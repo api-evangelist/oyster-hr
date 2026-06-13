@@ -1,0 +1,70 @@
+name: Oyster HR FinOps
+description: >-
+  Financial operations considerations for teams using the Oyster HR API.
+  Oyster's pricing is usage-based per employee or contractor per month.
+  API access is included with paid plans. Cost drivers include headcount,
+  plan tier, and optional People Partner advisory hours.
+url: https://www.oysterhr.com/pricing
+cost_model:
+  type: per-seat-monthly
+  description: >-
+    Oyster charges per employee or contractor per month depending on the
+    selected plan. No extra fees for setup, onboarding, or offboarding on
+    the EOR plan. Annual billing discounts are available for EOR customers.
+billing_units:
+  - name: EOR Employee
+    price: 699
+    currency: USD
+    unit: employee/month
+    notes: Annual discounts available; no setup/onboarding/offboarding fees
+  - name: US PEO Employee
+    price: 114
+    currency: USD
+    unit: employee/month
+  - name: Global Contractor
+    price: 29
+    currency: USD
+    unit: contractor/month
+    notes: First 30 days free
+  - name: People Partner Advisory
+    price: 300
+    currency: USD
+    unit: hour
+    notes: Project-based; billed per engagement hour
+cost_optimization:
+  - tip: Annual billing
+    description: >-
+      Opt for annual billing on EOR plans to receive a discount over
+      monthly billing.
+  - tip: Contractor vs EOR classification
+    description: >-
+      Use the contractor plan ($29/month) where legally permissible instead
+      of EOR ($699/month). The Oyster misclassification analyzer helps
+      assess risk before choosing the engagement type.
+  - tip: Special programs
+    description: >-
+      Nonprofits, B-Corps, refugee programs, and qualifying startups may
+      receive discounted or free access. Contact Oyster to apply.
+  - tip: Headcount management
+    description: >-
+      Costs scale linearly with headcount. Offboarding on EOR includes
+      no extra fee, so cost planning can be done based purely on active
+      employee count.
+  - tip: Advisory hours
+    description: >-
+      People Partner advisory hours at $300/hour are project-based.
+      Define clear project scope before engaging to control total spend.
+invoicing:
+  description: >-
+    Oyster provides invoices and credit note management through the platform.
+    The API exposes full invoicing endpoints (retrieve, approve, dispute) and
+    charge group tracking, enabling automated reconciliation with internal
+    finance systems.
+  api_endpoints:
+    - Retrieve all invoices
+    - Retrieve invoice breakdown
+    - Approve invoice
+    - Dispute invoice
+    - Retrieve all credit notes
+    - Retrieve charge groups and charges
+    - Retrieve payouts

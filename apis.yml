@@ -1,0 +1,73 @@
+aid: oyster-hr
+name: Oyster HR
+description: >-
+  Global employment platform with a REST API for hiring international employees,
+  managing contracts, processing global payroll, and ensuring local compliance
+  in 180+ countries. The API enables integration with HRIS and payroll systems,
+  time-off management, expense management, invoicing, benefits, offboarding, and
+  provides embeddable web components for partners and resellers.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+url: https://raw.githubusercontent.com/api-evangelist/oyster-hr/refs/heads/main/apis.yml
+created: '2026-06-13'
+modified: '2026-06-13'
+specificationVersion: '0.19'
+tags:
+  - HR
+  - Global Employment
+  - Payroll
+  - Employer of Record
+  - EOR
+  - Contractors
+  - Compliance
+  - Remote Work
+apis:
+  - aid: oyster-hr:oyster-hr-api
+    name: Oyster HR API
+    description: >-
+      REST API for global employment operations including hiring, payroll,
+      benefits, time off, expenses, invoicing, offboarding, and webhooks.
+      Supports both customer-direct and reseller/partner integration patterns
+      with OAuth2 client credentials authentication.
+    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    humanURL: https://www.oysterhr.com/developer-api
+    baseURL: https://api.oysterhr.com/v1
+    tags:
+      - HR
+      - Payroll
+      - Global Employment
+      - Employer of Record
+      - Benefits
+      - Expenses
+      - Invoicing
+      - Webhooks
+    properties:
+      - type: Documentation
+        url: https://docs.oysterhr.com/
+      - type: OpenAPI
+        url: https://docs.oysterhr.com/llms.txt
+common:
+  - type: Website
+    url: https://www.oysterhr.com/
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: GitHubOrg
+    url: https://github.com/oysterhr
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/oysterhr
+  - type: Blog
+    url: https://www.oysterhr.com/library
+  - type: Pricing
+    url: https://www.oysterhr.com/pricing
+  - type: StatusPage
+    url: https://status.oysterhr.com/
+  - type: X
+    url: https://x.com/oyster_hr
+  - type: Plans
+    url: plans/oyster-hr-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/oyster-hr-rate-limits.yml
+  - type: FinOps
+    url: finops/oyster-hr-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com

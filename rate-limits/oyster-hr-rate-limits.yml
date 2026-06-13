@@ -1,0 +1,35 @@
+name: Oyster HR API Rate Limits
+description: >-
+  The Oyster public API enforces rate limits per company to ensure fair usage
+  and platform stability. Limits apply to all v1 endpoints. Companies requiring
+  higher limits should contact Oyster support.
+url: https://docs.oysterhr.com/docs/understanding-rate-limiting
+limits:
+  - name: Sustained Request Limit
+    description: >-
+      Maximum number of API requests allowed per company within a rolling
+      5-minute window.
+    requests: 300
+    window: 5 minutes
+    scope: per company
+  - name: Burst Request Limit
+    description: >-
+      Maximum instantaneous request rate per company to prevent traffic spikes.
+    requests: 40
+    window: per second
+    scope: per company
+error_handling:
+  status_code: 429
+  description: >-
+    When the rate limit is exceeded, the API returns HTTP 429 Too Many Requests.
+    The response is header-only with no body content.
+  headers:
+    - name: Retry-After
+      description: >-
+        Number of seconds to wait before retrying the request. Included in
+        the 429 response when the rate limit is exceeded.
+contact:
+  description: >-
+    Companies that need higher rate limits should contact the Oyster team
+    to request an increase.
+  email: api@oysterhr.com

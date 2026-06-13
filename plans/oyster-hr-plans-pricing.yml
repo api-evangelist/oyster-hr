@@ -1,0 +1,86 @@
+name: Oyster HR Plans and Pricing
+description: >-
+  Oyster HR offers tiered pricing plans covering Employer of Record (EOR),
+  Global Contractors, US PEO, and People Partner Services. API access is
+  available to customers and integration partners. Special discounts apply
+  for nonprofits, B-Corps, refugees, and qualifying startups.
+url: https://www.oysterhr.com/pricing
+plans:
+  - name: Global Contractors
+    description: >-
+      Manage global contractors with instant contracts in 180+ countries,
+      contractor payments in 120+ currencies, identity verification,
+      onboarding, invoice/expense/contract management, and a misclassification
+      analyzer.
+    price: 29
+    unit: contractor/month
+    currency: USD
+    trial:
+      days: 30
+      free: true
+    features:
+      - Instant contracts in 180+ countries
+      - Contractor payments in 120+ currencies
+      - Identity verification and onboarding
+      - Invoice, expense, and contract management
+      - Misclassification analyzer
+  - name: US PEO
+    description: >-
+      Co-employment solution for hiring across any US state with payroll
+      processing, competitive benefits, HR admin, compliance outsourcing,
+      and liability coverage.
+    price: 114
+    unit: employee/month
+    currency: USD
+    features:
+      - Hiring in any US state via co-employment
+      - Accurate payroll processing
+      - Competitive benefits offerings
+      - HR admin and compliance outsourcing
+      - Liability coverage
+  - name: Employer of Record (EOR)
+    description: >-
+      Full EOR solution for compliant international hiring in 120+ countries,
+      multi-currency payroll, automated expenses, time-off, onboarding,
+      offboarding, and end-to-end local expert support. No extra charges for
+      setup, onboarding, or offboarding. Annual discounts available.
+    price: 699
+    unit: employee/month
+    currency: USD
+    features:
+      - Compliant employment in 120+ countries
+      - Multi-country payroll in 120+ currencies
+      - Automated expenses, time-off, and reports
+      - Onboarding and offboarding specialists
+      - End-to-end support by local experts
+      - No setup, onboarding, or offboarding fees
+      - Annual discount available
+  - name: People Partner Services
+    description: >-
+      Project-based HR advisory from senior experts, supporting EOR and
+      existing entities with flexible scope from consultation to full
+      execution.
+    price: 300
+    unit: hour
+    currency: USD
+    features:
+      - Senior HR expert advisory
+      - Supports EOR and existing entities
+      - Flexible scope from consultation to execution
+      - Hands-on support for complex situations
+  - name: Scale
+    description: >-
+      Custom pricing for large enterprises with advanced needs. Contact
+      Oyster for a tailored quote.
+    price: custom
+    features:
+      - Custom pricing and terms
+      - Enterprise-level support
+      - Advanced integration options
+special_programs:
+  - name: Nonprofits and B-Corps
+    description: Discounted rates available for qualifying organizations
+  - name: Refugees
+    description: Free or discounted costs for refugee employment programs
+  - name: Startups
+    description: Up to $1,200 savings on EOR subscription fees for qualifying startups
