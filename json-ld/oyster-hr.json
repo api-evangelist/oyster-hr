@@ -1,0 +1,94 @@
+{
+  "@context": "https://schema.org",
+  "@type": "WebAPI",
+  "name": "Oyster HR API",
+  "description": "REST API for global employment operations including hiring, payroll, benefits, time off, expenses, invoicing, offboarding, and webhooks. Supports both customer-direct and reseller/partner integration patterns with OAuth2 client credentials authentication.",
+  "url": "https://www.oysterhr.com/developer-api",
+  "documentation": "https://docs.oysterhr.com/",
+  "termsOfService": "https://www.oysterhr.com/legal",
+  "provider": {
+    "@type": "Organization",
+    "name": "Oyster HR",
+    "url": "https://www.oysterhr.com/",
+    "sameAs": [
+      "https://www.linkedin.com/company/oysterhr",
+      "https://x.com/oyster_hr",
+      "https://github.com/oysterhr"
+    ]
+  },
+  "offers": {
+    "@type": "Offer",
+    "url": "https://www.oysterhr.com/pricing"
+  },
+  "applicationCategory": [
+    "HR",
+    "Global Employment",
+    "Payroll",
+    "Employer of Record",
+    "EOR",
+    "Contractors",
+    "Compliance",
+    "Remote Work"
+  ],
+  "availableChannel": {
+    "@type": "ServiceChannel",
+    "serviceUrl": "https://api.oysterhr.com/v1"
+  },
+  "potentialAction": [
+    {
+      "@type": "Action",
+      "name": "Manage Departments",
+      "description": "Retrieve company details and manage departments"
+    },
+    {
+      "@type": "Action",
+      "name": "Manage Benefits",
+      "description": "Manage benefit offerings, enrollments, and provisioning"
+    },
+    {
+      "@type": "Action",
+      "name": "Manage Contracts and Employment",
+      "description": "Create, update, and manage EOR employment records, contracts, and agreements"
+    },
+    {
+      "@type": "Action",
+      "name": "Manage Expenses",
+      "description": "Create, approve, and decline expense records"
+    },
+    {
+      "@type": "Action",
+      "name": "Manage Invoices",
+      "description": "Handle invoices, credit notes, payment and charge group management"
+    },
+    {
+      "@type": "Action",
+      "name": "Manage Payroll",
+      "description": "Manage payroll operations and payroll changes"
+    },
+    {
+      "@type": "Action",
+      "name": "Manage Time Off",
+      "description": "Create and track time off requests and entitlements"
+    },
+    {
+      "@type": "Action",
+      "name": "Manage Timesheets",
+      "description": "Create and track timesheets for contractor engagements"
+    },
+    {
+      "@type": "Action",
+      "name": "Hire Employees",
+      "description": "Create and submit EOR employment, manage onboarding forms and agreements"
+    },
+    {
+      "@type": "Action",
+      "name": "Offboard Employees",
+      "description": "Manage terminations, resignations, and offboarding agreements"
+    },
+    {
+      "@type": "Action",
+      "name": "Manage Webhooks",
+      "description": "Configure and receive webhooks for events across benefits, contracts, engagements, expenses, hiring, invoicing, offboarding, payments, payroll, and time tracking"
+    }
+  ]
+}
