@@ -4,5 +4,14 @@
   "title": "Oyster HR Blog & Library",
   "description": "Blog posts and resources from Oyster HR covering global employment, remote work, compliance, payroll, and HR technology.",
   "updated": "2026-06-13",
-  "posts": []
+  "posts": [],
+  "repo": "oyster-hr",
+  "feeds": [
+    {
+      "source": "https://www.linkedin.com/company/oysterhr",
+      "error": "HTTPError"
+    }
+  ],
+  "post_count": 0,
+  "fetched": "2026-06-14T20:42:17Z"
 }
