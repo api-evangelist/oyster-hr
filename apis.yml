@@ -6,7 +6,7 @@ description: >-
   in 180+ countries. The API enables integration with HRIS and payroll systems,
   time-off management, expense management, invoicing, benefits, offboarding, and
   provides embeddable web components for partners and resellers.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/oyster-hr/refs/heads/main/apis.yml
 created: '2026-06-13'
 modified: '2026-06-13'
@@ -28,7 +28,7 @@ apis:
       benefits, time off, expenses, invoicing, offboarding, and webhooks.
       Supports both customer-direct and reseller/partner integration patterns
       with OAuth2 client credentials authentication.
-    image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://www.oysterhr.com/developer-api
     baseURL: https://api.oysterhr.com/v1
     tags:
