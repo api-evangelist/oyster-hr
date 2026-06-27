@@ -1,17 +1,27 @@
 {
   "aid": "oyster-hr",
+  "repo": "oyster-hr",
   "url": "https://www.oysterhr.com/library",
   "title": "Oyster HR Blog & Library",
   "description": "Blog posts and resources from Oyster HR covering global employment, remote work, compliance, payroll, and HR technology.",
   "updated": "2026-06-13",
   "posts": [],
-  "repo": "oyster-hr",
   "feeds": [
     {
+      "source": "https://www.oysterhr.com/library",
+      "feed_url": "https://www.oysterhr.com/library/rss.xml",
+      "title": "",
+      "saved": 60,
+      "method": "discovered"
+    },
+    {
       "source": "https://www.linkedin.com/company/oysterhr",
-      "error": "HTTPError"
+      "feed_url": "https://www.linkedin.com/company/oysterhr",
+      "title": "",
+      "saved": 0,
+      "method": "none"
     }
   ],
-  "post_count": 0,
-  "fetched": "2026-06-14T20:42:17Z"
+  "fetched": "2026-06-27T12:03:07Z",
+  "post_count": 60
 }
