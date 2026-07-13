@@ -8,11 +8,11 @@
   "posts": [],
   "feeds": [
     {
-      "source": "https://www.oysterhr.com/library",
+      "source": "https://www.oysterhr.com/library/rss.xml",
       "feed_url": "https://www.oysterhr.com/library/rss.xml",
       "title": "",
-      "saved": 60,
-      "method": "discovered"
+      "saved": 8,
+      "method": "feed"
     },
     {
       "source": "https://www.linkedin.com/company/oysterhr",
@@ -22,6 +22,6 @@
       "method": "none"
     }
   ],
-  "fetched": "2026-06-27T12:03:07Z",
-  "post_count": 60
+  "fetched": "2026-07-11T11:50:51Z",
+  "post_count": 117
 }
