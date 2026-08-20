@@ -51,6 +51,15 @@ apis:
       - Benefits
       - Expenses
       - Invoicing
+      - Webhook
+    tags_raw:
+      - HR
+      - Payroll
+      - Global Employment
+      - Employer of Record
+      - Benefits
+      - Expenses
+      - Invoicing
       - Webhooks
     properties:
       - type: Documentation
