@@ -6,6 +6,17 @@ description: >-
   in 180+ countries. The API enables integration with HRIS and payroll systems,
   time-off management, expense management, invoicing, benefits, offboarding, and
   provides embeddable web components for partners and resellers.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: unknown
