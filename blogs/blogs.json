@@ -11,17 +11,14 @@
       "source": "https://www.oysterhr.com/library/rss.xml",
       "feed_url": "https://www.oysterhr.com/library/rss.xml",
       "title": "",
-      "saved": 10,
+      "saved": 8,
       "method": "feed"
     },
     {
       "source": "https://www.linkedin.com/company/oysterhr",
-      "feed_url": "https://www.linkedin.com/company/oysterhr",
-      "title": "",
-      "saved": 0,
-      "method": "none"
+      "error": "HTTPError"
     }
   ],
-  "fetched": "2026-08-22T20:20:02Z",
-  "post_count": 289
+  "fetched": "2026-08-30T22:33:40Z",
+  "post_count": 337
 }
