@@ -35,7 +35,7 @@ created: '2026-06-13'
 modified: '2026-06-13'
 specificationVersion: '0.23'
 tags:
-  - HR
+  - Human Resources
   - Global Employment
   - Payroll
   - Employer of Record
@@ -63,7 +63,7 @@ apis:
     humanURL: https://www.oysterhr.com/developer-api
     baseURL: https://api.oysterhr.com/v1
     tags:
-      - HR
+      - Human Resources
       - Payroll
       - Global Employment
       - Employer of Record
