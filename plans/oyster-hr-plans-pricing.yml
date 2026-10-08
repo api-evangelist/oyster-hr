@@ -88,3 +88,47 @@ special_programs:
     description: Free or discounted costs for refugee employment programs
   - name: Startups
     description: Up to $1,200 savings on EOR subscription fees for qualifying startups
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - hybrid
+  - negotiated
+  - subscription
+  units:
+  - compute
+  plans:
+  - name: Global Contractors
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods: []
+  - name: US PEO
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods: []
+  - name: Employer of Record (EOR)
+    access: other
+    model: subscription
+    model_how: derived
+    units:
+    - other
+    periods: []
+  - name: People Partner Services
+    access: other
+    model: hybrid
+    model_how: derived
+    units:
+    - compute
+    periods: []
+  - name: Scale
+    access: other
+    model: negotiated
+    model_how: derived
+    units: []
+    periods: []
