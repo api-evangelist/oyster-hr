@@ -1,11 +1,11 @@
 aid: oyster-hr
+
 name: Oyster HR
-description: >-
-  Global employment platform with a REST API for hiring international employees,
-  managing contracts, processing global payroll, and ensuring local compliance
-  in 180+ countries. The API enables integration with HRIS and payroll systems,
-  time-off management, expense management, invoicing, benefits, offboarding, and
-  provides embeddable web components for partners and resellers.
+
+description: Global employment platform with a REST API for hiring international employees, managing contracts, processing global payroll, and
+  ensuring local compliance in 180+ countries. The API enables integration with HRIS and payroll systems, time-off management, expense management,
+  invoicing, benefits, offboarding, and provides embeddable web components for partners and resellers.
+
 deliveryModel:
   model: saas
   open_source: false
@@ -17,6 +17,7 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+
 accessModel:
   pricing: paid
   onboarding: unknown
@@ -29,89 +30,146 @@ accessModel:
   - plans
   generated: '2026-07-22'
   method: derived
+
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/oyster-hr.png
+
 url: https://raw.githubusercontent.com/api-evangelist/oyster-hr/refs/heads/main/apis.yml
+
 created: '2026-06-13'
+
 modified: '2026-06-13'
+
 specificationVersion: '0.23'
+
 tags:
-  - Human Resources
-  - Global Employment
-  - Payroll
-  - Employer of Record
-  - Contractors
-  - Compliance
-  - Remote Work
+- Human Resources
+- Global Employment
+- Payroll
+- Employer of Record
+- Contractors
+- Compliance
+- Remote Work
+
 tags_raw:
-  - HR
-  - Global Employment
-  - Payroll
-  - Employer of Record
-  - EOR
-  - Contractors
-  - Compliance
-  - Remote Work
-apis:
-  - aid: oyster-hr:oyster-hr-api
-    name: Oyster HR API
-    description: >-
-      REST API for global employment operations including hiring, payroll,
-      benefits, time off, expenses, invoicing, offboarding, and webhooks.
-      Supports both customer-direct and reseller/partner integration patterns
-      with OAuth2 client credentials authentication.
-    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-    humanURL: https://www.oysterhr.com/developer-api
-    baseURL: https://api.oysterhr.com/v1
-    tags:
-      - Human Resources
-      - Payroll
-      - Global Employment
-      - Employer of Record
-      - Benefits
-      - Expenses
-      - Invoicing
-      - Webhook
-    tags_raw:
-      - HR
-      - Payroll
-      - Global Employment
-      - Employer of Record
-      - Benefits
-      - Expenses
-      - Invoicing
-      - Webhooks
-    properties:
-      - type: Documentation
-        url: https://docs.oysterhr.com/
-      - type: OpenAPI
-        url: https://docs.oysterhr.com/llms.txt
+- HR
+- Global Employment
+- Payroll
+- Employer of Record
+- EOR
+- Contractors
+- Compliance
+- Remote Work
+
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+
 common:
-  - type: TrustCenter
-    url: security/oyster-hr-trust-center.yml
-  - type: DomainSecurity
-    url: security/oyster-hr-domain-security.yml
-  - type: Website
-    url: https://www.oysterhr.com/
+- type: AgenticAccess
+  url: agentic-access/oyster-hr-agentic-access.yml
+- type: Spectral
+  url: rules/oyster-hr-rules.yml
+- type: JSONLD
+  url: json-ld/oyster-hr-context.jsonld
+- type: Vocabulary
+  url: vocabulary/oyster-hr-vocabulary.yml
+- type: DataModel
+  url: data-model/oyster-hr-data-model.yml
+- type: Compliance
+  url: https://trust.oysterhr.com/
+- type: ErrorCatalog
+  url: errors/oyster-hr-problem-types.yml
+- type: Conformance
+  url: conformance/oyster-hr-conformance.yml
+- type: LLMsTxt
+  url: llms/oyster-hr-llms.txt
+- type: Hosts
+  url: hosts/oyster-hr-hosts.yml
+- type: Vendors
+  url: vendors/oyster-hr-vendors.yml
+- type: TermsOfService
+  url: https://app.oysterhr.com/legal-notices/terms
+- type: Support
+  url: https://support.oysterhr.com/hc/en-us
+- type: SignUp
+  url: https://www.oysterhr.com/library/register-a-company-in-india
+- type: Security
+  url: https://www.oysterhr.com/security
+- type: PrivacyPolicy
+  url: https://www.oysterhr.com/trust/privacy-notice
+- type: Authentication
+  url: authentication/oyster-hr-authentication.yml
+- type: TrustCenter
+  url: security/oyster-hr-trust-center.yml
+- type: DomainSecurity
+  url: security/oyster-hr-domain-security.yml
+- type: Website
+  url: https://www.oysterhr.com/
+- type: Documentation
+  url: https://docs.oysterhr.com/
+- type: GitHubOrg
+  url: https://github.com/oysterhr
+- type: LinkedIn
+  url: https://www.linkedin.com/company/oysterhr
+- type: Blog
+  url: https://www.oysterhr.com/library
+- type: Pricing
+  url: https://www.oysterhr.com/pricing
+- type: StatusPage
+  url: https://status.oysterhr.com/
+- type: X
+  url: https://x.com/oyster_hr
+- type: Plans
+  url: plans/oyster-hr-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/oyster-hr-rate-limits.yml
+- type: FinOps
+  url: finops/oyster-hr-finops.yml
+
+apis:
+- aid: oyster-hr:oyster-hr-authentication
+  name: Oyster HR Hr Authentication Openapi.Yml API
+  description: The Hr Authentication Openapi.Yml API from Oyster HR — 1 operation(s) for hr authentication openapi.yml.
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Hr Authentication Openapi.Yml
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-authentication-openapi.yml
   - type: Documentation
     url: https://docs.oysterhr.com/
-  - type: GitHubOrg
-    url: https://github.com/oysterhr
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/oysterhr
-  - type: Blog
-    url: https://www.oysterhr.com/library
-  - type: Pricing
-    url: https://www.oysterhr.com/pricing
-  - type: StatusPage
-    url: https://status.oysterhr.com/
-  - type: X
-    url: https://x.com/oyster_hr
-  - type: Plans
-    url: plans/oyster-hr-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/oyster-hr-rate-limits.yml
-  - type: FinOps
-    url: finops/oyster-hr-finops.yml
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+- aid: oyster-hr:oyster-hr-endpoints
+  name: Oyster HR Contract Changes API
+  description: 'With the Contract Changes API, you can manage your team''s contract change requests.
+
+    You can access details of a specific request, cancel change requests, and view a list of all requests.'
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Contract Changes
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-endpoints-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+
+x-readme-harvest:
+  date: '2026-10-14'
+  ops: 141
+  tool: harvest-readme-openapi.py
+  portal: https://docs.oysterhr.com

@@ -1,0 +1,401 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/oyster-hr/main/json-schema/oyster-hr-engagement-schema.json",
+  "title": "engagement",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/engagement",
+  "type": "object",
+  "properties": {
+    "engagementId": {
+      "type": "string"
+    },
+    "modifiedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "startDate": {
+      "type": "string",
+      "format": "date"
+    },
+    "engagementType": {
+      "enum": [
+        "EMPLOYMENT",
+        "CONTRACT"
+      ]
+    },
+    "state": {
+      "type": "string"
+    },
+    "role": {
+      "type": "string"
+    },
+    "countryCode": {
+      "type": "string"
+    },
+    "personalDetails": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "addresses": {
+          "type": "object",
+          "properties": {
+            "livingAddress": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "$ref": "#/$defs/address"
+            },
+            "mailingAddress": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "$ref": "#/$defs/address"
+            }
+          }
+        },
+        "citizenships": {
+          "type": "array",
+          "items": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        },
+        "dateOfBirth": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "phoneNumbers": {
+          "type": "object",
+          "properties": {
+            "default": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "$ref": "#/$defs/phoneNumber"
+            },
+            "emergency": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "$ref": "#/$defs/phoneNumber"
+            }
+          }
+        }
+      },
+      "required": [
+        "name",
+        "addresses"
+      ]
+    },
+    "employment": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "employmentId": {
+          "type": "string"
+        },
+        "fullLegalName": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "email": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "workEmail": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "employmentType": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "FULL-TIME",
+            "PART-TIME"
+          ]
+        },
+        "type": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "FULL-TIME",
+            "PART-TIME"
+          ]
+        },
+        "lastDayOn": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "salary": {
+          "$ref": "#/$defs/amount"
+        },
+        "payrollTeamMember": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "employmentId",
+        "fullLegalName",
+        "email",
+        "workEmail",
+        "employmentType",
+        "type",
+        "lastDayOn",
+        "salary",
+        "payrollTeamMember"
+      ]
+    },
+    "contract": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "id": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "contractId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "email": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "workEmail": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "billingType": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "FIXED",
+            "PAY_AS_YOU_GO",
+            "MILESTONE"
+          ]
+        },
+        "taxIdNumber": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "contractId",
+        "name",
+        "email",
+        "workEmail",
+        "billingType",
+        "taxIdNumber"
+      ]
+    },
+    "benefitEnrollments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "benefitEnrollmentId": {
+            "type": "string"
+          },
+          "plan": {
+            "type": "object",
+            "properties": {
+              "provider": {
+                "type": "string"
+              },
+              "descriptiveName": {
+                "type": "string"
+              }
+            }
+          },
+          "name": {
+            "type": "string"
+          },
+          "state": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "terminations": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "state": {
+            "type": "string"
+          },
+          "proposedDate": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      }
+    },
+    "department": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "departmentId": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "required": [
+    "engagementId",
+    "engagementType",
+    "personalDetails",
+    "startDate",
+    "countryCode",
+    "role"
+  ],
+  "$defs": {
+    "address": {
+      "type": "object",
+      "properties": {
+        "addressId": {
+          "type": "string"
+        },
+        "addressLine1": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "addressLine2": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "city": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "region": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "countryCode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "postalCode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      },
+      "required": [
+        "addressId",
+        "addressLine1",
+        "postalCode"
+      ]
+    },
+    "amount": {
+      "type": "object",
+      "properties": {
+        "decimal": {
+          "type": "string",
+          "pattern": "^\\d+([.]\\d+)?$"
+        },
+        "currencyCode": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 3
+        }
+      },
+      "required": [
+        "decimal",
+        "currencyCode"
+      ]
+    },
+    "phoneNumber": {
+      "type": "object",
+      "properties": {
+        "countryCode": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "number": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "number"
+      ]
+    }
+  }
+}

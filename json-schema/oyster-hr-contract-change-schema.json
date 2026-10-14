@@ -1,0 +1,410 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/oyster-hr/main/json-schema/oyster-hr-contract-change-schema.json",
+  "title": "contractChange",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/contractChange",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "effectiveFrom": {
+      "type": "string",
+      "format": "date"
+    },
+    "applicableFrom": {
+      "type": "string",
+      "format": "date"
+    },
+    "expirationDate": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updatedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "requestedBy": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        }
+      }
+    },
+    "changesRequested": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "POSITION_DETAILS",
+          "COMPENSATION",
+          "BONUS",
+          "ALLOWANCE"
+        ]
+      }
+    },
+    "state": {
+      "type": "string"
+    },
+    "changes": {
+      "type": "object",
+      "properties": {
+        "positionDetails": {
+          "type": "object",
+          "properties": {
+            "jobTitle": {
+              "type": "object",
+              "properties": {
+                "from": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "to": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            },
+            "jobDescription": {
+              "type": "object",
+              "properties": {
+                "from": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                },
+                "to": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "compensation": {
+          "type": "object",
+          "properties": {
+            "salary": {
+              "type": "object",
+              "properties": {
+                "from": {
+                  "nullable": true,
+                  "$ref": "#/$defs/amount"
+                },
+                "to": {
+                  "nullable": true,
+                  "$ref": "#/$defs/amount"
+                }
+              }
+            },
+            "salaryAbsorbable": {
+              "type": "object",
+              "properties": {
+                "from": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                },
+                "to": {
+                  "type": [
+                    "boolean",
+                    "null"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "bonuses": {
+          "type": "object",
+          "properties": {
+            "added": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  },
+                  "paymentFrequency": {
+                    "enum": [
+                      "MONTHLY",
+                      "QUARTERLY",
+                      "BIANNUAL",
+                      "YEARLY",
+                      "ONE_TIME"
+                    ]
+                  },
+                  "guaranteed": {
+                    "type": "boolean"
+                  },
+                  "statutory": {
+                    "type": "boolean"
+                  },
+                  "amountDecimal": {
+                    "type": "string"
+                  },
+                  "selectedMonths": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  },
+                  "prorated": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "id",
+                  "label",
+                  "paymentFrequency",
+                  "guaranteed",
+                  "statutory"
+                ]
+              }
+            },
+            "removed": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  },
+                  "paymentFrequency": {
+                    "enum": [
+                      "MONTHLY",
+                      "QUARTERLY",
+                      "BIANNUAL",
+                      "YEARLY",
+                      "ONE_TIME"
+                    ]
+                  },
+                  "guaranteed": {
+                    "type": "boolean"
+                  },
+                  "statutory": {
+                    "type": "boolean"
+                  },
+                  "amountDecimal": {
+                    "type": "string"
+                  },
+                  "selectedMonths": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  },
+                  "prorated": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "id",
+                  "label",
+                  "paymentFrequency",
+                  "guaranteed",
+                  "statutory"
+                ]
+              }
+            }
+          },
+          "required": [
+            "added",
+            "removed"
+          ]
+        },
+        "allowances": {
+          "type": "object",
+          "properties": {
+            "added": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  },
+                  "paymentFrequency": {
+                    "enum": [
+                      "MONTHLY",
+                      "QUARTERLY",
+                      "BIANNUAL",
+                      "YEARLY",
+                      "ONE_TIME"
+                    ]
+                  },
+                  "statutory": {
+                    "type": "boolean"
+                  },
+                  "amountDecimal": {
+                    "type": "string"
+                  },
+                  "selectedMonths": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  },
+                  "prorated": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "id",
+                  "label",
+                  "paymentFrequency",
+                  "statutory"
+                ]
+              }
+            },
+            "removed": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string"
+                  },
+                  "label": {
+                    "type": "string"
+                  },
+                  "paymentFrequency": {
+                    "enum": [
+                      "MONTHLY",
+                      "QUARTERLY",
+                      "BIANNUAL",
+                      "YEARLY",
+                      "ONE_TIME"
+                    ]
+                  },
+                  "statutory": {
+                    "type": "boolean"
+                  },
+                  "amountDecimal": {
+                    "type": "string"
+                  },
+                  "selectedMonths": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  },
+                  "prorated": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "id",
+                  "label",
+                  "paymentFrequency",
+                  "statutory"
+                ]
+              }
+            }
+          },
+          "required": [
+            "added",
+            "removed"
+          ]
+        }
+      },
+      "required": [
+        "bonuses",
+        "allowances"
+      ]
+    },
+    "engagement": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "EMPLOYMENT",
+            "CONTRACT"
+          ]
+        },
+        "countryCode": {
+          "type": "string",
+          "pattern": "^[A-Z]{2}$"
+        }
+      }
+    },
+    "oneOffBonusPayment": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "$ref": "#/$defs/amount"
+    }
+  },
+  "required": [
+    "id",
+    "engagement",
+    "effectiveFrom",
+    "applicableFrom",
+    "createdAt",
+    "updatedAt",
+    "requestedBy",
+    "changesRequested",
+    "state",
+    "changes"
+  ],
+  "$defs": {
+    "amount": {
+      "type": "object",
+      "properties": {
+        "decimal": {
+          "type": "string",
+          "pattern": "^\\d+([.]\\d+)?$"
+        },
+        "currencyCode": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 3
+        }
+      },
+      "required": [
+        "decimal",
+        "currencyCode"
+      ]
+    }
+  }
+}

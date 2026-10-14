@@ -1,0 +1,435 @@
+generated: '2026-10-14'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/oyster-hr-authentication-openapi.yml
+- openapi/oyster-hr-endpoints-openapi.yml
+vocabulary:
+  name: Oyster HR Domain Vocabulary
+  description: 'Terms declared by Oyster HR''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-14'
+  terms:
+  - term: Contract Changes
+    definition: With the Contract Changes API, you can manage your team's contract change requests. You can access details of a specific request,
+      cancel change requests, and view a list of all requests.
+    tags:
+    - Resource Group
+    source: openapi/oyster-hr-endpoints-openapi.yml
+  - term: Expenses
+    definition: Expenses API allows you to remotely manage expenses of your team. Approve or decline a specific expense, get info about a specific
+      expense or receive real-time information about all expenses.
+    tags:
+    - Resource Group
+    source: openapi/oyster-hr-endpoints-openapi.yml
+  - term: Time Off
+    definition: With the Time Off API, you can manage your team's time off requests. You can approve or decline specific time off requests, access
+      information about a particular request, and get updates on all time off requests. It also provides details on time off entitlements for
+      each engagement within the company
+    tags:
+    - Resource Group
+    source: openapi/oyster-hr-endpoints-openapi.yml
+  - term: Token
+    definition: 'Object declared by the contract with fields: access_token, token_type, expires_in, refresh_token, scope, created_at.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-authentication-openapi.yml#/components/schemas/Token
+  - term: benefitPackage
+    definition: 'Object declared by the contract with fields: id, fee, name, plans.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/benefitPackage
+  - term: benefitPlan
+    definition: 'Object declared by the contract with fields: category, estimatedPrice, fee, guideUrl, id, link, name.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/benefitPlan
+  - term: enrollment
+    definition: 'Object declared by the contract with fields: id, state, plan, package, employerContribution, totalCost, totalEmployerContributionCost,
+      coveragePeriod.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/enrollment
+  - term: benefitsOffering
+    definition: 'Object declared by the contract with fields: supplementary, packages.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/benefitsOffering
+  - term: address
+    definition: 'Object declared by the contract with fields: addressId, addressLine1, addressLine2, city, region, countryCode, postalCode.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/address
+  - term: amount
+    definition: 'Object declared by the contract with fields: decimal, currencyCode.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/amount
+  - term: phoneNumber
+    definition: 'Object declared by the contract with fields: countryCode, number.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/phoneNumber
+  - term: engagement
+    definition: 'Object declared by the contract with fields: engagementId, modifiedAt, startDate, engagementType, state, role, countryCode, personalDetails,
+      employment, contract, benefitEnrollments, terminations. (1 more)'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/engagement
+  - term: meta
+    definition: 'Object declared by the contract with fields: items, count, page, pages, firstUrl, lastUrl, pageUrl, nextUrl, prevUrl, deprecation.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/meta
+  - term: baseCompensation
+    definition: 'Object declared by the contract with fields: label, paymentFrequency, statutory, amountDecimal, selectedMonths.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/baseCompensation
+  - term: employmentPersonalDetails
+    definition: 'Object declared by the contract with fields: fullLegalName, email, nationality, workPermit.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/employmentPersonalDetails
+  - term: errors
+    definition: 'Object declared by the contract with fields: errors.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/errors
+  - term: document
+    definition: 'Object declared by the contract with fields: id, title, description, url, contentType, type.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/document
+  - term: contractChange
+    definition: 'Object declared by the contract with fields: id, effectiveFrom, applicableFrom, expirationDate, createdAt, updatedAt, requestedBy,
+      changesRequested, state, changes, engagement, oneOffBonusPayment.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/contractChange
+  - term: expense
+    definition: 'Object declared by the contract with fields: expenseId, name, description, amount, category, incurredOn, submittedAt, reviewState,
+      reviewedAt, receiptAmount, receiptUrl, engagement. (1 more)'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/expense
+  - term: asyncResponse
+    definition: 'Object declared by the contract with fields: meta.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/asyncResponse
+  - term: timeOffEntitlement
+    definition: 'Object declared by the contract with fields: engagement, annualEntitlement, accrued, carried, adjustedAdhoc, taken, availableBalance,
+      upcoming, projectedBalance, units.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/timeOffEntitlement
+  - term: timeOffEngagementDetails
+    definition: 'Object declared by the contract with fields: engagementId, name, type, countryCode.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/timeOffEngagementDetails
+  - term: timeOffRequest
+    definition: 'Object declared by the contract with fields: timeOffRequestId, engagement, startDate, endDate, firstDayDuration, lastDayDuration,
+      firstDayDurationInHours, lastDayDurationInHours, state, type, requesterComments, rejectionReason. (6 more)'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/timeOffRequest
+  - term: attachmentDetails
+    definition: 'Object declared by the contract with fields: filename, url, contentType.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/attachmentDetails
+  - term: timeTrackingWorkSummaryItem
+    definition: 'Object declared by the contract with fields: type, duration.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/timeTrackingWorkSummaryItem
+  - term: duration
+    definition: 'Object declared by the contract with fields: hours, minutes.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/duration
+  - term: timeTrackingTimeOff
+    definition: 'Object declared by the contract with fields: date, duration, reason, type.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/timeTrackingTimeOff
+  - term: timeTrackingTimeSheetEntry
+    definition: 'Object declared by the contract with fields: id, timeSheetId, date, type, notes, present, breakInterval, workDuration.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/timeTrackingTimeSheetEntry
+  - term: timeTrackingTimeSheet
+    definition: 'Object declared by the contract with fields: id, engagement, timePeriod, cadence, status, statusReason, locked, isAmendment,
+      hasAmendmentTimeSheet, amendmentTimeSheetId, originalTimeSheetId, createdBy. (7 more)'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/timeTrackingTimeSheet
+  - term: bankAccount
+    definition: 'Object declared by the contract with fields: engagementId, bankAccountId, payoutUsage, isPrimary, currencyCode, countryCode,
+      details.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/bankAccount
+  - term: creditNote
+    definition: 'Object declared by the contract with fields: id, referenceCode, type, status, payrollMonth, payrollYear, issueDate, totalAmount,
+      amountRemaining, customer, files, appliedToInvoices.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/creditNote
+  - term: sourceOption
+    definition: 'Object declared by the contract with fields: value, title.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/sourceOption
+  - term: payoutCollectionItem
+    definition: 'Object declared by the contract with fields: id, status, amount.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/payoutCollectionItem
+  - term: chargeCollectionItem
+    definition: 'Object declared by the contract with fields: id, status, amount, amountDue.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/chargeCollectionItem
+  - term: invoiceBase
+    definition: Base properties for all invoices.
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/invoiceBase
+  - term: settlementInvoice
+    definition: Additional properties specific to settlement invoices.
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/settlementInvoice
+  - term: globalPayrollInvoice
+    definition: Additional properties specific to global payroll invoices.
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/globalPayrollInvoice
+  - term: contractorInvoice
+    definition: Additional properties specific to contractor invoices.
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/contractorInvoice
+  - term: invoiceAmount
+    definition: 'Object declared by the contract with fields: decimal, currencyCode.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/invoiceAmount
+  - term: endClient
+    definition: 'Object declared by the contract with fields: id, name, registrationNumber, countryOfIncorporation, websiteUrl, address.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/endClient
+  - term: department
+    definition: 'Object declared by the contract with fields: departmentId, name, description, engagementsCount.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/department
+  - term: company
+    definition: 'Object declared by the contract with fields: companyId, name, registrationNumber, addresses.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/company
+  - term: hiringTask
+    definition: 'Object declared by the contract with fields: type, state, visibleTo, parties.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/hiringTask
+  - term: employment
+    definition: 'Object declared by the contract with fields: engagementId, countryCode, subdivisionCode, status, personalDetails, manager, role,
+      compensation, documents, signer, invitation.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/employment
+  - term: fieldErrors
+    definition: 'Object declared by the contract with fields: errors.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/fieldErrors
+  - term: autoKycVerificationData
+    definition: 'Object declared by the contract with fields: sessionUrl.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/autoKycVerificationData
+  - term: partnerKycVerificationData
+    definition: 'Object declared by the contract with fields: referenceId, reason, user, document, screening.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/partnerKycVerificationData
+  - term: identityVerification
+    definition: 'Object declared by the contract with fields: id, status, verificationData.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/identityVerification
+  - term: employmentCostEstimate
+    definition: 'Object declared by the contract with fields: engagement, grossSalaryAmount, mandatoryCosts, additionalCosts, oysterFee, vat,
+      totalCostsAmount, taxesAndSocialSecurity, netSalaryAmount, notes.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/employmentCostEstimate
+  - term: onboardingForm
+    definition: 'Object declared by the contract with fields: sections, state.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/onboardingForm
+  - term: baseField
+    definition: 'Object declared by the contract with fields: id, type, required, enabled, label, assistiveText, assistiveTextPlain, templateDocuments,
+      validationMessage.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/baseField
+  - term: agreement
+    definition: 'Object declared by the contract with fields: id, name, state, type, parties, preview.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/agreement
+  - term: roleType
+    definition: 'Object declared by the contract with fields: id, roleTypeId, name.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/roleType
+  - term: operation
+    definition: 'Object declared by the contract with fields: request, data, meta.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/operation
+  - term: offboarding
+    definition: 'Object declared by the contract with fields: id, engagement, state, cancelledAt, initiatedAt, cancelReason, requestorId, category,
+      lastDayOn.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/offboarding
+  - term: paymentsGroup
+    definition: 'Object declared by the contract with fields: id, referenceCode, itemsCount, state, amount, createdAt, wireSentAt, paidAt.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/paymentsGroup
+  - term: chargeDetails
+    definition: 'Object declared by the contract with fields: id, status, amount, completedAt, amountDue, collectionType, subject.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/chargeDetails
+  - term: paymentsAmount
+    definition: Monetary amount with currency for payments.
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/paymentsAmount
+  - term: payoutDetails
+    definition: 'Object declared by the contract with fields: id, status, amount, statusChanges, subject.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/payoutDetails
+  - term: payroll
+    definition: 'Object declared by the contract with fields: payrollId, currencyCode, cutoffTimeForPayroll, state, payrollRecordsCount.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/payroll
+  - term: payrollRecord
+    definition: 'Object declared by the contract with fields: id, engagementId, currencyCode, monthlyPaymentsTotalAmount, allowancesTotalAmount,
+      benefitsTotalAmount, bonusesTotalAmount, addOnsTotalAmount, taxesTotalAmount, trueUpsTotalAmount, oysterFeesTotalAmount, engagement.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/payrollRecord
+  - term: payrollChange
+    definition: 'Object declared by the contract with fields: id, type, engagement, month, year, notes, state, amount.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/payrollChange
+  - term: webhook
+    definition: 'Object declared by the contract with fields: id, url, sharedSecret, enabled.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/webhook
+  - term: webhookDispatch
+    definition: 'Object declared by the contract with fields: id, companyId, endpointId, eventName, eventTimestamp, lastResponseCode, sentAt,
+      firstSentAt, retries, data.'
+    tags:
+    - Object
+    source: openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/webhookDispatch
+  - term: Authentication
+    definition: 'Resource group in the contract; its operation POST /oauth2/token: Creates or refreshes an OAuth access token.'
+    tags:
+    - Resource Group
+    source: openapi/oyster-hr-authentication-openapi.yml
+  - term: Bank Accounts
+    definition: 'Resource group in the contract; its operation GET /v1/bank_accounts: Returns TM bank accounts for a company.'
+    tags:
+    - Resource Group
+    source: openapi/oyster-hr-endpoints-openapi.yml
+  - term: Benefits
+    definition: 'Resource group in the contract; its operation POST /v1/benefits/engagements/{engagement_id}/enrollments: Provisions benefits
+      for an engagement.'
+    tags:
+    - Resource Group
+    source: openapi/oyster-hr-endpoints-openapi.yml
+  - term: Company
+    definition: 'Resource group in the contract; its operation GET /v1/company: Returns details about the connected company'
+    tags:
+    - Resource Group
+    source: openapi/oyster-hr-endpoints-openapi.yml
+  - term: Consent
+    definition: 'Resource group in the contract; its operation DELETE /v1/consent/grants: Revokes an existing consent grant for an engagement.'
+    tags:
+    - Resource Group
+    source: openapi/oyster-hr-endpoints-openapi.yml
+  - term: Credit notes
+    definition: 'Resource group in the contract; its operation GET /v1/credit_notes: Returns company''s credit notes'
+    tags:
+    - Resource Group
+    source: openapi/oyster-hr-endpoints-openapi.yml
+  - term: Departments
+    definition: 'Resource group in the contract; its operation GET /v1/departments: Returns a list of departments'
+    tags:
+    - Resource Group
+    source: openapi/oyster-hr-endpoints-openapi.yml
+  - term: Employments
+    definition: 'Resource group in the contract; its operation PATCH /v1/employments/{id}/personal_details: Update TM Personal Details'
+    tags:
+    - Resource Group
+    source: openapi/oyster-hr-endpoints-openapi.yml
+  - term: Engagements
+    definition: 'Resource group in the contract; its operation GET /v1/engagements: Returns a list of engagements'
+    tags:
+    - Resource Group
+    source: openapi/oyster-hr-endpoints-openapi.yml
+  - term: Identity Verification
+    definition: 'Resource group in the contract; its operation GET /v1/engagements/{id}/identity_verification: Retrieves the latest identity verification
+      status for an engagement, regardless of whether Oyster KYC or Partner KYC was used.'
+    tags:
+    - Resource Group
+    source: openapi/oyster-hr-endpoints-openapi.yml
+  - term: expenses
+    definition: 'Resource group in the contract; its operation GET /v1/expenses: Returns expense details for all engagements.'
+    tags:
+    - Resource Group
+    source: openapi/oyster-hr-endpoints-openapi.yml
+  - term: '@oysterhr/prepay'
+    definition: 'Resource group in the contract; its operation GET /v1/expenses: Returns expense details for all engagements.'
+    tags:
+    - Resource Group
+    source: openapi/oyster-hr-endpoints-openapi.yml
+  - term: Cost Estimate
+    definition: 'Resource group in the contract; its operation GET /v1/hiring/employments/{id}/cost_estimates/annually: Retrieve annual cost estimates
+      for an employment'
+    tags:
+    - Resource Group
+    source: openapi/oyster-hr-endpoints-openapi.yml
+  - term: Invoices
+    definition: 'Resource group in the contract; its operation GET /v1/invoices: Returns company''s invoices.'
+    tags:
+    - Resource Group
+    source: openapi/oyster-hr-endpoints-openapi.yml
+  - term: Operations
+    definition: 'Resource group in the contract; its operation GET /v1/meta/operations/{operation_key}: Returns details for an operation with
+      a given operation key.'
+    tags:
+    - Resource Group
+    source: openapi/oyster-hr-endpoints-openapi.yml
+  - term: Offboarding
+    definition: 'Resource group in the contract; its operation GET /v1/offboardings/: This API endpoint allows you to retrieve a list of offboardings.'
+    tags:
+    - Resource Group
+    source: openapi/oyster-hr-endpoints-openapi.yml

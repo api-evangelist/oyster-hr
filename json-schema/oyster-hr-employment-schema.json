@@ -1,0 +1,746 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/oyster-hr/main/json-schema/oyster-hr-employment-schema.json",
+  "title": "employment",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/employment",
+  "type": "object",
+  "properties": {
+    "engagementId": {
+      "type": "string"
+    },
+    "countryCode": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "subdivisionCode": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "type": "string"
+    },
+    "personalDetails": {
+      "type": "object",
+      "nullable": false,
+      "$ref": "#/$defs/employmentPersonalDetails"
+    },
+    "manager": {
+      "type": "object",
+      "properties": {
+        "managerRole": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "managerName": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "managerEmailAddress": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "managerPhoneNumber": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "managerIsExpenseApprover": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "managerRole",
+        "managerName",
+        "managerEmailAddress",
+        "managerPhoneNumber",
+        "managerIsExpenseApprover"
+      ]
+    },
+    "role": {
+      "type": "object",
+      "properties": {
+        "seniorityLevel": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "roleTypeId": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "role": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "jobDescription": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "startDate": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "initialStartDate": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "endDate": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "employmentType": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "cbaLevel": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "probationPeriod": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "terminationNotice": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "resignationNotice": {
+          "type": [
+            "object",
+            "null"
+          ]
+        },
+        "fullTimeHoursPerWeek": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "format": "float"
+        },
+        "partTimeDaysPerWeek": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "partTimeHoursPerDay": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "workSchedule": {
+          "type": "array",
+          "description": "Per-day work schedule. Present for employments whose country supports work schedules.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "day": {
+                "type": "string",
+                "enum": [
+                  "MONDAY",
+                  "TUESDAY",
+                  "WEDNESDAY",
+                  "THURSDAY",
+                  "FRIDAY",
+                  "SATURDAY",
+                  "SUNDAY"
+                ]
+              },
+              "fromTime": {
+                "type": "string",
+                "format": "time",
+                "description": "Working hours start time, in HH:MM format (e.g. 09:00)."
+              },
+              "toTime": {
+                "type": "string",
+                "format": "time",
+                "description": "Working hours end time, in HH:MM format (e.g. 17:00)."
+              }
+            },
+            "required": [
+              "day",
+              "fromTime",
+              "toTime"
+            ]
+          }
+        }
+      },
+      "required": [
+        "seniorityLevel",
+        "roleTypeId",
+        "role",
+        "jobDescription",
+        "startDate",
+        "initialStartDate",
+        "endDate",
+        "employmentType",
+        "probationPeriod",
+        "terminationNotice",
+        "resignationNotice"
+      ]
+    },
+    "compensation": {
+      "type": "object",
+      "properties": {
+        "commissionPlanOffered": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "commissionPlan": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "url": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "salary": {
+          "type": "object",
+          "properties": {
+            "decimal": {
+              "type": [
+                "string",
+                "null"
+              ]
+            },
+            "currencyCode": {
+              "type": [
+                "string",
+                "null"
+              ]
+            }
+          }
+        },
+        "paidHolidayDays": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "bonuses": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "paymentFrequency": {
+                "type": "string"
+              },
+              "guaranteed": {
+                "type": "boolean"
+              },
+              "statutory": {
+                "type": "boolean"
+              },
+              "amountAsPercentage": {
+                "type": "string"
+              },
+              "amountDecimal": {
+                "type": "string"
+              },
+              "selectedMonths": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "prorated": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "id",
+              "label",
+              "paymentFrequency",
+              "guaranteed",
+              "statutory"
+            ]
+          }
+        },
+        "allowances": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "paymentFrequency": {
+                "type": "string"
+              },
+              "statutory": {
+                "type": "boolean"
+              },
+              "amountAsPercentage": {
+                "type": "string"
+              },
+              "amountDecimal": {
+                "type": "string"
+              },
+              "selectedMonths": {
+                "type": "array",
+                "items": {
+                  "type": "integer"
+                }
+              },
+              "prorated": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "id",
+              "label",
+              "paymentFrequency",
+              "statutory"
+            ]
+          }
+        },
+        "reimbursementBudgets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "customLabel": {
+                "type": [
+                  "string",
+                  "null"
+                ]
+              },
+              "resetFrequency": {
+                "type": "string"
+              },
+              "amountDecimal": {
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "label",
+              "customLabel",
+              "resetFrequency",
+              "amountDecimal"
+            ]
+          }
+        },
+        "remoteWorkCosts": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "allowancePolicy": {
+              "type": "object",
+              "properties": {
+                "allowancePolicy": {
+                  "type": "string",
+                  "enum": [
+                    "MONTHLY_ALLOWANCE",
+                    "ONE_TIME_STIPEND",
+                    "BASIC_REIMBURSEMENT",
+                    "NO_REIMBURSEMENT"
+                  ]
+                },
+                "amount": {
+                  "$ref": "#/$defs/amount",
+                  "nullable": true
+                },
+                "statutoryAmount": {
+                  "$ref": "#/$defs/amount",
+                  "nullable": true
+                }
+              },
+              "required": [
+                "allowancePolicy",
+                "amount",
+                "statutoryAmount"
+              ]
+            },
+            "equipmentBudget": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "amount": {
+                  "$ref": "#/$defs/amount",
+                  "nullable": true
+                }
+              },
+              "required": [
+                "amount"
+              ]
+            },
+            "equipmentListOwnedByTeamMember": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "equipmentList": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "COMPUTER_MONITOR",
+                      "HEADSET",
+                      "KEYBOARD",
+                      "LAPTOP_COMPUTER",
+                      "MOBILE_PHONE",
+                      "MOUSE",
+                      "PRINTER",
+                      "OTHER"
+                    ]
+                  }
+                },
+                "equipmentOther": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "equipmentList",
+                "equipmentOther"
+              ]
+            },
+            "equipmentListProvidedByCustomer": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "equipmentList": {
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "enum": [
+                      "COMPUTER_MONITOR",
+                      "HEADSET",
+                      "KEYBOARD",
+                      "LAPTOP_COMPUTER",
+                      "MOBILE_PHONE",
+                      "MOUSE",
+                      "PRINTER",
+                      "OTHER"
+                    ]
+                  }
+                },
+                "equipmentOther": {
+                  "type": [
+                    "string",
+                    "null"
+                  ]
+                }
+              },
+              "required": [
+                "equipmentList",
+                "equipmentOther"
+              ]
+            },
+            "equipmentOneTimePayment": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "amount": {
+                  "$ref": "#/$defs/amount",
+                  "nullable": true
+                }
+              },
+              "required": [
+                "amount"
+              ]
+            }
+          },
+          "required": [
+            "allowancePolicy",
+            "equipmentBudget",
+            "equipmentListOwnedByTeamMember",
+            "equipmentListProvidedByCustomer",
+            "equipmentOneTimePayment"
+          ]
+        },
+        "privateNotes": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sickPay": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "option": {
+              "type": "string"
+            },
+            "customDuration": {
+              "type": [
+                "object",
+                "null"
+              ],
+              "properties": {
+                "value": {
+                  "type": "integer"
+                },
+                "unit": {
+                  "type": "string",
+                  "enum": [
+                    "DAYS",
+                    "WEEKS",
+                    "MONTHS"
+                  ]
+                }
+              }
+            }
+          },
+          "required": [
+            "option",
+            "customDuration"
+          ]
+        }
+      },
+      "required": [
+        "commissionPlanOffered",
+        "commissionPlan",
+        "salary",
+        "paidHolidayDays",
+        "bonuses",
+        "allowances",
+        "reimbursementBudgets",
+        "remoteWorkCosts",
+        "privateNotes",
+        "sickPay"
+      ]
+    },
+    "documents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "filename": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "documentId",
+          "title",
+          "url",
+          "filename"
+        ]
+      }
+    },
+    "signer": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "fullName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "jobTitle": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "object",
+          "properties": {
+            "countryCode": {
+              "type": "string"
+            },
+            "number": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "countryCode",
+            "number"
+          ]
+        }
+      },
+      "required": [
+        "fullName",
+        "email",
+        "jobTitle",
+        "phone"
+      ]
+    },
+    "invitation": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "email": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "name": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sentAt": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        }
+      },
+      "required": [
+        "email",
+        "name",
+        "sentAt"
+      ]
+    }
+  },
+  "required": [
+    "engagementId",
+    "countryCode",
+    "subdivisionCode",
+    "status",
+    "personalDetails",
+    "manager",
+    "role",
+    "compensation",
+    "documents",
+    "signer",
+    "invitation"
+  ],
+  "$defs": {
+    "amount": {
+      "type": "object",
+      "properties": {
+        "decimal": {
+          "type": "string",
+          "pattern": "^\\d+([.]\\d+)?$"
+        },
+        "currencyCode": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 3
+        }
+      },
+      "required": [
+        "decimal",
+        "currencyCode"
+      ]
+    },
+    "employmentPersonalDetails": {
+      "type": "object",
+      "properties": {
+        "fullLegalName": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "email": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "nationality": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "workPermit": {
+          "type": [
+            "object",
+            "null"
+          ],
+          "properties": {
+            "url": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "required": [
+        "fullLegalName",
+        "email",
+        "nationality",
+        "workPermit"
+      ]
+    }
+  }
+}

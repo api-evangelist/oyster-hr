@@ -1,0 +1,927 @@
+{
+  "@context": {
+    "@vocab": "https://oysterhr.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "oyster": "https://oysterhr.com/schema#",
+    "Token": "oyster:Token",
+    "access_token": {
+      "@id": "oyster:access_token",
+      "@type": "xsd:string"
+    },
+    "token_type": {
+      "@id": "oyster:token_type",
+      "@type": "xsd:string"
+    },
+    "expires_in": {
+      "@id": "oyster:expires_in",
+      "@type": "xsd:decimal"
+    },
+    "refresh_token": {
+      "@id": "oyster:refresh_token",
+      "@type": "xsd:string"
+    },
+    "scope": {
+      "@id": "oyster:scope",
+      "@type": "xsd:string"
+    },
+    "created_at": {
+      "@id": "oyster:created_at",
+      "@type": "xsd:decimal"
+    },
+    "benefitPackage": "oyster:benefitPackage",
+    "id": {
+      "@id": "oyster:id",
+      "@type": "xsd:string"
+    },
+    "fee": {
+      "@id": "oyster:fee"
+    },
+    "name": {
+      "@id": "oyster:name",
+      "@type": "xsd:string"
+    },
+    "plans": {
+      "@id": "oyster:plans",
+      "@container": "@list"
+    },
+    "benefitPlan": "oyster:benefitPlan",
+    "category": {
+      "@id": "oyster:category",
+      "@type": "xsd:string"
+    },
+    "estimatedPrice": {
+      "@id": "oyster:estimatedPrice"
+    },
+    "guideUrl": {
+      "@id": "oyster:guideUrl",
+      "@type": "xsd:string"
+    },
+    "link": {
+      "@id": "oyster:link",
+      "@type": "xsd:string"
+    },
+    "enrollment": "oyster:enrollment",
+    "state": {
+      "@id": "oyster:state",
+      "@type": "xsd:string"
+    },
+    "plan": {
+      "@id": "oyster:plan",
+      "@type": "@id"
+    },
+    "package": {
+      "@id": "oyster:package",
+      "@type": "@id"
+    },
+    "employerContribution": {
+      "@id": "oyster:employerContribution"
+    },
+    "totalCost": {
+      "@id": "oyster:totalCost"
+    },
+    "totalEmployerContributionCost": {
+      "@id": "oyster:totalEmployerContributionCost"
+    },
+    "coveragePeriod": {
+      "@id": "oyster:coveragePeriod"
+    },
+    "benefitsOffering": "oyster:benefitsOffering",
+    "supplementary": {
+      "@id": "oyster:supplementary"
+    },
+    "packages": {
+      "@id": "oyster:packages",
+      "@container": "@list"
+    },
+    "address": "oyster:address",
+    "addressId": {
+      "@id": "oyster:addressId",
+      "@type": "xsd:string"
+    },
+    "addressLine1": {
+      "@id": "oyster:addressLine1",
+      "@type": "xsd:string"
+    },
+    "addressLine2": {
+      "@id": "oyster:addressLine2",
+      "@type": "xsd:string"
+    },
+    "city": {
+      "@id": "oyster:city",
+      "@type": "xsd:string"
+    },
+    "region": {
+      "@id": "oyster:region",
+      "@type": "xsd:string"
+    },
+    "countryCode": {
+      "@id": "oyster:countryCode",
+      "@type": "xsd:string"
+    },
+    "postalCode": {
+      "@id": "oyster:postalCode",
+      "@type": "xsd:string"
+    },
+    "amount": "oyster:amount",
+    "decimal": {
+      "@id": "oyster:decimal",
+      "@type": "xsd:string"
+    },
+    "currencyCode": {
+      "@id": "oyster:currencyCode",
+      "@type": "xsd:string"
+    },
+    "phoneNumber": "oyster:phoneNumber",
+    "number": {
+      "@id": "oyster:number",
+      "@type": "xsd:string"
+    },
+    "engagement": "oyster:engagement",
+    "engagementId": {
+      "@id": "oyster:engagementId",
+      "@type": "xsd:string"
+    },
+    "modifiedAt": {
+      "@id": "oyster:modifiedAt",
+      "@type": "xsd:dateTime"
+    },
+    "startDate": {
+      "@id": "oyster:startDate",
+      "@type": "xsd:date"
+    },
+    "engagementType": {
+      "@id": "oyster:engagementType"
+    },
+    "role": {
+      "@id": "oyster:role",
+      "@type": "xsd:string"
+    },
+    "personalDetails": {
+      "@id": "oyster:personalDetails"
+    },
+    "employment": {
+      "@id": "oyster:employment"
+    },
+    "contract": {
+      "@id": "oyster:contract"
+    },
+    "benefitEnrollments": {
+      "@id": "oyster:benefitEnrollments",
+      "@container": "@list"
+    },
+    "terminations": {
+      "@id": "oyster:terminations",
+      "@container": "@list"
+    },
+    "department": {
+      "@id": "oyster:department"
+    },
+    "meta": "oyster:meta",
+    "items": {
+      "@id": "oyster:items",
+      "@type": "xsd:integer"
+    },
+    "count": {
+      "@id": "oyster:count",
+      "@type": "xsd:integer"
+    },
+    "page": {
+      "@id": "oyster:page",
+      "@type": "xsd:integer"
+    },
+    "pages": {
+      "@id": "oyster:pages",
+      "@type": "xsd:integer"
+    },
+    "firstUrl": {
+      "@id": "oyster:firstUrl",
+      "@type": "xsd:string"
+    },
+    "lastUrl": {
+      "@id": "oyster:lastUrl",
+      "@type": "xsd:string"
+    },
+    "pageUrl": {
+      "@id": "oyster:pageUrl",
+      "@type": "xsd:string"
+    },
+    "nextUrl": {
+      "@id": "oyster:nextUrl",
+      "@type": "xsd:string"
+    },
+    "prevUrl": {
+      "@id": "oyster:prevUrl",
+      "@type": "xsd:string"
+    },
+    "deprecation": {
+      "@id": "oyster:deprecation"
+    },
+    "baseCompensation": "oyster:baseCompensation",
+    "label": {
+      "@id": "oyster:label"
+    },
+    "paymentFrequency": {
+      "@id": "oyster:paymentFrequency"
+    },
+    "statutory": {
+      "@id": "oyster:statutory",
+      "@type": "xsd:boolean"
+    },
+    "amountDecimal": {
+      "@id": "oyster:amountDecimal",
+      "@type": "xsd:string"
+    },
+    "selectedMonths": {
+      "@id": "oyster:selectedMonths",
+      "@container": "@list"
+    },
+    "employmentPersonalDetails": "oyster:employmentPersonalDetails",
+    "fullLegalName": {
+      "@id": "oyster:fullLegalName",
+      "@type": "xsd:string"
+    },
+    "email": {
+      "@id": "oyster:email",
+      "@type": "xsd:string"
+    },
+    "nationality": {
+      "@id": "oyster:nationality",
+      "@type": "xsd:string"
+    },
+    "workPermit": {
+      "@id": "oyster:workPermit"
+    },
+    "errors": "oyster:errors",
+    "document": "oyster:document",
+    "title": {
+      "@id": "oyster:title",
+      "@type": "xsd:string"
+    },
+    "description": {
+      "@id": "oyster:description",
+      "@type": "xsd:string"
+    },
+    "url": {
+      "@id": "oyster:url",
+      "@type": "xsd:string"
+    },
+    "contentType": {
+      "@id": "oyster:contentType",
+      "@type": "xsd:string"
+    },
+    "type": {
+      "@id": "oyster:type",
+      "@type": "xsd:string"
+    },
+    "contractChange": "oyster:contractChange",
+    "effectiveFrom": {
+      "@id": "oyster:effectiveFrom",
+      "@type": "xsd:date"
+    },
+    "applicableFrom": {
+      "@id": "oyster:applicableFrom",
+      "@type": "xsd:date"
+    },
+    "expirationDate": {
+      "@id": "oyster:expirationDate",
+      "@type": "xsd:date"
+    },
+    "createdAt": {
+      "@id": "oyster:createdAt",
+      "@type": "xsd:dateTime"
+    },
+    "updatedAt": {
+      "@id": "oyster:updatedAt",
+      "@type": "xsd:dateTime"
+    },
+    "requestedBy": {
+      "@id": "oyster:requestedBy"
+    },
+    "changesRequested": {
+      "@id": "oyster:changesRequested",
+      "@container": "@list"
+    },
+    "changes": {
+      "@id": "oyster:changes"
+    },
+    "oneOffBonusPayment": {
+      "@id": "oyster:oneOffBonusPayment",
+      "@type": "@id"
+    },
+    "expense": "oyster:expense",
+    "expenseId": {
+      "@id": "oyster:expenseId",
+      "@type": "xsd:string"
+    },
+    "incurredOn": {
+      "@id": "oyster:incurredOn",
+      "@type": "xsd:date"
+    },
+    "submittedAt": {
+      "@id": "oyster:submittedAt",
+      "@type": "xsd:dateTime"
+    },
+    "reviewState": {
+      "@id": "oyster:reviewState",
+      "@type": "xsd:string"
+    },
+    "reviewedAt": {
+      "@id": "oyster:reviewedAt",
+      "@type": "xsd:dateTime"
+    },
+    "receiptAmount": {
+      "@id": "oyster:receiptAmount",
+      "@type": "@id"
+    },
+    "receiptUrl": {
+      "@id": "oyster:receiptUrl",
+      "@type": "@id"
+    },
+    "source": {
+      "@id": "oyster:source",
+      "@type": "xsd:string"
+    },
+    "asyncResponse": "oyster:asyncResponse",
+    "timeOffEntitlement": "oyster:timeOffEntitlement",
+    "annualEntitlement": {
+      "@id": "oyster:annualEntitlement",
+      "@type": "xsd:decimal"
+    },
+    "accrued": {
+      "@id": "oyster:accrued",
+      "@type": "xsd:decimal"
+    },
+    "carried": {
+      "@id": "oyster:carried",
+      "@type": "xsd:decimal"
+    },
+    "adjustedAdhoc": {
+      "@id": "oyster:adjustedAdhoc",
+      "@type": "xsd:decimal"
+    },
+    "taken": {
+      "@id": "oyster:taken",
+      "@type": "xsd:decimal"
+    },
+    "availableBalance": {
+      "@id": "oyster:availableBalance",
+      "@type": "xsd:decimal"
+    },
+    "upcoming": {
+      "@id": "oyster:upcoming",
+      "@type": "xsd:decimal"
+    },
+    "projectedBalance": {
+      "@id": "oyster:projectedBalance",
+      "@type": "xsd:decimal"
+    },
+    "units": {
+      "@id": "oyster:units",
+      "@type": "xsd:string"
+    },
+    "timeOffEngagementDetails": "oyster:timeOffEngagementDetails",
+    "timeOffRequest": "oyster:timeOffRequest",
+    "timeOffRequestId": {
+      "@id": "oyster:timeOffRequestId",
+      "@type": "xsd:string"
+    },
+    "endDate": {
+      "@id": "oyster:endDate",
+      "@type": "xsd:date"
+    },
+    "firstDayDuration": {
+      "@id": "oyster:firstDayDuration",
+      "@type": "xsd:string"
+    },
+    "lastDayDuration": {
+      "@id": "oyster:lastDayDuration",
+      "@type": "xsd:string"
+    },
+    "firstDayDurationInHours": {
+      "@id": "oyster:firstDayDurationInHours",
+      "@type": "xsd:decimal"
+    },
+    "lastDayDurationInHours": {
+      "@id": "oyster:lastDayDurationInHours",
+      "@type": "xsd:decimal"
+    },
+    "requesterComments": {
+      "@id": "oyster:requesterComments",
+      "@type": "xsd:string"
+    },
+    "rejectionReason": {
+      "@id": "oyster:rejectionReason",
+      "@type": "xsd:string"
+    },
+    "reason": {
+      "@id": "oyster:reason",
+      "@type": "xsd:string"
+    },
+    "periodInHours": {
+      "@id": "oyster:periodInHours",
+      "@type": "xsd:decimal"
+    },
+    "approvedAt": {
+      "@id": "oyster:approvedAt",
+      "@type": "xsd:dateTime"
+    },
+    "rejectedAt": {
+      "@id": "oyster:rejectedAt",
+      "@type": "xsd:dateTime"
+    },
+    "attachment": {
+      "@id": "oyster:attachment",
+      "@type": "@id"
+    },
+    "attachmentDetails": "oyster:attachmentDetails",
+    "filename": {
+      "@id": "oyster:filename",
+      "@type": "xsd:string"
+    },
+    "timeTrackingWorkSummaryItem": "oyster:timeTrackingWorkSummaryItem",
+    "duration": {
+      "@id": "oyster:duration",
+      "@type": "@id"
+    },
+    "timeTrackingTimeOff": "oyster:timeTrackingTimeOff",
+    "date": {
+      "@id": "oyster:date",
+      "@type": "xsd:date"
+    },
+    "timeTrackingTimeSheetEntry": "oyster:timeTrackingTimeSheetEntry",
+    "timeSheetId": {
+      "@id": "oyster:timeSheetId",
+      "@type": "xsd:string"
+    },
+    "notes": {
+      "@id": "oyster:notes",
+      "@type": "xsd:string"
+    },
+    "present": {
+      "@id": "oyster:present"
+    },
+    "breakInterval": {
+      "@id": "oyster:breakInterval"
+    },
+    "workDuration": {
+      "@id": "oyster:workDuration",
+      "@type": "@id"
+    },
+    "timeTrackingTimeSheet": "oyster:timeTrackingTimeSheet",
+    "timePeriod": {
+      "@id": "oyster:timePeriod"
+    },
+    "cadence": {
+      "@id": "oyster:cadence",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "oyster:status",
+      "@type": "xsd:string"
+    },
+    "statusReason": {
+      "@id": "oyster:statusReason",
+      "@type": "xsd:string"
+    },
+    "locked": {
+      "@id": "oyster:locked",
+      "@type": "xsd:boolean"
+    },
+    "isAmendment": {
+      "@id": "oyster:isAmendment",
+      "@type": "xsd:boolean"
+    },
+    "hasAmendmentTimeSheet": {
+      "@id": "oyster:hasAmendmentTimeSheet",
+      "@type": "xsd:boolean"
+    },
+    "amendmentTimeSheetId": {
+      "@id": "oyster:amendmentTimeSheetId",
+      "@type": "xsd:string"
+    },
+    "originalTimeSheetId": {
+      "@id": "oyster:originalTimeSheetId",
+      "@type": "xsd:string"
+    },
+    "createdBy": {
+      "@id": "oyster:createdBy",
+      "@type": "xsd:string"
+    },
+    "submittedBy": {
+      "@id": "oyster:submittedBy",
+      "@type": "xsd:string"
+    },
+    "confirmedBy": {
+      "@id": "oyster:confirmedBy",
+      "@type": "xsd:string"
+    },
+    "flexibleWorkArrangement": {
+      "@id": "oyster:flexibleWorkArrangement",
+      "@type": "xsd:boolean"
+    },
+    "totals": {
+      "@id": "oyster:totals"
+    },
+    "workSummary": {
+      "@id": "oyster:workSummary",
+      "@container": "@list"
+    },
+    "timeOffs": {
+      "@id": "oyster:timeOffs",
+      "@container": "@list"
+    },
+    "entries": {
+      "@id": "oyster:entries",
+      "@container": "@list"
+    },
+    "bankAccount": "oyster:bankAccount",
+    "bankAccountId": {
+      "@id": "oyster:bankAccountId",
+      "@type": "xsd:string"
+    },
+    "payoutUsage": {
+      "@id": "oyster:payoutUsage",
+      "@type": "xsd:string"
+    },
+    "isPrimary": {
+      "@id": "oyster:isPrimary",
+      "@type": "xsd:boolean"
+    },
+    "details": {
+      "@id": "oyster:details"
+    },
+    "creditNote": "oyster:creditNote",
+    "referenceCode": {
+      "@id": "oyster:referenceCode",
+      "@type": "xsd:string"
+    },
+    "payrollMonth": {
+      "@id": "oyster:payrollMonth",
+      "@type": "xsd:string"
+    },
+    "payrollYear": {
+      "@id": "oyster:payrollYear",
+      "@type": "xsd:string"
+    },
+    "issueDate": {
+      "@id": "oyster:issueDate",
+      "@type": "xsd:date"
+    },
+    "totalAmount": {
+      "@id": "oyster:totalAmount",
+      "@type": "@id"
+    },
+    "amountRemaining": {
+      "@id": "oyster:amountRemaining",
+      "@type": "@id"
+    },
+    "customer": {
+      "@id": "oyster:customer"
+    },
+    "files": {
+      "@id": "oyster:files"
+    },
+    "appliedToInvoices": {
+      "@id": "oyster:appliedToInvoices",
+      "@container": "@list"
+    },
+    "sourceOption": "oyster:sourceOption",
+    "value": {
+      "@id": "oyster:value",
+      "@type": "xsd:string"
+    },
+    "payoutCollectionItem": "oyster:payoutCollectionItem",
+    "chargeCollectionItem": "oyster:chargeCollectionItem",
+    "amountDue": {
+      "@id": "oyster:amountDue",
+      "@type": "@id"
+    },
+    "invoiceBase": "oyster:invoiceBase",
+    "charge": {
+      "@id": "oyster:charge",
+      "@type": "@id"
+    },
+    "payout": {
+      "@id": "oyster:payout",
+      "@type": "@id"
+    },
+    "dueDate": {
+      "@id": "oyster:dueDate",
+      "@type": "xsd:date"
+    },
+    "taxPercentage": {
+      "@id": "oyster:taxPercentage",
+      "@type": "xsd:string"
+    },
+    "taxAmount": {
+      "@id": "oyster:taxAmount",
+      "@type": "@id"
+    },
+    "lineItems": {
+      "@id": "oyster:lineItems",
+      "@container": "@list"
+    },
+    "appliedCredit": {
+      "@id": "oyster:appliedCredit",
+      "@container": "@list"
+    },
+    "settlementInvoice": "oyster:settlementInvoice",
+    "actualTotal": {
+      "@id": "oyster:actualTotal",
+      "@type": "@id"
+    },
+    "prefundingTotal": {
+      "@id": "oyster:prefundingTotal",
+      "@type": "@id"
+    },
+    "settlementTotal": {
+      "@id": "oyster:settlementTotal",
+      "@type": "@id"
+    },
+    "globalPayrollInvoice": "oyster:globalPayrollInvoice",
+    "payrollEntity": {
+      "@id": "oyster:payrollEntity"
+    },
+    "contractorInvoice": "oyster:contractorInvoice",
+    "contractors": {
+      "@id": "oyster:contractors",
+      "@container": "@list"
+    },
+    "invoiceAmount": "oyster:invoiceAmount",
+    "endClient": "oyster:endClient",
+    "registrationNumber": {
+      "@id": "oyster:registrationNumber",
+      "@type": "xsd:string"
+    },
+    "countryOfIncorporation": {
+      "@id": "oyster:countryOfIncorporation",
+      "@type": "xsd:string"
+    },
+    "websiteUrl": {
+      "@id": "oyster:websiteUrl",
+      "@type": "xsd:string"
+    },
+    "company": "oyster:company",
+    "companyId": {
+      "@id": "oyster:companyId",
+      "@type": "xsd:string"
+    },
+    "addresses": {
+      "@id": "oyster:addresses"
+    },
+    "hiringTask": "oyster:hiringTask",
+    "visibleTo": {
+      "@id": "oyster:visibleTo",
+      "@container": "@list"
+    },
+    "parties": {
+      "@id": "oyster:parties",
+      "@container": "@list"
+    },
+    "fieldErrors": "oyster:fieldErrors",
+    "autoKycVerificationData": "oyster:autoKycVerificationData",
+    "sessionUrl": {
+      "@id": "oyster:sessionUrl",
+      "@type": "@id"
+    },
+    "partnerKycVerificationData": "oyster:partnerKycVerificationData",
+    "referenceId": {
+      "@id": "oyster:referenceId",
+      "@type": "xsd:string"
+    },
+    "user": {
+      "@id": "oyster:user"
+    },
+    "screening": {
+      "@id": "oyster:screening"
+    },
+    "identityVerification": "oyster:identityVerification",
+    "verificationData": {
+      "@id": "oyster:verificationData"
+    },
+    "employmentCostEstimate": "oyster:employmentCostEstimate",
+    "grossSalaryAmount": {
+      "@id": "oyster:grossSalaryAmount",
+      "@type": "@id"
+    },
+    "mandatoryCosts": {
+      "@id": "oyster:mandatoryCosts"
+    },
+    "additionalCosts": {
+      "@id": "oyster:additionalCosts"
+    },
+    "oysterFee": {
+      "@id": "oyster:oysterFee"
+    },
+    "vat": {
+      "@id": "oyster:vat"
+    },
+    "totalCostsAmount": {
+      "@id": "oyster:totalCostsAmount",
+      "@type": "@id"
+    },
+    "taxesAndSocialSecurity": {
+      "@id": "oyster:taxesAndSocialSecurity"
+    },
+    "netSalaryAmount": {
+      "@id": "oyster:netSalaryAmount",
+      "@type": "@id"
+    },
+    "onboardingForm": "oyster:onboardingForm",
+    "sections": {
+      "@id": "oyster:sections",
+      "@container": "@list"
+    },
+    "baseField": "oyster:baseField",
+    "required": {
+      "@id": "oyster:required",
+      "@type": "xsd:boolean"
+    },
+    "enabled": {
+      "@id": "oyster:enabled"
+    },
+    "assistiveText": {
+      "@id": "oyster:assistiveText",
+      "@type": "xsd:string"
+    },
+    "assistiveTextPlain": {
+      "@id": "oyster:assistiveTextPlain",
+      "@type": "xsd:string"
+    },
+    "templateDocuments": {
+      "@id": "oyster:templateDocuments",
+      "@container": "@list"
+    },
+    "validationMessage": {
+      "@id": "oyster:validationMessage",
+      "@type": "xsd:string"
+    },
+    "agreement": "oyster:agreement",
+    "preview": {
+      "@id": "oyster:preview"
+    },
+    "roleType": "oyster:roleType",
+    "roleTypeId": {
+      "@id": "oyster:roleTypeId",
+      "@type": "xsd:string"
+    },
+    "operation": "oyster:operation",
+    "request": {
+      "@id": "oyster:request"
+    },
+    "data": {
+      "@id": "oyster:data"
+    },
+    "offboarding": "oyster:offboarding",
+    "cancelledAt": {
+      "@id": "oyster:cancelledAt",
+      "@type": "xsd:string"
+    },
+    "initiatedAt": {
+      "@id": "oyster:initiatedAt",
+      "@type": "xsd:string"
+    },
+    "cancelReason": {
+      "@id": "oyster:cancelReason",
+      "@type": "xsd:string"
+    },
+    "requestorId": {
+      "@id": "oyster:requestorId",
+      "@type": "xsd:string"
+    },
+    "lastDayOn": {
+      "@id": "oyster:lastDayOn",
+      "@type": "xsd:string"
+    },
+    "paymentsGroup": "oyster:paymentsGroup",
+    "itemsCount": {
+      "@id": "oyster:itemsCount",
+      "@type": "xsd:integer"
+    },
+    "wireSentAt": {
+      "@id": "oyster:wireSentAt",
+      "@type": "xsd:dateTime"
+    },
+    "paidAt": {
+      "@id": "oyster:paidAt",
+      "@type": "xsd:dateTime"
+    },
+    "chargeDetails": "oyster:chargeDetails",
+    "completedAt": {
+      "@id": "oyster:completedAt",
+      "@type": "xsd:dateTime"
+    },
+    "collectionType": {
+      "@id": "oyster:collectionType",
+      "@type": "xsd:string"
+    },
+    "subject": {
+      "@id": "oyster:subject"
+    },
+    "paymentsAmount": "oyster:paymentsAmount",
+    "payoutDetails": "oyster:payoutDetails",
+    "statusChanges": {
+      "@id": "oyster:statusChanges",
+      "@container": "@list"
+    },
+    "payroll": "oyster:payroll",
+    "payrollId": {
+      "@id": "oyster:payrollId",
+      "@type": "xsd:string"
+    },
+    "cutoffTimeForPayroll": {
+      "@id": "oyster:cutoffTimeForPayroll",
+      "@type": "xsd:dateTime"
+    },
+    "payrollRecordsCount": {
+      "@id": "oyster:payrollRecordsCount",
+      "@type": "xsd:integer"
+    },
+    "payrollRecord": "oyster:payrollRecord",
+    "monthlyPaymentsTotalAmount": {
+      "@id": "oyster:monthlyPaymentsTotalAmount",
+      "@type": "@id"
+    },
+    "allowancesTotalAmount": {
+      "@id": "oyster:allowancesTotalAmount",
+      "@type": "@id"
+    },
+    "benefitsTotalAmount": {
+      "@id": "oyster:benefitsTotalAmount",
+      "@type": "@id"
+    },
+    "bonusesTotalAmount": {
+      "@id": "oyster:bonusesTotalAmount",
+      "@type": "@id"
+    },
+    "addOnsTotalAmount": {
+      "@id": "oyster:addOnsTotalAmount",
+      "@type": "@id"
+    },
+    "taxesTotalAmount": {
+      "@id": "oyster:taxesTotalAmount",
+      "@type": "@id"
+    },
+    "trueUpsTotalAmount": {
+      "@id": "oyster:trueUpsTotalAmount",
+      "@type": "@id"
+    },
+    "oysterFeesTotalAmount": {
+      "@id": "oyster:oysterFeesTotalAmount",
+      "@type": "@id"
+    },
+    "payrollChange": "oyster:payrollChange",
+    "month": {
+      "@id": "oyster:month",
+      "@type": "xsd:string"
+    },
+    "year": {
+      "@id": "oyster:year",
+      "@type": "xsd:string"
+    },
+    "webhook": "oyster:webhook",
+    "sharedSecret": {
+      "@id": "oyster:sharedSecret",
+      "@type": "xsd:string"
+    },
+    "webhookDispatch": "oyster:webhookDispatch",
+    "endpointId": {
+      "@id": "oyster:endpointId",
+      "@type": "xsd:string"
+    },
+    "eventName": {
+      "@id": "oyster:eventName",
+      "@type": "xsd:string"
+    },
+    "eventTimestamp": {
+      "@id": "oyster:eventTimestamp",
+      "@type": "xsd:dateTime"
+    },
+    "lastResponseCode": {
+      "@id": "oyster:lastResponseCode",
+      "@type": "xsd:string"
+    },
+    "sentAt": {
+      "@id": "oyster:sentAt",
+      "@type": "xsd:dateTime"
+    },
+    "firstSentAt": {
+      "@id": "oyster:firstSentAt",
+      "@type": "xsd:dateTime"
+    },
+    "retries": {
+      "@id": "oyster:retries",
+      "@type": "xsd:integer"
+    }
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Oyster HR API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Oyster HR's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-14) from openapi/oyster-hr-authentication-openapi.yml, openapi/oyster-hr-endpoints-openapi.yml.",
+  "dcterms:created": "2026-10-14",
+  "dcterms:source": [
+    "openapi/oyster-hr-authentication-openapi.yml",
+    "openapi/oyster-hr-endpoints-openapi.yml"
+  ]
+}

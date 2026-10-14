@@ -1,0 +1,124 @@
+[
+ {
+  "page": "https://docs.oysterhr.com/reference/post_oauth2-token-1.md",
+  "definition": {
+   "openapi": "3.0.0",
+   "info": {
+    "version": "0.1",
+    "title": "Authentication",
+    "description": "Oyster uses OAuth2 to enable customers to grant access to their data to third party applications. Customers also need to use this API to authenticate themselves when making API requests.",
+    "license": {
+     "name": "MIT"
+    }
+   },
+   "servers": [
+    {
+     "url": "https://api.oysterhr.com",
+     "description": "OAuth Server"
+    }
+   ],
+   "paths": {
+    "/oauth2/token": {
+     "post": {
+      "summary": "Create or refresh an access token",
+      "description": "Creates or refreshes an OAuth access token.",
+      "tags": [
+       "Authentication"
+      ],
+      "requestBody": {
+       "required": true,
+       "content": {
+        "application/x-www-form-urlencoded": {
+         "schema": {
+          "type": "object",
+          "properties": {
+           "client_id": {
+            "type": "string",
+            "description": "The client_id of your Developer App. This can be found by visting https://app.oysterhr.com/developer",
+            "example": "1234ABCD"
+           },
+           "client_secret": {
+            "type": "string",
+            "description": "The secret of your Developer App.",
+            "example": "1234ABCD"
+           },
+           "grant_type": {
+            "type": "string",
+            "description": "First you need to request an `authorization_code`. Afterwards you can request a `refresh_token`.",
+            "example": "authorization_code"
+           },
+           "code": {
+            "type": "string",
+            "description": "The code is required when requesting an `authorization_code`.",
+            "example": "1234ABCD"
+           },
+           "redirect_uri": {
+            "type": "string",
+            "description": "The redirect_uri is required when requesting an `authorization_code`.",
+            "example": "https://example.com/inbound"
+           },
+           "refresh_token": {
+            "type": "string",
+            "description": "A `refresh_token` is required when requesting a `refresh_token`. A `refresh_token` will be provided when requesting an `authorization_code`",
+            "example": "https://example.com/inbound"
+           }
+          }
+         }
+        }
+       }
+      },
+      "responses": {
+       "201": {
+        "description": "Create an access token to make an API request",
+        "content": {
+         "application/json": {
+          "schema": {
+           "$ref": "#/components/schemas/Token"
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "components": {
+    "schemas": {
+     "Token": {
+      "type": "object",
+      "properties": {
+       "access_token": {
+        "type": "string",
+        "example": "1234ABCD"
+       },
+       "token_type": {
+        "type": "string",
+        "example": "Bearer"
+       },
+       "expires_in": {
+        "type": "number",
+        "example": 7200
+       },
+       "refresh_token": {
+        "type": "string",
+        "example": "1234ABCD"
+       },
+       "scope": {
+        "type": "string",
+        "example": "read"
+       },
+       "created_at": {
+        "type": "number",
+        "example": 167474949830
+       }
+      }
+     }
+    }
+   },
+   "x-readme": {
+    "explorer-enabled": true,
+    "proxy-enabled": true
+   }
+  }
+ }
+]

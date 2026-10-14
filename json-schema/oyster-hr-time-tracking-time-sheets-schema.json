@@ -1,0 +1,197 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/oyster-hr/main/json-schema/oyster-hr-time-tracking-time-sheets-schema.json",
+  "title": "timeTrackingTimeSheets",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/timeTrackingTimeSheets",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "required": [
+      "id",
+      "engagement",
+      "timePeriod",
+      "cadence",
+      "status",
+      "locked",
+      "isAmendment",
+      "hasAmendmentTimeSheet",
+      "createdBy",
+      "flexibleWorkArrangement",
+      "totals",
+      "workSummary"
+    ],
+    "properties": {
+      "id": {
+        "type": "string"
+      },
+      "engagement": {
+        "type": "object",
+        "properties": {
+          "engagementId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          },
+          "countryCode": {
+            "type": "string"
+          }
+        }
+      },
+      "timePeriod": {
+        "type": "object",
+        "required": [
+          "startDate",
+          "endDate"
+        ],
+        "properties": {
+          "startDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "year": {
+            "type": "string"
+          },
+          "month": {
+            "type": "string"
+          }
+        }
+      },
+      "cadence": {
+        "type": "string",
+        "enum": [
+          "MONTHLY",
+          "BI_WEEKLY",
+          "SEMI_MONTHLY"
+        ]
+      },
+      "status": {
+        "type": "string",
+        "enum": [
+          "PENDING_SUBMISSION",
+          "SUBMITTED",
+          "PENDING_APPROVAL",
+          "APPROVED"
+        ]
+      },
+      "statusReason": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "locked": {
+        "type": "boolean"
+      },
+      "isAmendment": {
+        "type": "boolean"
+      },
+      "hasAmendmentTimeSheet": {
+        "type": "boolean"
+      },
+      "amendmentTimeSheetId": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "originalTimeSheetId": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "createdBy": {
+        "type": "string"
+      },
+      "submittedBy": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "confirmedBy": {
+        "type": [
+          "string",
+          "null"
+        ]
+      },
+      "flexibleWorkArrangement": {
+        "type": "boolean"
+      },
+      "totals": {
+        "type": "object",
+        "properties": {
+          "worked": {
+            "$ref": "#/$defs/duration"
+          },
+          "workedOnHolidays": {
+            "$ref": "#/$defs/duration"
+          },
+          "workedOnWeekends": {
+            "$ref": "#/$defs/duration"
+          },
+          "workedOnWeekdays": {
+            "$ref": "#/$defs/duration"
+          },
+          "notWorked": {
+            "$ref": "#/$defs/duration"
+          },
+          "timeOff": {
+            "$ref": "#/$defs/duration"
+          }
+        }
+      },
+      "workSummary": {
+        "type": "array",
+        "items": {
+          "$ref": "#/$defs/timeTrackingWorkSummaryItem"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "duration": {
+      "type": "object",
+      "properties": {
+        "hours": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "minutes": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "hours",
+        "minutes"
+      ]
+    },
+    "timeTrackingWorkSummaryItem": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "duration": {
+          "$ref": "#/$defs/duration"
+        }
+      },
+      "required": [
+        "type",
+        "duration"
+      ]
+    }
+  }
+}

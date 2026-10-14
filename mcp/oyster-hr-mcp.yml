@@ -1,0 +1,214 @@
+generated: '2026-10-14'
+method: derived
+generator: derive-mcp-candidate.py
+source:
+- openapi/oyster-hr-authentication-openapi.yml
+- openapi/oyster-hr-endpoints-openapi.yml
+status: candidate
+deployment:
+  mode: none
+  auth: unknown
+  verified: derived
+note: No MCP server was found. No probe result in the dossier. Candidate tools below are derived from the 121 operation(s) in the provider's own
+  OpenAPI (40 listed); they describe what a server WOULD expose, not one that exists.
+tools:
+- name: create_oauth2_token
+  operationId: POST /oauth2/token
+  method: POST
+  path: /oauth2/token
+  description: Create or refresh an access token
+- name: get_v1_bank_accounts
+  operationId: GET /v1/bank_accounts
+  method: GET
+  path: /v1/bank_accounts
+  description: Retrieve bank accounts
+- name: create_v1_bank_accounts
+  operationId: POST /v1/bank_accounts
+  method: POST
+  path: /v1/bank_accounts
+  description: Create bank account
+- name: get_bank_accounts_rulesets
+  operationId: GET /v1/bank_accounts/rulesets
+  method: GET
+  path: /v1/bank_accounts/rulesets
+  description: Retrieve bank account rulesets
+- name: delete_v1_bank_accounts
+  operationId: DELETE /v1/bank_accounts/{id}
+  method: DELETE
+  path: /v1/bank_accounts/{id}
+  description: Delete bank account
+- name: update_v1_bank_accounts
+  operationId: PATCH /v1/bank_accounts/{id}
+  method: PATCH
+  path: /v1/bank_accounts/{id}
+  description: Update bank account
+- name: create_engagements_enrollments
+  operationId: POST /v1/benefits/engagements/{engagement_id}/enrollments
+  method: POST
+  path: /v1/benefits/engagements/{engagement_id}/enrollments
+  description: Request benefits
+- name: get_engagements_offerings
+  operationId: GET /v1/benefits/engagements/{engagement_id}/offerings
+  method: GET
+  path: /v1/benefits/engagements/{engagement_id}/offerings
+  description: Retrieve an employment's available benefits offerings
+- name: get_benefits_enrollments
+  operationId: GET /v1/benefits/enrollments/{id}
+  method: GET
+  path: /v1/benefits/enrollments/{id}
+  description: Retrieve an enrollment
+- name: get_benefits_ruleset
+  operationId: GET /v1/benefits/ruleset
+  method: GET
+  path: /v1/benefits/ruleset
+  description: Retrieve benefits ruleset
+- name: get_v1_company
+  operationId: GET /v1/company
+  method: GET
+  path: /v1/company
+  description: Retrieve company details
+- name: delete_consent_grants
+  operationId: DELETE /v1/consent/grants
+  method: DELETE
+  path: /v1/consent/grants
+  description: Revoke consent grant
+- name: create_consent_grants
+  operationId: POST /v1/consent/grants
+  method: POST
+  path: /v1/consent/grants
+  description: Create consent grant
+- name: get_v1_contract_changes
+  operationId: GET /v1/contract_changes
+  method: GET
+  path: /v1/contract_changes
+  description: Retrieve all contract changes
+- name: create_v1_contract_changes
+  operationId: POST /v1/contract_changes
+  method: POST
+  path: /v1/contract_changes
+  description: Create request
+- name: get_contract_changes_rulesets
+  operationId: GET /v1/contract_changes/rulesets
+  method: GET
+  path: /v1/contract_changes/rulesets
+  description: Retrieve rulesets for creating a contract change
+- name: create_contract_changes_cancel
+  operationId: POST /v1/contract_changes/{id}/cancel
+  method: POST
+  path: /v1/contract_changes/{id}/cancel
+  description: Cancel request
+- name: get_v1_credit_notes
+  operationId: GET /v1/credit_notes
+  method: GET
+  path: /v1/credit_notes
+  description: Retrieve all credit notes
+- name: get_sources_statuses
+  operationId: GET /v1/credit_notes/sources/statuses
+  method: GET
+  path: /v1/credit_notes/sources/statuses
+  description: Retrieve credit notes rulesets for source statuses
+- name: get_sources_types
+  operationId: GET /v1/credit_notes/sources/types
+  method: GET
+  path: /v1/credit_notes/sources/types
+  description: Retrieve credit notes rulesets for source types
+- name: get_v1_departments
+  operationId: GET /v1/departments
+  method: GET
+  path: /v1/departments
+  description: Retrieve all departments
+- name: update_employments_personal_details
+  operationId: PATCH /v1/employments/{id}/personal_details
+  method: PATCH
+  path: /v1/employments/{id}/personal_details
+  description: Update personal details
+- name: get_v1_engagements
+  operationId: GET /v1/engagements
+  method: GET
+  path: /v1/engagements
+  description: Retrieve all engagements
+- name: get_engagements_allowances
+  operationId: GET /v1/engagements/{id}/allowances
+  method: GET
+  path: /v1/engagements/{id}/allowances
+  description: Retrieve allowances for engagement
+- name: get_engagements_bonuses
+  operationId: GET /v1/engagements/{id}/bonuses
+  method: GET
+  path: /v1/engagements/{id}/bonuses
+  description: Retrieve bonuses for engagement
+- name: get_engagements_documents
+  operationId: GET /v1/engagements/{id}/documents
+  method: GET
+  path: /v1/engagements/{id}/documents
+  description: Retrieve documents for engagement
+- name: get_engagements_identity_verification
+  operationId: GET /v1/engagements/{id}/identity_verification
+  method: GET
+  path: /v1/engagements/{id}/identity_verification
+  description: Retrieve the latest identity verification for an engagement
+- name: create_identity_verification_approved
+  operationId: POST /v1/engagements/{id}/identity_verification/approved
+  method: POST
+  path: /v1/engagements/{id}/identity_verification/approved
+  description: Submit an approved partner identity verification
+- name: create_identity_verification_declined
+  operationId: POST /v1/engagements/{id}/identity_verification/declined
+  method: POST
+  path: /v1/engagements/{id}/identity_verification/declined
+  description: Submit a declined partner identity verification
+- name: create_identity_verification_sessions
+  operationId: POST /v1/engagements/{id}/identity_verification/sessions
+  method: POST
+  path: /v1/engagements/{id}/identity_verification/sessions
+  description: Create or resume a verification session
+- name: get_engagements_payslips
+  operationId: GET /v1/engagements/{id}/payslips
+  method: GET
+  path: /v1/engagements/{id}/payslips
+  description: Retrieve payslips for engagement
+- name: get_v1_expenses
+  operationId: GET /v1/expenses
+  method: GET
+  path: /v1/expenses
+  description: Retrieve all expenses
+- name: create_v1_expenses
+  operationId: POST /v1/expenses
+  method: POST
+  path: /v1/expenses
+  description: Create expense
+- name: get_expenses_ruleset
+  operationId: GET /v1/expenses/ruleset
+  method: GET
+  path: /v1/expenses/ruleset
+  description: Retrieve default expenses ruleset
+- name: get_expenses_rulesets
+  operationId: GET /v1/expenses/rulesets/{id}
+  method: GET
+  path: /v1/expenses/rulesets/{id}
+  description: Retrieve expenses rulesets
+- name: get_sources_categories
+  operationId: GET /v1/expenses/rulesets/{id}/sources/categories
+  method: GET
+  path: /v1/expenses/rulesets/{id}/sources/categories
+  description: Retrieve expense categories
+- name: delete_v1_expenses
+  operationId: DELETE /v1/expenses/{id}
+  method: DELETE
+  path: /v1/expenses/{id}
+  description: Deletes an individual expense
+- name: create_expenses_approve
+  operationId: POST /v1/expenses/{id}/approve
+  method: POST
+  path: /v1/expenses/{id}/approve
+  description: Approve expense
+- name: create_expenses_decline
+  operationId: POST /v1/expenses/{id}/decline
+  method: POST
+  path: /v1/expenses/{id}/decline
+  description: Decline expense
+- name: create_hiring_employments
+  operationId: POST /v1/hiring/employments
+  method: POST
+  path: /v1/hiring/employments
+  description: Create employment

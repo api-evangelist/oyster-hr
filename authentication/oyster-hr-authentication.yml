@@ -1,0 +1,12 @@
+generated: '2026-10-14'
+method: derived
+source: openapi/oyster-hr-endpoints-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearer_auth
+  type: http
+  scheme: bearer
+  sources:
+  - openapi/oyster-hr-endpoints-openapi.yml

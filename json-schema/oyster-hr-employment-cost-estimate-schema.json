@@ -1,0 +1,269 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/oyster-hr/main/json-schema/oyster-hr-employment-cost-estimate-schema.json",
+  "title": "employmentCostEstimate",
+  "x-generated": "2026-10-14",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/oyster-hr-endpoints-openapi.yml#/components/schemas/employmentCostEstimate",
+  "type": "object",
+  "properties": {
+    "engagement": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "countryCode": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "countryCode"
+      ]
+    },
+    "grossSalaryAmount": {
+      "type": "object",
+      "$ref": "#/$defs/amount"
+    },
+    "mandatoryCosts": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "totalAmount": {
+          "type": "object",
+          "$ref": "#/$defs/amount"
+        },
+        "constituents": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "label": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "Machine-readable key for a variable compensation (for example SIGN_ON_BONUS). Null for cost lines that are not variable compensations, such as benefits and taxes. Not unique: the same label can exist under both BONUS and ALLOWANCE, and several compensations can share a label, so combine it with `category`. Match on this rather than on `name`, which is display copy and may change. Statutory variable compensations are listed here and not in `additionalCosts`."
+              },
+              "category": {
+                "type": "string",
+                "enum": [
+                  "SOCIAL_SECURITY",
+                  "ACCRUAL",
+                  "ALLOWANCE",
+                  "EMPLOYER_BENEFIT",
+                  "BONUS",
+                  "BENEFIT"
+                ]
+              },
+              "amount": {
+                "type": "object",
+                "$ref": "#/$defs/amount"
+              }
+            },
+            "required": [
+              "name",
+              "label",
+              "category",
+              "amount"
+            ]
+          }
+        }
+      },
+      "required": [
+        "totalAmount",
+        "constituents"
+      ]
+    },
+    "additionalCosts": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "totalAmount": {
+          "type": "object",
+          "$ref": "#/$defs/amount"
+        },
+        "constituents": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "label": {
+                "type": [
+                  "string",
+                  "null"
+                ],
+                "description": "Machine-readable key for a variable compensation (for example SIGN_ON_BONUS). Null for cost lines that are not variable compensations, such as benefits and taxes. Not unique: the same label can exist under both BONUS and ALLOWANCE, and several compensations can share a label, so combine it with `category`. Match on this rather than on `name`, which is display copy and may change."
+              },
+              "category": {
+                "type": "string",
+                "enum": [
+                  "BONUS",
+                  "ALLOWANCE",
+                  "BENEFIT"
+                ]
+              },
+              "amount": {
+                "type": "object",
+                "$ref": "#/$defs/amount"
+              }
+            },
+            "required": [
+              "name",
+              "label",
+              "category",
+              "amount"
+            ]
+          }
+        }
+      },
+      "required": [
+        "totalAmount",
+        "constituents"
+      ]
+    },
+    "oysterFee": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "amountInEmploymentCurrency": {
+          "type": "object",
+          "$ref": "#/$defs/amount"
+        },
+        "amountInCompanyCurrency": {
+          "type": "object",
+          "$ref": "#/$defs/amount"
+        }
+      },
+      "required": [
+        "amountInEmploymentCurrency",
+        "amountInCompanyCurrency"
+      ]
+    },
+    "vat": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "percentage": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "object",
+          "$ref": "#/$defs/amount"
+        }
+      },
+      "required": [
+        "percentage",
+        "amount"
+      ]
+    },
+    "totalCostsAmount": {
+      "type": "object",
+      "$ref": "#/$defs/amount"
+    },
+    "taxesAndSocialSecurity": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "properties": {
+        "totalAmount": {
+          "type": "object",
+          "$ref": "#/$defs/amount"
+        },
+        "constituents": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "category": {
+                "type": "string",
+                "enum": [
+                  "SOCIAL_SECURITY",
+                  "INCOME_TAX",
+                  "EMPLOYEE_BENEFIT",
+                  "TAX_CREDIT",
+                  "SOLIDARITY_TAX"
+                ]
+              },
+              "amount": {
+                "type": "object",
+                "$ref": "#/$defs/amount"
+              }
+            },
+            "required": [
+              "name",
+              "category",
+              "amount"
+            ]
+          }
+        }
+      },
+      "required": [
+        "totalAmount",
+        "constituents"
+      ]
+    },
+    "netSalaryAmount": {
+      "type": "object",
+      "$ref": "#/$defs/amount"
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "required": [
+    "engagement",
+    "grossSalaryAmount",
+    "mandatoryCosts",
+    "additionalCosts",
+    "oysterFee",
+    "vat",
+    "totalCostsAmount",
+    "taxesAndSocialSecurity",
+    "netSalaryAmount",
+    "notes"
+  ],
+  "$defs": {
+    "amount": {
+      "type": "object",
+      "properties": {
+        "decimal": {
+          "type": "string",
+          "pattern": "^\\d+([.]\\d+)?$"
+        },
+        "currencyCode": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 3
+        }
+      },
+      "required": [
+        "decimal",
+        "currencyCode"
+      ]
+    }
+  }
+}
