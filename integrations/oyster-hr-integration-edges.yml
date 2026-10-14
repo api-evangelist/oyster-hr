@@ -1,16 +1,34 @@
 generated: '2026-10-14'
-method: none
+method: searched
 source:
 - https://zapier.com/apps/oyster-hr/integrations
 - https://n8n.io/integrations/oyster-hr/
 - https://composio.dev/toolkits/oyster-hr
 - https://monid.ai/tools/oyster-hr
 checked:
+- bamboohr/integrations/bamboohr-integration-edges.yml
 - https://composio.dev/toolkits/oyster-hr
 - https://monid.ai/tools/oyster-hr
 - https://n8n.io/integrations/oyster-hr/
 - https://zapier.com/apps/oyster-hr/integrations
 summary: null
 marketplace_apps: []
-edges: []
+edges:
+- partner_name: BambooHR (own)
+  partner: bamboohr
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.bamboohr.com/integrations/listings/oyster
+  mirror_of: bamboohr/integrations/bamboohr-integration-edges.yml
+  apps:
+  - Oyster
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+  category: Global Payroll, Payroll, PEO
 templates: []
