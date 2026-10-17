@@ -1,0 +1,976 @@
+openapi: 3.2.0
+info:
+  title: Endpoints Expenses API
+  version: v1
+  description: 'Expenses API allows you to remotely manage expenses of your team.
+
+    Approve or decline a specific expense, get info about a specific expense or receive real-time information about all expenses.'
+servers:
+- url: https://api.oysterhr.com
+  description: Production server
+- url: https://api-sandbox.oysterhr.com
+  description: Sandbox server
+tags:
+- name: Expenses
+  description: 'Expenses API allows you to remotely manage expenses of your team.
+
+    Approve or decline a specific expense, get info about a specific expense or receive real-time information about all expenses.'
+paths:
+  /v1/expenses:
+    get:
+      summary: Retrieve all expenses
+      tags:
+      - Expenses
+      description: Returns expense details for all engagements.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: query
+        in: query
+        required: false
+        description: Search expenses by name
+        schema:
+          type: string
+      - name: review_states[]
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - APPROVED
+            - DECLINED
+            - UNREVIEWED
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                No expenses:
+                  value:
+                    data: []
+                    meta:
+                      items: 100
+                      count: 0
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/expenses?page=1&perPage=100&query=&reviewStates[]=UNREVIEWED
+                      lastUrl: /v1/expenses?page=1&perPage=100&query=&reviewStates[]=UNREVIEWED
+                      pageUrl: /v1/expenses?page=1&perPage=100&query=&reviewStates[]=UNREVIEWED
+                      nextUrl: /v1/expenses?page=&perPage=100&query=&reviewStates[]=UNREVIEWED
+                      prevUrl: /v1/expenses?page=&perPage=100&query=&reviewStates[]=UNREVIEWED
+                Successful:
+                  value:
+                    data:
+                    - expenseId: C220cf49
+                      name: Unique Barry Allen figurine
+                      description: Dicta voluptas fugiat. Rerum aperiam placeat. Enim illo sit.
+                      amount:
+                        decimal: '489.60'
+                        currencyCode: EUR
+                      category: CAR
+                      incurredOn: '2022-10-15'
+                      submittedAt: '2022-10-15T12:34:56Z'
+                      reviewState: UNREVIEWED
+                      reviewedAt: null
+                      declineReason: null
+                      revertReason: null
+                      receiptAmount:
+                        decimal: '489.60'
+                        currencyCode: USD
+                      receiptUrl: null
+                      engagement:
+                        engagementId: C6c9d557
+                        name: Janette Nitzsche
+                        engagementType: EMPLOYMENT
+                      source: OYSTER
+                    - expenseId: Bcdad091
+                      name: Unique Terry McGinnis figurine
+                      description: Sapiente officia dicta. Facilis et esse. Accusamus rerum praesentium.
+                      amount:
+                        decimal: '548.46'
+                        currencyCode: EUR
+                      category: CAR
+                      incurredOn: '2022-10-15'
+                      submittedAt: '2022-10-15T12:34:56Z'
+                      reviewState: UNREVIEWED
+                      reviewedAt: null
+                      declineReason: null
+                      revertReason: null
+                      receiptAmount:
+                        decimal: '548.46'
+                        currencyCode: USD
+                      receiptUrl: null
+                      engagement:
+                        engagementId: B0b779a8
+                        name: Danny Keebler
+                        engagementType: EMPLOYMENT
+                      source: OYSTER
+                    - expenseId: A48674e0
+                      name: Veranda Java coffee
+                      description: Incidunt earum qui. Aspernatur sed repudiandae. Rerum rerum illo.
+                      amount:
+                        decimal: '703.33'
+                        currencyCode: EUR
+                      category: CAR
+                      incurredOn: '2022-10-15'
+                      submittedAt: '2022-10-15T12:34:56Z'
+                      reviewState: UNREVIEWED
+                      reviewedAt: null
+                      declineReason: null
+                      revertReason: null
+                      receiptAmount:
+                        decimal: '703.33'
+                        currencyCode: USD
+                      receiptUrl: null
+                      engagement:
+                        engagementId: A5540727
+                        name: Shirlee Cremin
+                        engagementType: EMPLOYMENT
+                      source: OYSTER
+                    meta:
+                      items: 100
+                      count: 3
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/expenses?page=1&perPage=100&query=&reviewStates[]=UNREVIEWED
+                      lastUrl: /v1/expenses?page=1&perPage=100&query=&reviewStates[]=UNREVIEWED
+                      pageUrl: /v1/expenses?page=1&perPage=100&query=&reviewStates[]=UNREVIEWED
+                      nextUrl: /v1/expenses?page=&perPage=100&query=&reviewStates[]=UNREVIEWED
+                      prevUrl: /v1/expenses?page=&perPage=100&query=&reviewStates[]=UNREVIEWED
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/expenses'
+                  meta:
+                    $ref: '#/components/schemas/meta'
+                required:
+                - data
+                - meta
+      operationId: getV1Expenses
+      x-operation-id-source: derived
+    post:
+      summary: Create expense
+      tags:
+      - Expenses
+      description: 'Creates a new expense for an engagement. This is an asynchronous operation. Returns operationKey that can be used to retrieve the operation to know if it''s successfully completed
+
+
+        **This endpoint requires the `X-Oyster-Actor-Email` header when using client credentials authentication.**'
+      security:
+      - bearer_auth:
+        - manage
+      parameters: []
+      responses:
+        '202':
+          description: Successfully created async operation
+          content:
+            application/json:
+              examples:
+                Successfully created async operation:
+                  value:
+                    meta:
+                      operationKey: e1d8b6c7-be75-c625-ea2d-b10de17aa688
+              schema:
+                $ref: '#/components/schemas/asyncResponse'
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              examples:
+                Unprocessable entity:
+                  value:
+                    errors:
+                    - message: Category must have a valid category
+              schema:
+                $ref: '#/components/schemas/errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                engagementId:
+                  type: string
+                  minLength: 1
+                  pattern: ^[\w+\-]{8,9}$
+                name:
+                  type: string
+                  minLength: 1
+                description:
+                  type: string
+                incurredOn:
+                  type: string
+                  format: date
+                  minLength: 1
+                category:
+                  type: string
+                  minLength: 1
+                  pattern: ^[A-Z_]+$
+                receiptUrl:
+                  type: string
+                  minLength: 1
+                  pattern: '([a-zA-Z][\-+.a-zA-Z\d]*): (?# 1: scheme) (?: ((?:[\-_.!~*''()a-zA-Z\d;?:@&=+$,]|%[a-fA-F\d]{2})(?:[\-_.!~*''()a-zA-Z\d;/?:@&=+$,\[\]]|%[a-fA-F\d]{2})*) (?# 2: opaque) | (?:(?: //(?: (?:(?:((?:[\-_.!~*''()a-zA-Z\d;:&=+$,]|%[a-fA-F\d]{2})*)@)? (?# 3: userinfo) (?:((?:(?:[a-zA-Z0-9\-.]|%\h\h)+|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|\[(?:(?:[a-fA-F\d]{1,4}:)*(?:[a-fA-F\d]{1,4}|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|(?:(?:[a-fA-F\d]{1,4}:)*[a-fA-F\d]{1,4})?::(?:(?:[a-fA-F\d]{1,4}:)*(?:[a-fA-F\d]{1,4}|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}))?)\]))(?::(\d*))?))? (?# 4: host, 5: port) | ((?:[\-_.!~*''()a-zA-Z\d$,;:@&=+]|%[a-fA-F\d]{2})+) (?# 6: registry) ) | (?!//)) (?# XXX: ''//'' is the mark for hostport) (/(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*(?:;(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*)*(?:/(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*(?:;(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*)*)*)? (?# 7: path) )(?:\?((?:[\-_.!~*''()a-zA-Z\d;/?:@&=+$,\[\]]|%[a-fA-F\d]{2})*))? (?# 8: query) ) (?:\#((?:[\-_.!~*''()a-zA-Z\d;/?:@&=+$,\[\]]|%[a-fA-F\d]{2})*))? (?# 9: fragment)'
+                pendingApproval:
+                  type: boolean
+                receiptAmount:
+                  type: object
+                  properties:
+                    decimal:
+                      type: string
+                      minLength: 1
+                      pattern: ^[0-9]+(\.[0-9]{2,})?$
+                    currencyCode:
+                      type: string
+                      minLength: 1
+                      pattern: ^[A-Z]{3}$
+                  required:
+                  - decimal
+                  - currencyCode
+              required:
+              - engagementId
+              - name
+              - incurredOn
+              - category
+              - receiptUrl
+              - receiptAmount
+            examples:
+              Successfully created async operation:
+                summary: Successfully created async operation
+                value:
+                  engagementId: A5540727
+                  name: An expense
+                  description: ''
+                  category: HOME_OFFICE
+                  incurredOn: '2022-10-15'
+                  receiptAmount:
+                    decimal: '1.23'
+                    currencyCode: GBP
+                  receiptUrl: https://www.example.com/receipts/test.pdf
+      operationId: postV1Expenses
+      x-operation-id-source: derived
+  /v1/expenses/ruleset:
+    get:
+      summary: Retrieve default expenses ruleset
+      tags:
+      - Expenses
+      description: 'Retrieves the default expenses ruleset, which includes schemas and available sources.
+
+
+        - This endpoint returns the default ruleset without requiring an ID parameter.
+
+        - The rulesets include schemas for creating expenses and available sources like categories.
+
+        - This is a convenient way to get the ruleset without specifying EXPENSES_DEFAULT explicitly.
+
+
+        Typical use case:
+
+        - Retrieving the default ruleset when creating a new expense.'
+      security:
+      - bearer_auth:
+        - read
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                      rulesetId: EXPENSES_DEFAULT
+                      scope: {}
+                      schemas:
+                        post:
+                          type: object
+                          properties:
+                            engagementId:
+                              type: string
+                              minLength: 1
+                              pattern: ^[\w+\-]{8,9}$
+                            name:
+                              type: string
+                              minLength: 1
+                            description:
+                              type: string
+                            incurredOn:
+                              type: string
+                              format: date
+                              minLength: 1
+                            category:
+                              type: string
+                              minLength: 1
+                              pattern: ^[A-Z_]+$
+                            receiptUrl:
+                              type: string
+                              minLength: 1
+                              pattern: '([a-zA-Z][\-+.a-zA-Z\d]*): (?# 1: scheme) (?: ((?:[\-_.!~*''()a-zA-Z\d;?:@&=+$,]|%[a-fA-F\d]{2})(?:[\-_.!~*''()a-zA-Z\d;/?:@&=+$,\[\]]|%[a-fA-F\d]{2})*) (?# 2: opaque) | (?:(?: //(?: (?:(?:((?:[\-_.!~*''()a-zA-Z\d;:&=+$,]|%[a-fA-F\d]{2})*)@)? (?# 3: userinfo) (?:((?:(?:[a-zA-Z0-9\-.]|%\h\h)+|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|\[(?:(?:[a-fA-F\d]{1,4}:)*(?:[a-fA-F\d]{1,4}|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|(?:(?:[a-fA-F\d]{1,4}:)*[a-fA-F\d]{1,4})?::(?:(?:[a-fA-F\d]{1,4}:)*(?:[a-fA-F\d]{1,4}|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}))?)\]))(?::(\d*))?))? (?# 4: host, 5: port) | ((?:[\-_.!~*''()a-zA-Z\d$,;:@&=+]|%[a-fA-F\d]{2})+) (?# 6: registry) ) | (?!//)) (?# XXX: ''//'' is the mark for hostport) (/(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*(?:;(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*)*(?:/(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*(?:;(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*)*)*)? (?# 7: path) )(?:\?((?:[\-_.!~*''()a-zA-Z\d;/?:@&=+$,\[\]]|%[a-fA-F\d]{2})*))? (?# 8: query) ) (?:\#((?:[\-_.!~*''()a-zA-Z\d;/?:@&=+$,\[\]]|%[a-fA-F\d]{2})*))? (?# 9: fragment)'
+                            pendingApproval:
+                              type: boolean
+                            receiptAmount:
+                              type: object
+                              properties:
+                                decimal:
+                                  type: string
+                                  minLength: 1
+                                  pattern: ^[0-9]+(\.[0-9]{2,})?$
+                                currencyCode:
+                                  type: string
+                                  minLength: 1
+                                  pattern: ^[A-Z]{3}$
+                              required:
+                              - decimal
+                              - currencyCode
+                          required:
+                          - engagementId
+                          - name
+                          - incurredOn
+                          - category
+                          - receiptUrl
+                          - receiptAmount
+                      sources:
+                        categories:
+                          params: {}
+      operationId: getV1ExpensesRuleset
+      x-operation-id-source: derived
+  /v1/expenses/rulesets/{id}:
+    get:
+      summary: Retrieve expenses rulesets
+      tags:
+      - Expenses
+      description: 'Retrieves the rulesets for expenses, which includes schemas and available sources.
+
+
+        - Use the `id` path parameter to fetch the specific ruleset (currently only EXPENSES_DEFAULT is supported).
+
+        - The rulesets include schemas for creating expenses and available sources like categories.
+
+
+        Typical use case:
+
+        - Retrieving rulesets when creating a new expense.'
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: id
+        in: path
+        description: Ruleset ID (EXPENSES_DEFAULT)
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                      rulesetId: EXPENSES_DEFAULT
+                      scope: {}
+                      schemas:
+                        post:
+                          type: object
+                          properties:
+                            engagementId:
+                              type: string
+                              minLength: 1
+                              pattern: ^[\w+\-]{8,9}$
+                            name:
+                              type: string
+                              minLength: 1
+                            description:
+                              type: string
+                            incurredOn:
+                              type: string
+                              format: date
+                              minLength: 1
+                            category:
+                              type: string
+                              minLength: 1
+                              pattern: ^[A-Z_]+$
+                            receiptUrl:
+                              type: string
+                              minLength: 1
+                              pattern: '([a-zA-Z][\-+.a-zA-Z\d]*): (?# 1: scheme) (?: ((?:[\-_.!~*''()a-zA-Z\d;?:@&=+$,]|%[a-fA-F\d]{2})(?:[\-_.!~*''()a-zA-Z\d;/?:@&=+$,\[\]]|%[a-fA-F\d]{2})*) (?# 2: opaque) | (?:(?: //(?: (?:(?:((?:[\-_.!~*''()a-zA-Z\d;:&=+$,]|%[a-fA-F\d]{2})*)@)? (?# 3: userinfo) (?:((?:(?:[a-zA-Z0-9\-.]|%\h\h)+|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|\[(?:(?:[a-fA-F\d]{1,4}:)*(?:[a-fA-F\d]{1,4}|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|(?:(?:[a-fA-F\d]{1,4}:)*[a-fA-F\d]{1,4})?::(?:(?:[a-fA-F\d]{1,4}:)*(?:[a-fA-F\d]{1,4}|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}))?)\]))(?::(\d*))?))? (?# 4: host, 5: port) | ((?:[\-_.!~*''()a-zA-Z\d$,;:@&=+]|%[a-fA-F\d]{2})+) (?# 6: registry) ) | (?!//)) (?# XXX: ''//'' is the mark for hostport) (/(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*(?:;(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*)*(?:/(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*(?:;(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*)*)*)? (?# 7: path) )(?:\?((?:[\-_.!~*''()a-zA-Z\d;/?:@&=+$,\[\]]|%[a-fA-F\d]{2})*))? (?# 8: query) ) (?:\#((?:[\-_.!~*''()a-zA-Z\d;/?:@&=+$,\[\]]|%[a-fA-F\d]{2})*))? (?# 9: fragment)'
+                            pendingApproval:
+                              type: boolean
+                            receiptAmount:
+                              type: object
+                              properties:
+                                decimal:
+                                  type: string
+                                  minLength: 1
+                                  pattern: ^[0-9]+(\.[0-9]{2,})?$
+                                currencyCode:
+                                  type: string
+                                  minLength: 1
+                                  pattern: ^[A-Z]{3}$
+                              required:
+                              - decimal
+                              - currencyCode
+                          required:
+                          - engagementId
+                          - name
+                          - incurredOn
+                          - category
+                          - receiptUrl
+                          - receiptAmount
+                      sources:
+                        categories:
+                          params: {}
+      operationId: getV1ExpensesRulesetsById
+      x-operation-id-source: derived
+  /v1/expenses/rulesets/{id}/sources/categories:
+    get:
+      summary: Retrieve expense categories
+      tags:
+      - Expenses
+      description: 'Retrieves the list of available expense categories.
+
+
+        - Use the `id` path parameter to specify the ruleset (currently only EXPENSES_DEFAULT is supported).
+
+        - The endpoint returns a list of expense categories with their values and display titles.
+
+
+        Typical use case:
+
+        - Retrieving available categories when creating or categorizing expenses.'
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: id
+        in: path
+        description: Ruleset ID (EXPENSES_DEFAULT)
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                    - value: BENEFITS
+                      title: Benefits
+                    - value: CAR
+                      title: Car
+                    - value: EQUIPMENT
+                      title: Equipment
+                    - value: HOME_OFFICE
+                      title: Home Office
+                    - value: LEARNING_AND_DEVELOPMENT
+                      title: Learning And Development
+                    - value: FOOD
+                      title: Food
+                    - value: OFFICE_SUPPLIES
+                      title: Office Supplies
+                    - value: RENT
+                      title: Rent
+                    - value: TRAVEL
+                      title: Travel
+                    - value: OTHER
+                      title: Other
+                    - value: COMMUNICATION
+                      title: Communication
+      operationId: getV1ExpensesRulesetsByIdSourcesCategories
+      x-operation-id-source: derived
+  /v1/expenses/{id}:
+    delete:
+      summary: Deletes an individual expense
+      tags:
+      - Expenses
+      description: Deletes an unreviewed expense given an ID.
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: id
+        in: path
+        description: Expense ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+        '422':
+          description: Operation cannot be performed
+          content:
+            application/json:
+              examples:
+                Operation cannot be performed:
+                  value:
+                    errors:
+                    - message: This expense has already been submitted. It cannot be deleted.
+              schema:
+                $ref: '#/components/schemas/errors'
+      operationId: deleteV1ExpensesById
+      x-operation-id-source: derived
+    get:
+      summary: Retrieve an individual expense
+      tags:
+      - Expenses
+      description: Returns details for an expense with a given expense ID.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: id
+        in: path
+        description: Expense ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                      expenseId: A48674e0
+                      name: Winter Breaker coffee
+                      description: Odit aut voluptatem. Earum quia sit. Iusto fugiat qui.
+                      amount:
+                        decimal: '723.89'
+                        currencyCode: EUR
+                      category: CAR
+                      incurredOn: '2022-10-15'
+                      submittedAt: '2022-10-15T12:34:56Z'
+                      reviewState: UNREVIEWED
+                      reviewedAt: null
+                      declineReason: null
+                      revertReason: null
+                      receiptAmount:
+                        decimal: '723.89'
+                        currencyCode: USD
+                      receiptUrl: null
+                      engagement:
+                        engagementId: A5540727
+                        name: null
+                        engagementType: EMPLOYMENT
+                      source: OYSTER
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/expense'
+                required:
+                - data
+      operationId: getV1ExpensesById
+      x-operation-id-source: derived
+  /v1/expenses/{id}/approve:
+    post:
+      summary: Approve expense
+      tags:
+      - Expenses
+      description: 'Approves an expense.
+
+
+        **This endpoint requires the `X-Oyster-Actor-Email` header when using client credentials authentication.**'
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: id
+        in: path
+        description: Expense ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+        '422':
+          description: Operation cannot be performed
+          content:
+            application/json:
+              examples:
+                Operation cannot be performed:
+                  value:
+                    errors:
+                    - message: Expense has been approved already
+              schema:
+                $ref: '#/components/schemas/errors'
+      operationId: postV1ExpensesByIdApprove
+      x-operation-id-source: derived
+  /v1/expenses/{id}/decline:
+    post:
+      summary: Decline expense
+      tags:
+      - Expenses
+      description: 'Declines an expense.
+
+
+        **This endpoint requires the `X-Oyster-Actor-Email` header when using client credentials authentication.**'
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: id
+        in: path
+        description: Expense ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+        '422':
+          description: Operation cannot be performed
+          content:
+            application/json:
+              examples:
+                Operation cannot be performed:
+                  value:
+                    errors:
+                    - message: Expense has been declined already
+              schema:
+                $ref: '#/components/schemas/errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type:
+                  - string
+                  - 'null'
+            examples:
+              Successful:
+                summary: Successful
+                value:
+                  reason: exceeds budget for this period
+      operationId: postV1ExpensesByIdDecline
+      x-operation-id-source: derived
+components:
+  schemas:
+    expenses:
+      type: array
+      items:
+        $ref: '#/components/schemas/expense'
+    expense:
+      type: object
+      properties:
+        expenseId:
+          type: string
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        amount:
+          type: object
+          $ref: '#/components/schemas/amount'
+        category:
+          type: string
+          pattern: ^[A-Z_]+$
+        incurredOn:
+          type: string
+          format: date
+        submittedAt:
+          type: string
+          format: date-time
+        reviewState:
+          type: string
+        reviewedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        receiptAmount:
+          type: object
+          $ref: '#/components/schemas/amount'
+        receiptUrl:
+          type:
+          - string
+          - 'null'
+          format: uri
+        engagement:
+          type: object
+          properties:
+            engagementId:
+              type: string
+            name:
+              type:
+              - string
+              - 'null'
+            engagementType:
+              type: string
+              pattern: ^[A-Z_]+$
+        source:
+          type: string
+      required:
+      - expenseId
+      - name
+      - amount
+      - category
+      - receiptAmount
+    asyncResponse:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            operationKey:
+              type: string
+          required:
+          - operationKey
+      required:
+      - meta
+    errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+            required:
+            - message
+      required:
+      - errors
+    meta:
+      type: object
+      properties:
+        items:
+          type: integer
+        count:
+          type: integer
+        page:
+          type: integer
+        pages:
+          type: integer
+        firstUrl:
+          type: string
+        lastUrl:
+          type: string
+        pageUrl:
+          type: string
+        nextUrl:
+          type: string
+        prevUrl:
+          type: string
+        deprecation:
+          type: object
+          properties:
+            at:
+              type: string
+            sunset:
+              type: string
+            link:
+              type: object
+              properties:
+                rel:
+                  type: string
+                url:
+                  type: string
+      required:
+      - items
+      - count
+      - page
+      - pages
+      - firstUrl
+      - lastUrl
+      - pageUrl
+      - nextUrl
+      - prevUrl
+    amount:
+      type: object
+      properties:
+        decimal:
+          type: string
+          pattern: ^\d+([.]\d+)?$
+        currencyCode:
+          type: string
+          minLength: 3
+          maxLength: 3
+      required:
+      - decimal
+      - currencyCode
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+x-provenance:
+  method: searched
+  source: https://docs.oysterhr.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.oysterhr.com/reference/delete_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/delete_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-document-document-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/delete_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-engagements-engagement-id-offerings.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-enrollments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-company.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes.md
+  - https://docs.oysterhr.com/reference/get_v1-departments.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-allowances.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-bonuses.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-documents.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-identity-verification.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-payslips.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id-sources-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements-agreement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-annually.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-monthly.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form-documents-field-or-document-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-tasks.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-role-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier-breakdown.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices.md
+  - https://docs.oysterhr.com/reference/get_v1-meta-operations-operation-key.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-payroll-team-members-terminations-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-pay-types.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id-charges.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charges-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-payouts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id-records.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll.md
+  - https://docs.oysterhr.com/reference/get_v1-public-holidays.md
+  - https://docs.oysterhr.com/reference/get_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id-sources-source-type.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks-dispatches.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/patch_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-employments-id-personal-details.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-reseller-customers-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/post_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/post_v1-benefits-engagements-engagement-id-enrollments.md
+  - https://docs.oysterhr.com/reference/post_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-approved.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-declined.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-sessions.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-decline.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-agreements-agreement-id-verify.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-document.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-onboarding-form-complete.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-team-member-invite.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-dispute.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-cancellation.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-documents.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-initiate.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-payroll-team-members-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/post_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-attachment.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-reject.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-entries.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-confirm.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks-id-test.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/put_v1-hiring-employments-id-onboarding-form-documents-field-id.md
+  merge:
+    pages: 140
+    deduped: 378
+    conflicts_kept_first: 0

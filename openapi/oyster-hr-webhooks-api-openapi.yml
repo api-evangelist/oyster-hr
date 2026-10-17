@@ -1,0 +1,652 @@
+openapi: 3.2.0
+info:
+  title: Endpoints Webhooks API
+  version: v1
+servers:
+- url: https://api.oysterhr.com
+  description: Production server
+- url: https://api-sandbox.oysterhr.com
+  description: Sandbox server
+tags:
+- name: Webhooks
+paths:
+  /v1/webhooks:
+    get:
+      summary: Retrieve all webhook endpoints
+      tags:
+      - Webhooks
+      description: Returns a list of webhook endpoints
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                No webhook endpoints:
+                  value:
+                    data: []
+                    meta:
+                      items: 100
+                      count: 0
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/webhooks?perPage=100&page=1
+                      lastUrl: /v1/webhooks?perPage=100&page=1
+                      pageUrl: /v1/webhooks?perPage=100&page=1
+                      nextUrl: /v1/webhooks?perPage=100&page=
+                      prevUrl: /v1/webhooks?perPage=100&page=
+                Successful:
+                  value:
+                    data:
+                    - id: E4f0db67
+                      url: https://example.com/candance.littel
+                      sharedSecret: '12345'
+                      enabled: true
+                    - id: D6abc63b
+                      url: https://example.com/bernice_damore
+                      sharedSecret: '12345'
+                      enabled: true
+                    - id: Cbf1d3c3
+                      url: https://example.com/gracia
+                      sharedSecret: '12345'
+                      enabled: true
+                    - id: B55f56d5
+                      url: https://example.com/elba_corwin
+                      sharedSecret: '12345'
+                      enabled: true
+                    - id: Ab0173c8
+                      url: https://example.com/chet
+                      sharedSecret: '12345'
+                      enabled: true
+                    meta:
+                      items: 100
+                      count: 5
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/webhooks?perPage=100&page=1
+                      lastUrl: /v1/webhooks?perPage=100&page=1
+                      pageUrl: /v1/webhooks?perPage=100&page=1
+                      nextUrl: /v1/webhooks?perPage=100&page=
+                      prevUrl: /v1/webhooks?perPage=100&page=
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/webhooks'
+                  meta:
+                    $ref: '#/components/schemas/meta'
+                required:
+                - data
+                - meta
+      operationId: getV1Webhooks
+      x-operation-id-source: derived
+    post:
+      summary: Create a webhook endpoint
+      tags:
+      - Webhooks
+      description: Creates a webhook endpoint to receive webhooks on
+      security:
+      - bearer_auth:
+        - subscribe
+      parameters: []
+      responses:
+        '200':
+          description: Successfully created webhook endpoint
+          content:
+            application/json:
+              examples:
+                Successfully created webhook endpoint:
+                  value:
+                    data:
+                      id: Ab0173c8
+                      url: https://example.com
+                      sharedSecret: '12345'
+                      enabled: true
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/webhook'
+                required:
+                - data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  minLength: 1
+                  pattern: '([a-zA-Z][\-+.a-zA-Z\d]*): (?# 1: scheme) (?: ((?:[\-_.!~*''()a-zA-Z\d;?:@&=+$,]|%[a-fA-F\d]{2})(?:[\-_.!~*''()a-zA-Z\d;/?:@&=+$,\[\]]|%[a-fA-F\d]{2})*) (?# 2: opaque) | (?:(?: //(?: (?:(?:((?:[\-_.!~*''()a-zA-Z\d;:&=+$,]|%[a-fA-F\d]{2})*)@)? (?# 3: userinfo) (?:((?:(?:[a-zA-Z0-9\-.]|%\h\h)+|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|\[(?:(?:[a-fA-F\d]{1,4}:)*(?:[a-fA-F\d]{1,4}|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|(?:(?:[a-fA-F\d]{1,4}:)*[a-fA-F\d]{1,4})?::(?:(?:[a-fA-F\d]{1,4}:)*(?:[a-fA-F\d]{1,4}|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}))?)\]))(?::(\d*))?))? (?# 4: host, 5: port) | ((?:[\-_.!~*''()a-zA-Z\d$,;:@&=+]|%[a-fA-F\d]{2})+) (?# 6: registry) ) | (?!//)) (?# XXX: ''//'' is the mark for hostport) (/(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*(?:;(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*)*(?:/(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*(?:;(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*)*)*)? (?# 7: path) )(?:\?((?:[\-_.!~*''()a-zA-Z\d;/?:@&=+$,\[\]]|%[a-fA-F\d]{2})*))? (?# 8: query) ) (?:\#((?:[\-_.!~*''()a-zA-Z\d;/?:@&=+$,\[\]]|%[a-fA-F\d]{2})*))? (?# 9: fragment)'
+                sharedSecret:
+                  type: string
+                  minLength: 1
+              required:
+              - url
+              - sharedSecret
+            examples:
+              Successfully created webhook endpoint:
+                summary: Successfully created webhook endpoint
+                value:
+                  url: https://example.com
+                  sharedSecret: '12345'
+      operationId: postV1Webhooks
+      x-operation-id-source: derived
+  /v1/webhooks/dispatches:
+    get:
+      summary: Retrieve all webhook dispatches
+      tags:
+      - Webhooks
+      description: Returns a list of webhook dispatches for the authenticated Developer application
+      security:
+      - bearer_auth:
+        - subscribe
+      parameters:
+      - name: per_page
+        in: query
+        required: false
+        description: Number of items per page
+        schema:
+          type: integer
+      - name: page
+        in: query
+        required: false
+        description: Page number
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                No webhook dispatches:
+                  value:
+                    data: []
+                    meta:
+                      items: 100
+                      count: 0
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/webhooks/dispatches?perPage=100&page=1
+                      lastUrl: /v1/webhooks/dispatches?perPage=100&page=1
+                      pageUrl: /v1/webhooks/dispatches?perPage=100&page=1
+                      nextUrl: /v1/webhooks/dispatches?perPage=100&page=
+                      prevUrl: /v1/webhooks/dispatches?perPage=100&page=
+                Successful:
+                  value:
+                    data:
+                    - id: wh_01GFDT7TC01MD0W7RG2080R409
+                      companyId: A2f05d13
+                      endpointId: Ab0173c8
+                      eventName: test.webhook
+                      eventTimestamp: '2022-10-15T12:34:56.000Z'
+                      lastResponseCode: '200'
+                      sentAt: '2022-10-15T12:34:56Z'
+                      firstSentAt: '2022-10-15T12:34:56Z'
+                      retries: 0
+                      data:
+                        success: true
+                    - id: wh_01GFDT7TC01460078D14F1200E
+                      companyId: A2f05d13
+                      endpointId: Ab0173c8
+                      eventName: test.webhook
+                      eventTimestamp: '2022-10-15T12:34:56.000Z'
+                      lastResponseCode: '200'
+                      sentAt: '2022-10-15T12:34:56Z'
+                      firstSentAt: '2022-10-15T12:34:56Z'
+                      retries: 0
+                      data:
+                        success: true
+                    - id: wh_01GFDT7TC000B0W6802CFH638E
+                      companyId: A2f05d13
+                      endpointId: Ab0173c8
+                      eventName: test.webhook
+                      eventTimestamp: '2022-10-15T12:34:56.000Z'
+                      lastResponseCode: '200'
+                      sentAt: '2022-10-15T12:34:56Z'
+                      firstSentAt: '2022-10-15T12:34:56Z'
+                      retries: 0
+                      data:
+                        success: true
+                    meta:
+                      items: 100
+                      count: 3
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/webhooks/dispatches?perPage=100&page=1
+                      lastUrl: /v1/webhooks/dispatches?perPage=100&page=1
+                      pageUrl: /v1/webhooks/dispatches?perPage=100&page=1
+                      nextUrl: /v1/webhooks/dispatches?perPage=100&page=
+                      prevUrl: /v1/webhooks/dispatches?perPage=100&page=
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/webhookDispatches'
+                  meta:
+                    $ref: '#/components/schemas/meta'
+                required:
+                - data
+                - meta
+        '400':
+          description: Targets another company
+          content:
+            application/json:
+              examples:
+                Targets another company:
+                  value:
+                    errors:
+                    - message: This endpoint only supports the OAuth application's authorized company
+              schema:
+                $ref: '#/components/schemas/errors'
+      operationId: getV1WebhooksDispatches
+      x-operation-id-source: derived
+  /v1/webhooks/{id}:
+    delete:
+      summary: Delete a webhook endpoint
+      tags:
+      - Webhooks
+      description: Deletes a webhook endpoint
+      security:
+      - bearer_auth:
+        - subscribe
+      parameters:
+      - name: id
+        in: path
+        description: Webhook endpoint ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully deleted webhook endpoint
+      operationId: deleteV1WebhooksById
+      x-operation-id-source: derived
+    patch:
+      summary: Update a webhook endpoint
+      tags:
+      - Webhooks
+      description: Updates a webhook endpoint
+      security:
+      - bearer_auth:
+        - subscribe
+      parameters:
+      - name: id
+        in: path
+        description: Webhook endpoint ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully updated webhook endpoint
+          content:
+            application/json:
+              examples:
+                Successfully updated webhook endpoint:
+                  value:
+                    data:
+                      id: Ab0173c8
+                      url: https://example.com
+                      sharedSecret: '12345'
+                      enabled: true
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/webhook'
+                required:
+                - data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  minLength: 1
+                  pattern: '([a-zA-Z][\-+.a-zA-Z\d]*): (?# 1: scheme) (?: ((?:[\-_.!~*''()a-zA-Z\d;?:@&=+$,]|%[a-fA-F\d]{2})(?:[\-_.!~*''()a-zA-Z\d;/?:@&=+$,\[\]]|%[a-fA-F\d]{2})*) (?# 2: opaque) | (?:(?: //(?: (?:(?:((?:[\-_.!~*''()a-zA-Z\d;:&=+$,]|%[a-fA-F\d]{2})*)@)? (?# 3: userinfo) (?:((?:(?:[a-zA-Z0-9\-.]|%\h\h)+|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|\[(?:(?:[a-fA-F\d]{1,4}:)*(?:[a-fA-F\d]{1,4}|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|(?:(?:[a-fA-F\d]{1,4}:)*[a-fA-F\d]{1,4})?::(?:(?:[a-fA-F\d]{1,4}:)*(?:[a-fA-F\d]{1,4}|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}))?)\]))(?::(\d*))?))? (?# 4: host, 5: port) | ((?:[\-_.!~*''()a-zA-Z\d$,;:@&=+]|%[a-fA-F\d]{2})+) (?# 6: registry) ) | (?!//)) (?# XXX: ''//'' is the mark for hostport) (/(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*(?:;(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*)*(?:/(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*(?:;(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*)*)*)? (?# 7: path) )(?:\?((?:[\-_.!~*''()a-zA-Z\d;/?:@&=+$,\[\]]|%[a-fA-F\d]{2})*))? (?# 8: query) ) (?:\#((?:[\-_.!~*''()a-zA-Z\d;/?:@&=+$,\[\]]|%[a-fA-F\d]{2})*))? (?# 9: fragment)'
+                sharedSecret:
+                  type: string
+                  minLength: 1
+            examples:
+              Successfully updated webhook endpoint:
+                summary: Successfully updated webhook endpoint
+                value:
+                  url: https://example.com
+                  sharedSecret: '12345'
+      operationId: patchV1WebhooksById
+      x-operation-id-source: derived
+  /v1/webhooks/{id}/test:
+    post:
+      summary: Send a test payload to a webhook endpoint
+      tags:
+      - Webhooks
+      security:
+      - bearer_auth:
+        - subscribe
+      parameters:
+      - name: id
+        in: path
+        description: Webhook endpoint ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully sent test payload
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  minProperties: 1
+              required:
+              - data
+            examples:
+              Successfully sent test payload:
+                summary: Successfully sent test payload
+                value:
+                  data:
+                    foo: bar
+                    baz: qux
+        description: Test data to send to the endpoint
+      operationId: postV1WebhooksByIdTest
+      x-operation-id-source: derived
+components:
+  schemas:
+    webhook:
+      type: object
+      properties:
+        id:
+          type: string
+        url:
+          type: string
+        sharedSecret:
+          type: string
+        enabled:
+          type: boolean
+      required:
+      - id
+      - url
+      - sharedSecret
+      - enabled
+    meta:
+      type: object
+      properties:
+        items:
+          type: integer
+        count:
+          type: integer
+        page:
+          type: integer
+        pages:
+          type: integer
+        firstUrl:
+          type: string
+        lastUrl:
+          type: string
+        pageUrl:
+          type: string
+        nextUrl:
+          type: string
+        prevUrl:
+          type: string
+        deprecation:
+          type: object
+          properties:
+            at:
+              type: string
+            sunset:
+              type: string
+            link:
+              type: object
+              properties:
+                rel:
+                  type: string
+                url:
+                  type: string
+      required:
+      - items
+      - count
+      - page
+      - pages
+      - firstUrl
+      - lastUrl
+      - pageUrl
+      - nextUrl
+      - prevUrl
+    errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+            required:
+            - message
+      required:
+      - errors
+    webhooks:
+      type: array
+      items:
+        $ref: '#/components/schemas/webhook'
+    webhookDispatch:
+      type: object
+      properties:
+        id:
+          type: string
+        companyId:
+          type: string
+        endpointId:
+          type: string
+        eventName:
+          type: string
+        eventTimestamp:
+          type: string
+          format: date-time
+        lastResponseCode:
+          type: string
+        sentAt:
+          type: string
+          format: date-time
+        firstSentAt:
+          type: string
+          format: date-time
+        retries:
+          type: integer
+        data:
+          type: object
+      required:
+      - id
+      - companyId
+      - endpointId
+      - eventName
+      - eventTimestamp
+      - lastResponseCode
+      - sentAt
+      - firstSentAt
+      - retries
+      - data
+    webhookDispatches:
+      type: array
+      items:
+        $ref: '#/components/schemas/webhookDispatch'
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+x-provenance:
+  method: searched
+  source: https://docs.oysterhr.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.oysterhr.com/reference/delete_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/delete_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-document-document-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/delete_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-engagements-engagement-id-offerings.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-enrollments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-company.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes.md
+  - https://docs.oysterhr.com/reference/get_v1-departments.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-allowances.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-bonuses.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-documents.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-identity-verification.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-payslips.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id-sources-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements-agreement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-annually.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-monthly.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form-documents-field-or-document-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-tasks.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-role-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier-breakdown.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices.md
+  - https://docs.oysterhr.com/reference/get_v1-meta-operations-operation-key.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-payroll-team-members-terminations-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-pay-types.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id-charges.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charges-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-payouts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id-records.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll.md
+  - https://docs.oysterhr.com/reference/get_v1-public-holidays.md
+  - https://docs.oysterhr.com/reference/get_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id-sources-source-type.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks-dispatches.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/patch_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-employments-id-personal-details.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-reseller-customers-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/post_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/post_v1-benefits-engagements-engagement-id-enrollments.md
+  - https://docs.oysterhr.com/reference/post_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-approved.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-declined.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-sessions.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-decline.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-agreements-agreement-id-verify.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-document.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-onboarding-form-complete.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-team-member-invite.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-dispute.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-cancellation.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-documents.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-initiate.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-payroll-team-members-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/post_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-attachment.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-reject.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-entries.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-confirm.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks-id-test.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/put_v1-hiring-employments-id-onboarding-form-documents-field-id.md
+  merge:
+    pages: 140
+    deduped: 378
+    conflicts_kept_first: 0

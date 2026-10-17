@@ -1,0 +1,281 @@
+openapi: 3.2.0
+info:
+  title: Endpoints Company API
+  version: v1
+servers:
+- url: https://api.oysterhr.com
+  description: Production server
+- url: https://api-sandbox.oysterhr.com
+  description: Sandbox server
+tags:
+- name: Company
+paths:
+  /v1/company:
+    get:
+      summary: Retrieve company details
+      tags:
+      - Company
+      description: Returns details about the connected company
+      security:
+      - bearer_auth:
+        - read
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                      id: A2f05d13
+                      companyId: A2f05d13
+                      name: company 00001 name
+                      registrationNumber: E15085814
+                      addresses:
+                        corporateAddress:
+                          id: A89578c8
+                          addressId: A89578c8
+                          addressLine1: 365 Walter Land
+                          addressLine2: Summer Estates
+                          city: Yongview
+                          region: SFO
+                          regionName: San Fernando
+                          countryCode: TT
+                          postalCode: '54590'
+                        billingAddress:
+                          id: B7c7c7aa
+                          addressId: B7c7c7aa
+                          addressLine1: 89913 Kihn Field
+                          addressLine2: Autumn Square
+                          city: Dietrichview
+                          region: SAN
+                          regionName: Santander
+                          countryCode: CO
+                          postalCode: 28998-6207
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/company'
+                required:
+                - data
+      operationId: getV1Company
+      x-operation-id-source: derived
+components:
+  schemas:
+    address:
+      type: object
+      properties:
+        addressId:
+          type: string
+        addressLine1:
+          type:
+          - string
+          - 'null'
+        addressLine2:
+          type:
+          - string
+          - 'null'
+        city:
+          type:
+          - string
+          - 'null'
+        region:
+          type:
+          - string
+          - 'null'
+        countryCode:
+          type:
+          - string
+          - 'null'
+        postalCode:
+          type:
+          - string
+          - 'null'
+      required:
+      - addressId
+      - addressLine1
+      - postalCode
+    company:
+      type: object
+      properties:
+        companyId:
+          type: string
+        name:
+          type: string
+        registrationNumber:
+          type: string
+        addresses:
+          type: object
+          properties:
+            corporateAddress:
+              type:
+              - object
+              - 'null'
+              $ref: '#/components/schemas/address'
+            billingAddress:
+              type:
+              - object
+              - 'null'
+              $ref: '#/components/schemas/address'
+      required:
+      - companyId
+      - name
+      - registrationNumber
+      - addresses
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+x-provenance:
+  method: searched
+  source: https://docs.oysterhr.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.oysterhr.com/reference/delete_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/delete_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-document-document-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/delete_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-engagements-engagement-id-offerings.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-enrollments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-company.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes.md
+  - https://docs.oysterhr.com/reference/get_v1-departments.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-allowances.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-bonuses.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-documents.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-identity-verification.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-payslips.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id-sources-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements-agreement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-annually.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-monthly.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form-documents-field-or-document-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-tasks.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-role-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier-breakdown.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices.md
+  - https://docs.oysterhr.com/reference/get_v1-meta-operations-operation-key.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-payroll-team-members-terminations-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-pay-types.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id-charges.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charges-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-payouts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id-records.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll.md
+  - https://docs.oysterhr.com/reference/get_v1-public-holidays.md
+  - https://docs.oysterhr.com/reference/get_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id-sources-source-type.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks-dispatches.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/patch_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-employments-id-personal-details.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-reseller-customers-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/post_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/post_v1-benefits-engagements-engagement-id-enrollments.md
+  - https://docs.oysterhr.com/reference/post_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-approved.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-declined.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-sessions.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-decline.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-agreements-agreement-id-verify.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-document.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-onboarding-form-complete.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-team-member-invite.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-dispute.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-cancellation.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-documents.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-initiate.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-payroll-team-members-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/post_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-attachment.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-reject.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-entries.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-confirm.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks-id-test.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/put_v1-hiring-employments-id-onboarding-form-documents-field-id.md
+  merge:
+    pages: 140
+    deduped: 378
+    conflicts_kept_first: 0

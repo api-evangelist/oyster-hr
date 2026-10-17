@@ -1,0 +1,1809 @@
+openapi: 3.2.0
+info:
+  title: Endpoints Contract Changes API
+  version: v1
+  description: 'With the Contract Changes API, you can manage your team''s contract change requests.
+
+    You can access details of a specific request, cancel change requests, and view a list of all requests.'
+servers:
+- url: https://api.oysterhr.com
+  description: Production server
+- url: https://api-sandbox.oysterhr.com
+  description: Sandbox server
+tags:
+- name: Contract Changes
+  description: 'With the Contract Changes API, you can manage your team''s contract change requests.
+
+    You can access details of a specific request, cancel change requests, and view a list of all requests.'
+paths:
+  /v1/contract_changes:
+    get:
+      summary: Retrieve all contract changes
+      tags:
+      - Contract Changes
+      description: Returns contract change details for all engagements.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                No contract changes:
+                  value:
+                    data: []
+                    meta:
+                      items: 100
+                      count: 0
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/contract_changes?perPage=100&page=1
+                      lastUrl: /v1/contract_changes?perPage=100&page=1
+                      pageUrl: /v1/contract_changes?perPage=100&page=1
+                      nextUrl: /v1/contract_changes?perPage=100&page=
+                      prevUrl: /v1/contract_changes?perPage=100&page=
+                Successful:
+                  value:
+                    data:
+                    - id: Ef778287
+                      engagement:
+                        id: C6c9d557
+                        name: Tandy Carroll PhD
+                        type: EMPLOYMENT
+                        countryCode: GB
+                      effectiveFrom: '2022-10-25'
+                      applicableFrom: '2022-11-01'
+                      expirationDate: '2022-10-22'
+                      createdAt: '2022-10-15T12:34:56Z'
+                      updatedAt: '2022-10-15T12:34:56Z'
+                      requestedBy:
+                        name: Nelia Stoltenberg
+                      state: APPLIED
+                      oneOffBonusPayment: null
+                      automatedAmendments: false
+                      changesRequested:
+                      - POSITION_DETAILS
+                      - BONUS
+                      - ALLOWANCE
+                      changes:
+                        positionDetails:
+                          jobTitle:
+                            from: Junior Copywriter Consultant
+                            to: Senior Copywriter Consultant
+                          jobDescription:
+                            from: null
+                            to: Next Job Description
+                        compensation:
+                          salary:
+                            from: null
+                            to: null
+                          salaryAbsorbable:
+                            from: null
+                            to: null
+                        bonuses:
+                          added: []
+                          removed:
+                          - id: O9f5574b
+                            label: VACATION_BONUS
+                            paymentFrequency: MONTHLY
+                            statutory: false
+                            guaranteed: false
+                            amountDecimal: '1.00'
+                            selectedMonths:
+                            - 1
+                            - 2
+                            - 3
+                            - 4
+                            - 5
+                            - 6
+                            - 7
+                            - 8
+                            - 9
+                            - 10
+                            - 11
+                            - 12
+                            prorated: true
+                          - id: P99c88d6
+                            label: VACATION_BONUS
+                            paymentFrequency: MONTHLY
+                            statutory: false
+                            guaranteed: false
+                            amountDecimal: '1.00'
+                            selectedMonths:
+                            - 1
+                            - 2
+                            - 3
+                            - 4
+                            - 5
+                            - 6
+                            - 7
+                            - 8
+                            - 9
+                            - 10
+                            - 11
+                            - 12
+                            prorated: true
+                        allowances:
+                          added:
+                          - id: M167c0f3
+                            label: CAR
+                            paymentFrequency: MONTHLY
+                            statutory: false
+                            amountDecimal: '1.00'
+                            selectedMonths:
+                            - 1
+                            - 2
+                            - 3
+                            - 4
+                            - 5
+                            - 6
+                            - 7
+                            - 8
+                            - 9
+                            - 10
+                            - 11
+                            - 12
+                          - id: N47e0eaf
+                            label: CAR
+                            paymentFrequency: MONTHLY
+                            statutory: false
+                            amountDecimal: '1.00'
+                            selectedMonths:
+                            - 1
+                            - 2
+                            - 3
+                            - 4
+                            - 5
+                            - 6
+                            - 7
+                            - 8
+                            - 9
+                            - 10
+                            - 11
+                            - 12
+                          removed:
+                          - id: Q542cc18
+                            label: CAR
+                            paymentFrequency: MONTHLY
+                            statutory: false
+                            amountDecimal: '1.00'
+                            selectedMonths:
+                            - 1
+                            - 2
+                            - 3
+                            - 4
+                            - 5
+                            - 6
+                            - 7
+                            - 8
+                            - 9
+                            - 10
+                            - 11
+                            - 12
+                          - id: Rd3605b2
+                            label: CAR
+                            paymentFrequency: MONTHLY
+                            statutory: false
+                            amountDecimal: '1.00'
+                            selectedMonths:
+                            - 1
+                            - 2
+                            - 3
+                            - 4
+                            - 5
+                            - 6
+                            - 7
+                            - 8
+                            - 9
+                            - 10
+                            - 11
+                            - 12
+                    - id: Dcba5404
+                      engagement:
+                        id: C6c9d557
+                        name: Tandy Carroll PhD
+                        type: EMPLOYMENT
+                        countryCode: GB
+                      effectiveFrom: '2022-10-25'
+                      applicableFrom: '2022-11-01'
+                      expirationDate: '2022-10-22'
+                      createdAt: '2022-10-15T12:34:56Z'
+                      updatedAt: '2022-10-15T12:34:56Z'
+                      requestedBy:
+                        name: Diamond Bartoletti
+                      state: APPLIED
+                      oneOffBonusPayment: null
+                      automatedAmendments: false
+                      changesRequested:
+                      - POSITION_DETAILS
+                      - BONUS
+                      - ALLOWANCE
+                      changes:
+                        positionDetails:
+                          jobTitle:
+                            from: Junior Copywriter Consultant
+                            to: Senior Copywriter Consultant
+                          jobDescription:
+                            from: null
+                            to: Next Job Description
+                        compensation:
+                          salary:
+                            from: null
+                            to: null
+                          salaryAbsorbable:
+                            from: null
+                            to: null
+                        bonuses:
+                          added: []
+                          removed:
+                          - id: I0a83217
+                            label: VACATION_BONUS
+                            paymentFrequency: MONTHLY
+                            statutory: false
+                            guaranteed: false
+                            amountDecimal: '1.00'
+                            selectedMonths:
+                            - 1
+                            - 2
+                            - 3
+                            - 4
+                            - 5
+                            - 6
+                            - 7
+                            - 8
+                            - 9
+                            - 10
+                            - 11
+                            - 12
+                            prorated: true
+                          - id: J3eff786
+                            label: VACATION_BONUS
+                            paymentFrequency: MONTHLY
+                            statutory: false
+                            guaranteed: false
+                            amountDecimal: '1.00'
+                            selectedMonths:
+                            - 1
+                            - 2
+                            - 3
+                            - 4
+                            - 5
+                            - 6
+                            - 7
+                            - 8
+                            - 9
+                            - 10
+                            - 11
+                            - 12
+                            prorated: true
+                        allowances:
+                          added:
+                          - id: G8963ce9
+                            label: CAR
+                            paymentFrequency: MONTHLY
+                            statutory: false
+                            amountDecimal: '1.00'
+                            selectedMonths:
+                            - 1
+                            - 2
+                            - 3
+                            - 4
+                            - 5
+                            - 6
+                            - 7
+                            - 8
+                            - 9
+                            - 10
+                            - 11
+                            - 12
+                          - id: H26d4f62
+                            label: CAR
+                            paymentFrequency: MONTHLY
+                            statutory: false
+                            amountDecimal: '1.00'
+                            selectedMonths:
+                            - 1
+                            - 2
+                            - 3
+                            - 4
+                            - 5
+                            - 6
+                            - 7
+                            - 8
+                            - 9
+                            - 10
+                            - 11
+                            - 12
+                          removed:
+                          - id: K30b2845
+                            label: CAR
+                            paymentFrequency: MONTHLY
+                            statutory: false
+                            amountDecimal: '1.00'
+                            selectedMonths:
+                            - 1
+                            - 2
+                            - 3
+                            - 4
+                            - 5
+                            - 6
+                            - 7
+                            - 8
+                            - 9
+                            - 10
+                            - 11
+                            - 12
+                          - id: Lc08bb99
+                            label: CAR
+                            paymentFrequency: MONTHLY
+                            statutory: false
+                            amountDecimal: '1.00'
+                            selectedMonths:
+                            - 1
+                            - 2
+                            - 3
+                            - 4
+                            - 5
+                            - 6
+                            - 7
+                            - 8
+                            - 9
+                            - 10
+                            - 11
+                            - 12
+                    - id: Cc8952c4
+                      engagement:
+                        id: C6c9d557
+                        name: Tandy Carroll PhD
+                        type: EMPLOYMENT
+                        countryCode: GB
+                      effectiveFrom: '2022-10-25'
+                      applicableFrom: '2022-11-01'
+                      expirationDate: '2022-10-22'
+                      createdAt: '2022-10-15T12:34:56Z'
+                      updatedAt: '2022-10-15T12:34:56Z'
+                      requestedBy:
+                        name: Alysia Towne
+                      state: APPLIED
+                      oneOffBonusPayment: null
+                      automatedAmendments: false
+                      changesRequested:
+                      - POSITION_DETAILS
+                      - BONUS
+                      - ALLOWANCE
+                      changes:
+                        positionDetails:
+                          jobTitle:
+                            from: Junior Copywriter Consultant
+                            to: Senior Copywriter Consultant
+                          jobDescription:
+                            from: null
+                            to: Next Job Description
+                        compensation:
+                          salary:
+                            from: null
+                            to: null
+                          salaryAbsorbable:
+                            from: null
+                            to: null
+                        bonuses:
+                          added: []
+                          removed:
+                          - id: Cdb74ce0
+                            label: VACATION_BONUS
+                            paymentFrequency: MONTHLY
+                            statutory: false
+                            guaranteed: false
+                            amountDecimal: '1.00'
+                            selectedMonths:
+                            - 1
+                            - 2
+                            - 3
+                            - 4
+                            - 5
+                            - 6
+                            - 7
+                            - 8
+                            - 9
+                            - 10
+                            - 11
+                            - 12
+                            prorated: true
+                          - id: D1aced86
+                            label: VACATION_BONUS
+                            paymentFrequency: MONTHLY
+                            statutory: false
+                            guaranteed: false
+                            amountDecimal: '1.00'
+                            selectedMonths:
+                            - 1
+                            - 2
+                            - 3
+                            - 4
+                            - 5
+                            - 6
+                            - 7
+                            - 8
+                            - 9
+                            - 10
+                            - 11
+                            - 12
+                            prorated: true
+                        allowances:
+                          added:
+                          - id: A6c99852
+                            label: CAR
+                            paymentFrequency: MONTHLY
+                            statutory: false
+                            amountDecimal: '1.00'
+                            selectedMonths:
+                            - 1
+                            - 2
+                            - 3
+                            - 4
+                            - 5
+                            - 6
+                            - 7
+                            - 8
+                            - 9
+                            - 10
+                            - 11
+                            - 12
+                          - id: B37f4b09
+                            label: CAR
+                            paymentFrequency: MONTHLY
+                            statutory: false
+                            amountDecimal: '1.00'
+                            selectedMonths:
+                            - 1
+                            - 2
+                            - 3
+                            - 4
+                            - 5
+                            - 6
+                            - 7
+                            - 8
+                            - 9
+                            - 10
+                            - 11
+                            - 12
+                          removed:
+                          - id: E5ff4041
+                            label: CAR
+                            paymentFrequency: MONTHLY
+                            statutory: false
+                            amountDecimal: '1.00'
+                            selectedMonths:
+                            - 1
+                            - 2
+                            - 3
+                            - 4
+                            - 5
+                            - 6
+                            - 7
+                            - 8
+                            - 9
+                            - 10
+                            - 11
+                            - 12
+                          - id: F2667c2d
+                            label: CAR
+                            paymentFrequency: MONTHLY
+                            statutory: false
+                            amountDecimal: '1.00'
+                            selectedMonths:
+                            - 1
+                            - 2
+                            - 3
+                            - 4
+                            - 5
+                            - 6
+                            - 7
+                            - 8
+                            - 9
+                            - 10
+                            - 11
+                            - 12
+                    meta:
+                      items: 100
+                      count: 3
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/contract_changes?perPage=100&page=1
+                      lastUrl: /v1/contract_changes?perPage=100&page=1
+                      pageUrl: /v1/contract_changes?perPage=100&page=1
+                      nextUrl: /v1/contract_changes?perPage=100&page=
+                      prevUrl: /v1/contract_changes?perPage=100&page=
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/contractChanges'
+                  meta:
+                    $ref: '#/components/schemas/meta'
+                required:
+                - data
+                - meta
+      operationId: getV1ContractChanges
+      x-operation-id-source: derived
+    post:
+      summary: Create request
+      tags:
+      - Contract Changes
+      description: 'Creates a new contract change request.
+
+
+        **This endpoint requires the `X-Oyster-Actor-Email` header when using client credentials authentication.**'
+      security:
+      - bearer_auth:
+        - manage
+      parameters: []
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                      id: A957fa08
+                      engagement:
+                        id: A5540727
+                        name: Mafalda Fahey
+                        type: EMPLOYMENT
+                        countryCode: IT
+                      effectiveFrom: '2024-06-01'
+                      applicableFrom: '2024-06-01'
+                      expirationDate: '2024-06-06'
+                      createdAt: '2022-10-15T12:34:56Z'
+                      updatedAt: '2022-10-15T12:34:56Z'
+                      requestedBy:
+                        name: Emely Langworth
+                      state: SUBMITTED
+                      oneOffBonusPayment:
+                        decimal: '10000.00'
+                        currencyCode: EUR
+                      automatedAmendments: false
+                      changesRequested:
+                      - POSITION_DETAILS
+                      - COMPENSATION
+                      - BONUS
+                      - ALLOWANCE
+                      changes:
+                        positionDetails:
+                          jobTitle:
+                            from: Design Technician Consultant
+                            to: New Job Title
+                          jobDescription:
+                            from: null
+                            to: null
+                        compensation:
+                          salary:
+                            from:
+                              decimal: '120345.00'
+                              currencyCode: EUR
+                            to:
+                              decimal: '120445.00'
+                              currencyCode: EUR
+                          salaryAbsorbable:
+                            from: null
+                            to: false
+                        bonuses:
+                          added:
+                          - id: D1aced86
+                            label: VACATION_BONUS
+                            paymentFrequency: MONTHLY
+                            statutory: false
+                            guaranteed: true
+                            amountDecimal: '100.00'
+                            selectedMonths:
+                            - 1
+                            - 2
+                            - 3
+                            - 4
+                            - 5
+                            - 6
+                            - 7
+                            - 8
+                            - 9
+                            - 10
+                            - 11
+                            - 12
+                            prorated: false
+                          removed:
+                          - id: B37f4b09
+                            label: VACATION_BONUS
+                            paymentFrequency: MONTHLY
+                            statutory: false
+                            guaranteed: false
+                            amountDecimal: '1.00'
+                            selectedMonths:
+                            - 1
+                            - 2
+                            - 3
+                            - 4
+                            - 5
+                            - 6
+                            - 7
+                            - 8
+                            - 9
+                            - 10
+                            - 11
+                            - 12
+                            prorated: true
+                        allowances:
+                          added:
+                          - id: Cdb74ce0
+                            label: HEALTH_AND_WELLBEING
+                            paymentFrequency: MONTHLY
+                            statutory: false
+                            amountDecimal: '100.00'
+                            selectedMonths:
+                            - 1
+                            - 2
+                            - 3
+                            - 4
+                            - 5
+                            - 6
+                            - 7
+                            - 8
+                            - 9
+                            - 10
+                            - 11
+                            - 12
+                          removed:
+                          - id: A6c99852
+                            label: HEALTH_AND_WELLBEING
+                            paymentFrequency: MONTHLY
+                            statutory: false
+                            amountDecimal: '1.00'
+                            selectedMonths:
+                            - 1
+                            - 2
+                            - 3
+                            - 4
+                            - 5
+                            - 6
+                            - 7
+                            - 8
+                            - 9
+                            - 10
+                            - 11
+                            - 12
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/contractChange'
+                required:
+                - data
+        '422':
+          description: Operation cannot be performed
+          content:
+            application/json:
+              examples:
+                Operation cannot be performed:
+                  value:
+                    errors:
+                    - message: You haven't changed one of the minimum required contract attributes.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                engagementId:
+                  type: string
+                  minLength: 1
+                effectiveFrom:
+                  type: string
+                  format: date
+                  minLength: 1
+                jobTitle:
+                  type: string
+                  minLength: 1
+                jobDescription:
+                  type: string
+                  minLength: 1
+                seniority:
+                  type: string
+                  enum:
+                  - JUNIOR
+                  - MID
+                  - SENIOR
+                  - PRINCIPAL
+                  - LEAD
+                  - DIRECTOR
+                  - HEAD
+                  - VP
+                  - CSUITE
+                oneOffBonusValue:
+                  type:
+                  - string
+                  - 'null'
+                  pattern: ^[0-9]+(\.[0-9]{2,})?$
+                salaryAbsorbable:
+                  type: boolean
+                salary:
+                  type: object
+                  properties:
+                    decimal:
+                      type: string
+                      pattern: ^[0-9]+(\.[0-9]{2,})?$
+                    frequency:
+                      type: string
+                      enum:
+                      - YEARLY
+                      - MONTHLY
+                  required:
+                  - decimal
+                  - frequency
+                allowancesToAdd:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      label:
+                        type: string
+                        enum:
+                        - HEALTH_AND_WELLBEING
+                        - LEARNING_DEVELOPMENT
+                        - SUSTENANCE
+                        - TRAVEL
+                      amountDecimal:
+                        type: string
+                        pattern: ^(?=.*[1-9])(0|[1-9][0-9]*)(\.[0-9]{2,})?$
+                      paymentFrequency:
+                        type: string
+                        enum:
+                        - MONTHLY
+                        - QUARTERLY
+                        - BIANNUAL
+                        - YEARLY
+                        - ONE_TIME
+                      selectedMonths:
+                        type: array
+                        items:
+                          type: integer
+                          minimum: 1
+                          maximum: 12
+                    required:
+                    - label
+                    - amountDecimal
+                    - paymentFrequency
+                bonusesToAdd:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      label:
+                        type: string
+                        enum:
+                        - END_OF_YEAR
+                        - VACATION_BONUS
+                        - HOLIDAY_BONUS
+                        - PERFORMANCE
+                        - RETENTION
+                        - COMMISSION_PERCENTAGE
+                        - COMMISSION_AMOUNT
+                      amountDecimal:
+                        type: string
+                        pattern: ^(?=.*[1-9])(0|[1-9][0-9]*)(\.[0-9]{2,})?$
+                      amountAsPercentage:
+                        type: string
+                        pattern: ^(100(\.0+)?|[0-9]{1,2}(\.[0-9]{1,6})?)$
+                      paymentFrequency:
+                        type: string
+                        enum:
+                        - MONTHLY
+                        - QUARTERLY
+                        - BIANNUAL
+                        - YEARLY
+                        - ONE_TIME
+                      selectedMonths:
+                        type: array
+                        items:
+                          type: integer
+                          minimum: 1
+                          maximum: 12
+                      guaranteed:
+                        type: boolean
+                      prorated:
+                        type: boolean
+                    required:
+                    - label
+                    - paymentFrequency
+                allowancesToRemove:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+                bonusesToRemove:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        minLength: 1
+                    required:
+                    - id
+              required:
+              - engagementId
+              - effectiveFrom
+            examples:
+              Successful:
+                summary: Successful
+                value:
+                  engagementId: A5540727
+                  effectiveFrom: '2024-06-01'
+                  jobTitle: New Job Title
+                  seniority: SENIOR
+                  salary:
+                    decimal: '120445.00'
+                    frequency: YEARLY
+                  oneOffBonusValue: '10000.00'
+                  salaryAbsorbable: false
+                  allowancesToAdd:
+                  - label: HEALTH_AND_WELLBEING
+                    amount_decimal: '100.00'
+                    payment_frequency: MONTHLY
+                  bonusesToAdd:
+                  - label: VACATION_BONUS
+                    amount_decimal: '100.00'
+                    payment_frequency: MONTHLY
+                    guaranteed: true
+                    prorated: false
+                  allowancesToRemove:
+                  - id: A6c99852
+                  bonusesToRemove:
+                  - id: B37f4b09
+      operationId: postV1ContractChanges
+      x-operation-id-source: derived
+  /v1/contract_changes/rulesets:
+    get:
+      summary: Retrieve rulesets for creating a contract change
+      tags:
+      - Contract Changes
+      description: 'This API endpoint allows you to get the ruleset for creating a contract change for an engagement of a particular country, engagement type and contracting type.
+
+        Use country_code with engagement_type and contracting_type to get more detailed rules.
+
+        Alternatively, use engagement_id (on its own) to fetch the ruleset relating to a specific engagement.
+
+        Either engagement_id or country_code with engagement_type are required.
+
+        contracting_type is only required when engagement_type is contract.'
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: country_code
+        in: query
+        required: false
+        description: The country code for the engagement, e.g. US
+        schema:
+          type: string
+      - name: engagement_type
+        in: query
+        schema:
+          type: string
+          enum:
+          - EMPLOYMENT
+          - CONTRACT
+        required: false
+        description: The type of the engagement
+      - name: contracting_type
+        in: query
+        schema:
+          type: string
+          enum:
+          - PAY_AS_YOU_GO
+          - FIXED
+        required: false
+        description: Contracting type of the contractor
+      - name: engagement_id
+        in: query
+        required: false
+        description: The ID of a specific engagement
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful access to the ruleset
+          content:
+            application/json:
+              examples:
+                Successful access to the ruleset:
+                  value:
+                    data:
+                      rulesetId: CONTRACT_CHANGES_CONTRACT_PAYG
+                      scope:
+                        countryCode: US
+                        engagementType: contract
+                        contractingType: pay_as_you_go
+                      schemas:
+                        post:
+                          type: object
+                          properties:
+                            engagementId:
+                              type: string
+                              minLength: 1
+                            effectiveFrom:
+                              type: string
+                              format: date
+                              minLength: 1
+                            jobTitle:
+                              type: string
+                              minLength: 1
+                            jobDescription:
+                              type: string
+                              minLength: 1
+                            seniority:
+                              type: string
+                              enum:
+                              - JUNIOR
+                              - MID
+                              - SENIOR
+                              - PRINCIPAL
+                              - LEAD
+                              - DIRECTOR
+                              - HEAD
+                              - VP
+                              - CSUITE
+                            allowancesToAdd:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  label:
+                                    type: string
+                                    enum:
+                                    - HEALTH_AND_WELLBEING
+                                    - LEARNING_DEVELOPMENT
+                                    - SUSTENANCE
+                                    - TRAVEL
+                                  amountDecimal:
+                                    type: string
+                                    pattern: ^(?=.*[1-9])(0|[1-9][0-9]*)(\.[0-9]{2,})?$
+                                  paymentFrequency:
+                                    type: string
+                                    enum:
+                                    - MONTHLY
+                                    - QUARTERLY
+                                    - BIANNUAL
+                                    - YEARLY
+                                    - ONE_TIME
+                                  selectedMonths:
+                                    type: array
+                                    items:
+                                      type: integer
+                                      minimum: 1
+                                      maximum: 12
+                                required:
+                                - label
+                                - amountDecimal
+                                - paymentFrequency
+                            bonusesToAdd:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  label:
+                                    type: string
+                                    enum:
+                                    - END_OF_YEAR
+                                    - VACATION_BONUS
+                                    - HOLIDAY_BONUS
+                                    - PERFORMANCE
+                                    - RETENTION
+                                    - COMMISSION_PERCENTAGE
+                                    - COMMISSION_AMOUNT
+                                  amountDecimal:
+                                    type: string
+                                    pattern: ^(?=.*[1-9])(0|[1-9][0-9]*)(\.[0-9]{2,})?$
+                                  amountAsPercentage:
+                                    type: string
+                                    pattern: ^(100(\.0+)?|[0-9]{1,2}(\.[0-9]{1,6})?)$
+                                  paymentFrequency:
+                                    type: string
+                                    enum:
+                                    - MONTHLY
+                                    - QUARTERLY
+                                    - BIANNUAL
+                                    - YEARLY
+                                    - ONE_TIME
+                                  selectedMonths:
+                                    type: array
+                                    items:
+                                      type: integer
+                                      minimum: 1
+                                      maximum: 12
+                                  guaranteed:
+                                    type: boolean
+                                  prorated:
+                                    type: boolean
+                                required:
+                                - label
+                                - paymentFrequency
+                            allowancesToRemove:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                    minLength: 1
+                                required:
+                                - id
+                            bonusesToRemove:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  id:
+                                    type: string
+                                    minLength: 1
+                                required:
+                                - id
+                          required:
+                          - engagementId
+                          - effectiveFrom
+                      sources: {}
+                      rules:
+                        post:
+                          allOf:
+                          - properties:
+                              bonusesToAdd:
+                                items:
+                                  allOf:
+                                  - if:
+                                      properties:
+                                        paymentFrequency:
+                                          const: YEARLY
+                                    then:
+                                      properties:
+                                        selectedMonths:
+                                          minItems: 1
+                                      required:
+                                      - selectedMonths
+                                    else:
+                                      not:
+                                        required:
+                                        - selectedMonths
+                                  - oneOf:
+                                    - required:
+                                      - amountDecimal
+                                    - required:
+                                      - amountAsPercentage
+                                  - if:
+                                      properties:
+                                        label:
+                                          const: COMMISSION_AMOUNT
+                                    then:
+                                      properties:
+                                        guaranteed:
+                                          enum:
+                                          - false
+                                      required:
+                                      - amountDecimal
+                                  - if:
+                                      properties:
+                                        label:
+                                          const: COMMISSION_PERCENTAGE
+                                    then:
+                                      properties:
+                                        guaranteed:
+                                          enum:
+                                          - false
+                                      required:
+                                      - amountAsPercentage
+                                  - if:
+                                      properties:
+                                        label:
+                                          const: END_OF_YEAR
+                                    then:
+                                      properties:
+                                        paymentFrequency:
+                                          enum:
+                                          - YEARLY
+                              allowancesToAdd:
+                                items:
+                                  allOf:
+                                  - if:
+                                      properties:
+                                        paymentFrequency:
+                                          const: YEARLY
+                                    then:
+                                      properties:
+                                        selectedMonths:
+                                          minItems: 1
+                                      required:
+                                      - selectedMonths
+                                    else:
+                                      not:
+                                        required:
+                                        - selectedMonths
+        '400':
+          description: Missing required parameter
+          content:
+            application/json:
+              examples:
+                Missing required parameter:
+                  value:
+                    errors:
+                    - message: provide either engagement_id or country_code and engagement_type
+      operationId: getV1ContractChangesRulesets
+      x-operation-id-source: derived
+  /v1/contract_changes/{id}:
+    get:
+      summary: Retrieve an individual contract change request
+      tags:
+      - Contract Changes
+      description: Returns details for a contract change with a given contract change ID.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: id
+        in: path
+        description: Contract change ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                      id: A957fa08
+                      engagement:
+                        id: A5540727
+                        name: Mafalda Fahey
+                        type: EMPLOYMENT
+                        countryCode: GB
+                      effectiveFrom: '2022-10-25'
+                      applicableFrom: '2022-11-01'
+                      expirationDate: '2022-10-22'
+                      createdAt: '2022-10-15T12:34:56Z'
+                      updatedAt: '2022-10-15T12:34:56Z'
+                      requestedBy:
+                        name: Aldo Kohler
+                      state: SUBMITTED
+                      oneOffBonusPayment: null
+                      automatedAmendments: false
+                      changesRequested:
+                      - POSITION_DETAILS
+                      changes:
+                        positionDetails:
+                          jobTitle:
+                            from: Junior Copywriter Consultant
+                            to: Senior Copywriter Consultant
+                          jobDescription:
+                            from: null
+                            to: Next Job Description
+                        compensation:
+                          salary:
+                            from: null
+                            to: null
+                          salaryAbsorbable:
+                            from: null
+                            to: null
+                        bonuses:
+                          added: []
+                          removed: []
+                        allowances:
+                          added: []
+                          removed: []
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/contractChange'
+                required:
+                - data
+      operationId: getV1ContractChangesById
+      x-operation-id-source: derived
+  /v1/contract_changes/{id}/cancel:
+    post:
+      summary: Cancel request
+      tags:
+      - Contract Changes
+      description: 'Cancels a contract change request.
+
+
+        **This endpoint requires the `X-Oyster-Actor-Email` header when using client credentials authentication.**'
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: id
+        in: path
+        description: Contract change ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                      id: A957fa08
+                      engagement:
+                        id: A5540727
+                        name: Mafalda Fahey
+                        type: EMPLOYMENT
+                        countryCode: GB
+                      effectiveFrom: '2022-10-25'
+                      applicableFrom: '2022-11-01'
+                      expirationDate: '2022-10-22'
+                      createdAt: '2022-10-15T12:34:56Z'
+                      updatedAt: '2022-10-15T12:34:56Z'
+                      requestedBy:
+                        name: Aldo Kohler
+                      state: CANCELLED
+                      oneOffBonusPayment: null
+                      automatedAmendments: false
+                      changesRequested:
+                      - POSITION_DETAILS
+                      changes:
+                        positionDetails:
+                          jobTitle:
+                            from: Junior Copywriter Consultant
+                            to: Senior Copywriter Consultant
+                          jobDescription:
+                            from: null
+                            to: Next Job Description
+                        compensation:
+                          salary:
+                            from: null
+                            to: null
+                          salaryAbsorbable:
+                            from: null
+                            to: null
+                        bonuses:
+                          added: []
+                          removed: []
+                        allowances:
+                          added: []
+                          removed: []
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/contractChange'
+                required:
+                - data
+        '422':
+          description: Operation cannot be performed
+          content:
+            application/json:
+              examples:
+                Operation cannot be performed:
+                  value:
+                    errors:
+                    - message: This contract change has already been canceled
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cancellationReason:
+                  type: string
+                  minLength: 1
+              required:
+              - cancellationReason
+            examples:
+              Successful:
+                summary: Successful
+                value:
+                  cancellationReason: Mistake in the original change
+      operationId: postV1ContractChangesByIdCancel
+      x-operation-id-source: derived
+components:
+  schemas:
+    contractChange:
+      type: object
+      properties:
+        id:
+          type: string
+        effectiveFrom:
+          type: string
+          format: date
+        applicableFrom:
+          type: string
+          format: date
+        expirationDate:
+          type:
+          - string
+          - 'null'
+          format: date
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        requestedBy:
+          type: object
+          properties:
+            name:
+              type: string
+        changesRequested:
+          type: array
+          items:
+            type: string
+            enum:
+            - POSITION_DETAILS
+            - COMPENSATION
+            - BONUS
+            - ALLOWANCE
+        state:
+          type: string
+        changes:
+          type: object
+          properties:
+            positionDetails:
+              type: object
+              properties:
+                jobTitle:
+                  type: object
+                  properties:
+                    from:
+                      type:
+                      - string
+                      - 'null'
+                    to:
+                      type:
+                      - string
+                      - 'null'
+                jobDescription:
+                  type: object
+                  properties:
+                    from:
+                      type:
+                      - string
+                      - 'null'
+                    to:
+                      type:
+                      - string
+                      - 'null'
+            compensation:
+              type: object
+              properties:
+                salary:
+                  type: object
+                  properties:
+                    from:
+                      $ref: '#/components/schemas/amount'
+                    to:
+                      $ref: '#/components/schemas/amount'
+                salaryAbsorbable:
+                  type: object
+                  properties:
+                    from:
+                      type:
+                      - boolean
+                      - 'null'
+                    to:
+                      type:
+                      - boolean
+                      - 'null'
+            bonuses:
+              type: object
+              properties:
+                added:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      label:
+                        type: string
+                      paymentFrequency:
+                        enum:
+                        - MONTHLY
+                        - QUARTERLY
+                        - BIANNUAL
+                        - YEARLY
+                        - ONE_TIME
+                      guaranteed:
+                        type: boolean
+                      statutory:
+                        type: boolean
+                      amountDecimal:
+                        type: string
+                      selectedMonths:
+                        type: array
+                        items:
+                          type: integer
+                      prorated:
+                        type: boolean
+                    required:
+                    - id
+                    - label
+                    - paymentFrequency
+                    - guaranteed
+                    - statutory
+                removed:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      label:
+                        type: string
+                      paymentFrequency:
+                        enum:
+                        - MONTHLY
+                        - QUARTERLY
+                        - BIANNUAL
+                        - YEARLY
+                        - ONE_TIME
+                      guaranteed:
+                        type: boolean
+                      statutory:
+                        type: boolean
+                      amountDecimal:
+                        type: string
+                      selectedMonths:
+                        type: array
+                        items:
+                          type: integer
+                      prorated:
+                        type: boolean
+                    required:
+                    - id
+                    - label
+                    - paymentFrequency
+                    - guaranteed
+                    - statutory
+              required:
+              - added
+              - removed
+            allowances:
+              type: object
+              properties:
+                added:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      label:
+                        type: string
+                      paymentFrequency:
+                        enum:
+                        - MONTHLY
+                        - QUARTERLY
+                        - BIANNUAL
+                        - YEARLY
+                        - ONE_TIME
+                      statutory:
+                        type: boolean
+                      amountDecimal:
+                        type: string
+                      selectedMonths:
+                        type: array
+                        items:
+                          type: integer
+                      prorated:
+                        type: boolean
+                    required:
+                    - id
+                    - label
+                    - paymentFrequency
+                    - statutory
+                removed:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                      label:
+                        type: string
+                      paymentFrequency:
+                        enum:
+                        - MONTHLY
+                        - QUARTERLY
+                        - BIANNUAL
+                        - YEARLY
+                        - ONE_TIME
+                      statutory:
+                        type: boolean
+                      amountDecimal:
+                        type: string
+                      selectedMonths:
+                        type: array
+                        items:
+                          type: integer
+                      prorated:
+                        type: boolean
+                    required:
+                    - id
+                    - label
+                    - paymentFrequency
+                    - statutory
+              required:
+              - added
+              - removed
+          required:
+          - bonuses
+          - allowances
+        engagement:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type:
+              - string
+              - 'null'
+            type:
+              type: string
+              enum:
+              - EMPLOYMENT
+              - CONTRACT
+            countryCode:
+              type: string
+              pattern: ^[A-Z]{2}$
+        oneOffBonusPayment:
+          type:
+          - object
+          - 'null'
+          $ref: '#/components/schemas/amount'
+      required:
+      - id
+      - engagement
+      - effectiveFrom
+      - applicableFrom
+      - createdAt
+      - updatedAt
+      - requestedBy
+      - changesRequested
+      - state
+      - changes
+    contractChanges:
+      type: array
+      items:
+        $ref: '#/components/schemas/contractChange'
+    meta:
+      type: object
+      properties:
+        items:
+          type: integer
+        count:
+          type: integer
+        page:
+          type: integer
+        pages:
+          type: integer
+        firstUrl:
+          type: string
+        lastUrl:
+          type: string
+        pageUrl:
+          type: string
+        nextUrl:
+          type: string
+        prevUrl:
+          type: string
+        deprecation:
+          type: object
+          properties:
+            at:
+              type: string
+            sunset:
+              type: string
+            link:
+              type: object
+              properties:
+                rel:
+                  type: string
+                url:
+                  type: string
+      required:
+      - items
+      - count
+      - page
+      - pages
+      - firstUrl
+      - lastUrl
+      - pageUrl
+      - nextUrl
+      - prevUrl
+    amount:
+      type: object
+      properties:
+        decimal:
+          type: string
+          pattern: ^\d+([.]\d+)?$
+        currencyCode:
+          type: string
+          minLength: 3
+          maxLength: 3
+      required:
+      - decimal
+      - currencyCode
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+x-provenance:
+  method: searched
+  source: https://docs.oysterhr.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.oysterhr.com/reference/delete_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/delete_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-document-document-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/delete_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-engagements-engagement-id-offerings.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-enrollments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-company.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes.md
+  - https://docs.oysterhr.com/reference/get_v1-departments.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-allowances.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-bonuses.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-documents.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-identity-verification.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-payslips.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id-sources-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements-agreement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-annually.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-monthly.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form-documents-field-or-document-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-tasks.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-role-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier-breakdown.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices.md
+  - https://docs.oysterhr.com/reference/get_v1-meta-operations-operation-key.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-payroll-team-members-terminations-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-pay-types.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id-charges.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charges-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-payouts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id-records.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll.md
+  - https://docs.oysterhr.com/reference/get_v1-public-holidays.md
+  - https://docs.oysterhr.com/reference/get_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id-sources-source-type.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks-dispatches.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/patch_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-employments-id-personal-details.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-reseller-customers-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/post_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/post_v1-benefits-engagements-engagement-id-enrollments.md
+  - https://docs.oysterhr.com/reference/post_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-approved.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-declined.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-sessions.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-decline.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-agreements-agreement-id-verify.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-document.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-onboarding-form-complete.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-team-member-invite.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-dispute.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-cancellation.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-documents.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-initiate.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-payroll-team-members-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/post_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-attachment.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-reject.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-entries.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-confirm.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks-id-test.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/put_v1-hiring-employments-id-onboarding-form-documents-field-id.md
+  merge:
+    pages: 140
+    deduped: 378
+    conflicts_kept_first: 0

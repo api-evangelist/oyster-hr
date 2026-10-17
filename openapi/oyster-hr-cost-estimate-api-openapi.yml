@@ -1,0 +1,574 @@
+openapi: 3.2.0
+info:
+  title: Endpoints Cost Estimate API
+  version: v1
+servers:
+- url: https://api.oysterhr.com
+  description: Production server
+- url: https://api-sandbox.oysterhr.com
+  description: Sandbox server
+tags:
+- name: Cost Estimate
+paths:
+  /v1/hiring/employments/{id}/cost_estimates/annually:
+    get:
+      summary: Retrieve annual cost estimates for an employment
+      tags:
+      - Cost Estimate
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: id
+        in: path
+        description: Employment ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                      engagement:
+                        id: A5540727
+                        countryCode: PT
+                      grossSalaryAmount:
+                        decimal: '34343.00'
+                        currencyCode: EUR
+                      mandatoryCosts:
+                        totalAmount:
+                          decimal: '8414.00'
+                          currencyCode: EUR
+                        constituents:
+                        - name: Social Tax
+                          category: SOCIAL_SECURITY
+                          amount:
+                            decimal: '8156.00'
+                            currencyCode: EUR
+                          label: null
+                        - name: Labor Accident Insurance
+                          category: SOCIAL_SECURITY
+                          amount:
+                            decimal: '258.00'
+                            currencyCode: EUR
+                          label: null
+                      additionalCosts:
+                        totalAmount:
+                          decimal: '30.00'
+                          currencyCode: EUR
+                        constituents:
+                        - name: Vacation bonus
+                          category: BONUS
+                          amount:
+                            decimal: '10.00'
+                            currencyCode: EUR
+                          label: VACATION_BONUS
+                        - name: Car
+                          category: ALLOWANCE
+                          amount:
+                            decimal: '20.00'
+                            currencyCode: EUR
+                          label: CAR
+                      oysterFee:
+                        amountInEmploymentCurrency:
+                          decimal: '7990.00'
+                          currencyCode: EUR
+                        amountInCompanyCurrency:
+                          decimal: '8388.00'
+                          currencyCode: USD
+                      vat:
+                        percentage: '0'
+                        amount:
+                          decimal: '0.00'
+                          currencyCode: EUR
+                      totalCostsAmount:
+                        decimal: '50777.00'
+                        currencyCode: EUR
+                      taxesAndSocialSecurity:
+                        totalAmount:
+                          decimal: '13186.00'
+                          currencyCode: EUR
+                        constituents:
+                        - name: Social Security
+                          category: SOCIAL_SECURITY
+                          amount:
+                            decimal: '3778.00'
+                            currencyCode: EUR
+                        - name: Personal Income Tax
+                          category: INCOME_TAX
+                          amount:
+                            decimal: '9408.00'
+                            currencyCode: EUR
+                      netSalaryAmount:
+                        decimal: '21157.00'
+                        currencyCode: EUR
+                      notes:
+                      - A refundable deposit that equals one-month of the total cost of employment for this new Team Member is required
+                      - This deposit is refundable after the Team Member has been with Oyster for 12 months.
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/employmentCostEstimate'
+                required:
+                - data
+      operationId: getV1HiringEmploymentsByIdCostEstimatesAnnually
+      x-operation-id-source: derived
+  /v1/hiring/employments/{id}/cost_estimates/monthly:
+    get:
+      summary: Retrieve monthly cost estimates for an employment
+      tags:
+      - Cost Estimate
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: id
+        in: path
+        description: Employment ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                      engagement:
+                        id: A5540727
+                        countryCode: PT
+                      grossSalaryAmount:
+                        decimal: '2862.00'
+                        currencyCode: EUR
+                      mandatoryCosts:
+                        totalAmount:
+                          decimal: '701.00'
+                          currencyCode: EUR
+                        constituents:
+                        - name: Social Tax
+                          category: SOCIAL_SECURITY
+                          amount:
+                            decimal: '680.00'
+                            currencyCode: EUR
+                          label: null
+                        - name: Labor Accident Insurance
+                          category: SOCIAL_SECURITY
+                          amount:
+                            decimal: '22.00'
+                            currencyCode: EUR
+                          label: null
+                      additionalCosts:
+                        totalAmount:
+                          decimal: '3.00'
+                          currencyCode: EUR
+                        constituents:
+                        - name: Vacation bonus
+                          category: BONUS
+                          amount:
+                            decimal: '1.00'
+                            currencyCode: EUR
+                          label: VACATION_BONUS
+                        - name: Car
+                          category: ALLOWANCE
+                          amount:
+                            decimal: '2.00'
+                            currencyCode: EUR
+                          label: CAR
+                      oysterFee:
+                        amountInEmploymentCurrency:
+                          decimal: '666.00'
+                          currencyCode: EUR
+                        amountInCompanyCurrency:
+                          decimal: '699.00'
+                          currencyCode: USD
+                      vat:
+                        percentage: '0'
+                        amount:
+                          decimal: '0.00'
+                          currencyCode: EUR
+                      totalCostsAmount:
+                        decimal: '4232.00'
+                        currencyCode: EUR
+                      taxesAndSocialSecurity:
+                        totalAmount:
+                          decimal: '1099.00'
+                          currencyCode: EUR
+                        constituents:
+                        - name: Social Security
+                          category: SOCIAL_SECURITY
+                          amount:
+                            decimal: '315.00'
+                            currencyCode: EUR
+                        - name: Personal Income Tax
+                          category: INCOME_TAX
+                          amount:
+                            decimal: '784.00'
+                            currencyCode: EUR
+                      netSalaryAmount:
+                        decimal: '1763.00'
+                        currencyCode: EUR
+                      notes:
+                      - A refundable deposit that equals one-month of the total cost of employment for this new Team Member is required
+                      - This deposit is refundable after the Team Member has been with Oyster for 12 months.
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/employmentCostEstimate'
+                required:
+                - data
+      operationId: getV1HiringEmploymentsByIdCostEstimatesMonthly
+      x-operation-id-source: derived
+components:
+  schemas:
+    employmentCostEstimate:
+      type: object
+      properties:
+        engagement:
+          type: object
+          properties:
+            id:
+              type: string
+            countryCode:
+              type: string
+          required:
+          - id
+          - countryCode
+        grossSalaryAmount:
+          type: object
+          $ref: '#/components/schemas/amount'
+        mandatoryCosts:
+          type:
+          - object
+          - 'null'
+          properties:
+            totalAmount:
+              type: object
+              $ref: '#/components/schemas/amount'
+            constituents:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  label:
+                    type:
+                    - string
+                    - 'null'
+                    description: 'Machine-readable key for a variable compensation (for example SIGN_ON_BONUS). Null for cost lines that are not variable compensations, such as benefits and taxes. Not unique: the same label can exist under both BONUS and ALLOWANCE, and several compensations can share a label, so combine it with `category`. Match on this rather than on `name`, which is display copy and may change. Statutory variable compensations are listed here and not in `additionalCosts`.'
+                  category:
+                    type: string
+                    enum:
+                    - SOCIAL_SECURITY
+                    - ACCRUAL
+                    - ALLOWANCE
+                    - EMPLOYER_BENEFIT
+                    - BONUS
+                    - BENEFIT
+                  amount:
+                    type: object
+                    $ref: '#/components/schemas/amount'
+                required:
+                - name
+                - label
+                - category
+                - amount
+          required:
+          - totalAmount
+          - constituents
+        additionalCosts:
+          type:
+          - object
+          - 'null'
+          properties:
+            totalAmount:
+              type: object
+              $ref: '#/components/schemas/amount'
+            constituents:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  label:
+                    type:
+                    - string
+                    - 'null'
+                    description: 'Machine-readable key for a variable compensation (for example SIGN_ON_BONUS). Null for cost lines that are not variable compensations, such as benefits and taxes. Not unique: the same label can exist under both BONUS and ALLOWANCE, and several compensations can share a label, so combine it with `category`. Match on this rather than on `name`, which is display copy and may change.'
+                  category:
+                    type: string
+                    enum:
+                    - BONUS
+                    - ALLOWANCE
+                    - BENEFIT
+                  amount:
+                    type: object
+                    $ref: '#/components/schemas/amount'
+                required:
+                - name
+                - label
+                - category
+                - amount
+          required:
+          - totalAmount
+          - constituents
+        oysterFee:
+          type:
+          - object
+          - 'null'
+          properties:
+            amountInEmploymentCurrency:
+              type: object
+              $ref: '#/components/schemas/amount'
+            amountInCompanyCurrency:
+              type: object
+              $ref: '#/components/schemas/amount'
+          required:
+          - amountInEmploymentCurrency
+          - amountInCompanyCurrency
+        vat:
+          type:
+          - object
+          - 'null'
+          properties:
+            percentage:
+              type: string
+            amount:
+              type: object
+              $ref: '#/components/schemas/amount'
+          required:
+          - percentage
+          - amount
+        totalCostsAmount:
+          type: object
+          $ref: '#/components/schemas/amount'
+        taxesAndSocialSecurity:
+          type:
+          - object
+          - 'null'
+          properties:
+            totalAmount:
+              type: object
+              $ref: '#/components/schemas/amount'
+            constituents:
+              type: array
+              items:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  category:
+                    type: string
+                    enum:
+                    - SOCIAL_SECURITY
+                    - INCOME_TAX
+                    - EMPLOYEE_BENEFIT
+                    - TAX_CREDIT
+                    - SOLIDARITY_TAX
+                  amount:
+                    type: object
+                    $ref: '#/components/schemas/amount'
+                required:
+                - name
+                - category
+                - amount
+          required:
+          - totalAmount
+          - constituents
+        netSalaryAmount:
+          type: object
+          $ref: '#/components/schemas/amount'
+        notes:
+          type: array
+          items:
+            type: string
+      required:
+      - engagement
+      - grossSalaryAmount
+      - mandatoryCosts
+      - additionalCosts
+      - oysterFee
+      - vat
+      - totalCostsAmount
+      - taxesAndSocialSecurity
+      - netSalaryAmount
+      - notes
+    amount:
+      type: object
+      properties:
+        decimal:
+          type: string
+          pattern: ^\d+([.]\d+)?$
+        currencyCode:
+          type: string
+          minLength: 3
+          maxLength: 3
+      required:
+      - decimal
+      - currencyCode
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+x-provenance:
+  method: searched
+  source: https://docs.oysterhr.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.oysterhr.com/reference/delete_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/delete_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-document-document-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/delete_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-engagements-engagement-id-offerings.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-enrollments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-company.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes.md
+  - https://docs.oysterhr.com/reference/get_v1-departments.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-allowances.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-bonuses.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-documents.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-identity-verification.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-payslips.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id-sources-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements-agreement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-annually.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-monthly.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form-documents-field-or-document-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-tasks.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-role-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier-breakdown.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices.md
+  - https://docs.oysterhr.com/reference/get_v1-meta-operations-operation-key.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-payroll-team-members-terminations-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-pay-types.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id-charges.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charges-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-payouts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id-records.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll.md
+  - https://docs.oysterhr.com/reference/get_v1-public-holidays.md
+  - https://docs.oysterhr.com/reference/get_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id-sources-source-type.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks-dispatches.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/patch_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-employments-id-personal-details.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-reseller-customers-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/post_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/post_v1-benefits-engagements-engagement-id-enrollments.md
+  - https://docs.oysterhr.com/reference/post_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-approved.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-declined.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-sessions.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-decline.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-agreements-agreement-id-verify.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-document.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-onboarding-form-complete.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-team-member-invite.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-dispute.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-cancellation.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-documents.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-initiate.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-payroll-team-members-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/post_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-attachment.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-reject.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-entries.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-confirm.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks-id-test.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/put_v1-hiring-employments-id-onboarding-form-documents-field-id.md
+  merge:
+    pages: 140
+    deduped: 378
+    conflicts_kept_first: 0

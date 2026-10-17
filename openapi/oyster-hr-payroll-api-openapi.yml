@@ -1,0 +1,627 @@
+openapi: 3.2.0
+info:
+  title: Endpoints Payroll API
+  version: v1
+servers:
+- url: https://api.oysterhr.com
+  description: Production server
+- url: https://api-sandbox.oysterhr.com
+  description: Sandbox server
+tags:
+- name: Payroll
+paths:
+  /v1/payroll:
+    get:
+      summary: Retrieve all payroll
+      tags:
+      - Payroll
+      description: Returns a list of payrolls, max items per request would be 12
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: from
+        in: query
+        required: false
+        schema:
+          type: string
+      - name: to
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                No payrolls:
+                  value:
+                    data: []
+                    meta:
+                      items: 12
+                      count: 0
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/payroll?perPage=12&page=1&from=&to=
+                      lastUrl: /v1/payroll?perPage=12&page=1&from=&to=
+                      pageUrl: /v1/payroll?perPage=12&page=1&from=&to=
+                      nextUrl: /v1/payroll?perPage=12&page=&from=&to=
+                      prevUrl: /v1/payroll?perPage=12&page=&from=&to=
+                Successful:
+                  value:
+                    data:
+                    - id: B7cf5c51
+                      payrollId: B7cf5c51
+                      currencyCode: USD
+                      cutoffTimeForPayroll: '2022-10-07T05:00:00.000Z'
+                      state: DRAFT
+                      payrollRecordsCount: 2
+                    - id: Afdc8fa8
+                      payrollId: Afdc8fa8
+                      currencyCode: USD
+                      cutoffTimeForPayroll: '2022-10-07T05:00:00.000Z'
+                      state: DRAFT
+                      payrollRecordsCount: 2
+                    meta:
+                      items: 12
+                      count: 2
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/payroll?perPage=12&page=1&from=2023-03&to=2023-04
+                      lastUrl: /v1/payroll?perPage=12&page=1&from=2023-03&to=2023-04
+                      pageUrl: /v1/payroll?perPage=12&page=1&from=2023-03&to=2023-04
+                      nextUrl: /v1/payroll?perPage=12&page=&from=2023-03&to=2023-04
+                      prevUrl: /v1/payroll?perPage=12&page=&from=2023-03&to=2023-04
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/payrolls'
+                  meta:
+                    $ref: '#/components/schemas/meta'
+                required:
+                - data
+                - meta
+      operationId: getV1Payroll
+      x-operation-id-source: derived
+  /v1/payroll/{id}:
+    get:
+      summary: Retrieve an individual payroll
+      tags:
+      - Payroll
+      description: Returns details for a payroll with a given payroll ID.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: id
+        in: path
+        description: Payroll ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                      id: Afdc8fa8
+                      payrollId: Afdc8fa8
+                      currencyCode: USD
+                      cutoffTimeForPayroll: '2022-10-07T05:00:00.000Z'
+                      state: DRAFT
+                      payrollRecordsCount: 2
+                      records:
+                      - id: Afdc8fa8
+                        engagementId: A5540727
+                        currencyCode: EUR
+                        monthlyPaymentsTotalAmount:
+                          decimal: '0.00'
+                          currencyCode: USD
+                        allowancesTotalAmount:
+                          decimal: '0.00'
+                          currencyCode: USD
+                        benefitsTotalAmount:
+                          decimal: '0.00'
+                          currencyCode: USD
+                        bonusesTotalAmount:
+                          decimal: '0.00'
+                          currencyCode: USD
+                        addOnsTotalAmount:
+                          decimal: '0.00'
+                          currencyCode: USD
+                        taxesTotalAmount:
+                          decimal: '0.00'
+                          currencyCode: USD
+                        trueUpsTotalAmount:
+                          decimal: '0.00'
+                          currencyCode: USD
+                        oysterFeesTotalAmount:
+                          decimal: '0.00'
+                          currencyCode: USD
+                        engagement:
+                          name: Mafalda Fahey
+                          cutoffMonthDay: 6
+                          type: EMPLOYMENT
+                          engagementType: EMPLOYMENT
+                      - id: Afdc8fa8
+                        engagementId: B0b779a8
+                        currencyCode: EUR
+                        monthlyPaymentsTotalAmount:
+                          decimal: '0.00'
+                          currencyCode: USD
+                        allowancesTotalAmount:
+                          decimal: '0.00'
+                          currencyCode: USD
+                        benefitsTotalAmount:
+                          decimal: '0.00'
+                          currencyCode: USD
+                        bonusesTotalAmount:
+                          decimal: '0.00'
+                          currencyCode: USD
+                        addOnsTotalAmount:
+                          decimal: '0.00'
+                          currencyCode: USD
+                        taxesTotalAmount:
+                          decimal: '0.00'
+                          currencyCode: USD
+                        trueUpsTotalAmount:
+                          decimal: '0.00'
+                          currencyCode: USD
+                        oysterFeesTotalAmount:
+                          decimal: '0.00'
+                          currencyCode: USD
+                        engagement:
+                          name: Freida Hessel
+                          cutoffMonthDay: 6
+                          type: EMPLOYMENT
+                          engagementType: EMPLOYMENT
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/payroll'
+                required:
+                - data
+      operationId: getV1PayrollById
+      x-operation-id-source: derived
+  /v1/payroll/{id}/records:
+    get:
+      summary: Retrieve payroll records for individual payroll
+      tags:
+      - Payroll
+      description: Returns a list of payroll records for an individual payroll, max items per request is 10
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: id
+        in: path
+        description: Payroll ID
+        required: true
+        schema:
+          type: string
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                    - id: Afdc8fa8
+                      engagementId: B0b779a8
+                      currencyCode: EUR
+                      monthlyPaymentsTotalAmount:
+                        decimal: '0.00'
+                        currencyCode: USD
+                      allowancesTotalAmount:
+                        decimal: '0.00'
+                        currencyCode: USD
+                      benefitsTotalAmount:
+                        decimal: '0.00'
+                        currencyCode: USD
+                      bonusesTotalAmount:
+                        decimal: '0.00'
+                        currencyCode: USD
+                      addOnsTotalAmount:
+                        decimal: '0.00'
+                        currencyCode: USD
+                      taxesTotalAmount:
+                        decimal: '0.00'
+                        currencyCode: USD
+                      trueUpsTotalAmount:
+                        decimal: '0.00'
+                        currencyCode: USD
+                      oysterFeesTotalAmount:
+                        decimal: '0.00'
+                        currencyCode: USD
+                      engagement:
+                        name: Freida Hessel
+                        cutoffMonthDay: 6
+                        type: EMPLOYMENT
+                        engagementType: EMPLOYMENT
+                    - id: Afdc8fa8
+                      engagementId: A5540727
+                      currencyCode: EUR
+                      monthlyPaymentsTotalAmount:
+                        decimal: '0.00'
+                        currencyCode: USD
+                      allowancesTotalAmount:
+                        decimal: '0.00'
+                        currencyCode: USD
+                      benefitsTotalAmount:
+                        decimal: '0.00'
+                        currencyCode: USD
+                      bonusesTotalAmount:
+                        decimal: '0.00'
+                        currencyCode: USD
+                      addOnsTotalAmount:
+                        decimal: '0.00'
+                        currencyCode: USD
+                      taxesTotalAmount:
+                        decimal: '0.00'
+                        currencyCode: USD
+                      trueUpsTotalAmount:
+                        decimal: '0.00'
+                        currencyCode: USD
+                      oysterFeesTotalAmount:
+                        decimal: '0.00'
+                        currencyCode: USD
+                      engagement:
+                        name: Mafalda Fahey
+                        cutoffMonthDay: 6
+                        type: EMPLOYMENT
+                        engagementType: EMPLOYMENT
+                    meta:
+                      items: 10
+                      count: 2
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/payroll/Afdc8fa8/records?perPage=10&page=1
+                      lastUrl: /v1/payroll/Afdc8fa8/records?perPage=10&page=1
+                      pageUrl: /v1/payroll/Afdc8fa8/records?perPage=10&page=1
+                      nextUrl: /v1/payroll/Afdc8fa8/records?perPage=10&page=
+                      prevUrl: /v1/payroll/Afdc8fa8/records?perPage=10&page=
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/payrollRecords'
+                  meta:
+                    $ref: '#/components/schemas/meta'
+                required:
+                - data
+                - meta
+      operationId: getV1PayrollByIdRecords
+      x-operation-id-source: derived
+components:
+  schemas:
+    payroll:
+      type: object
+      properties:
+        payrollId:
+          type: string
+        currencyCode:
+          type: string
+        cutoffTimeForPayroll:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        state:
+          type: string
+        payrollRecordsCount:
+          type: integer
+      required:
+      - payrollId
+      - currencyCode
+      - cutoffTimeForPayroll
+      - state
+      - payrollRecordsCount
+    payrollRecord:
+      type: object
+      properties:
+        id:
+          type: string
+        engagementId:
+          type:
+          - string
+          - 'null'
+        currencyCode:
+          type: string
+        monthlyPaymentsTotalAmount:
+          $ref: '#/components/schemas/amount'
+        allowancesTotalAmount:
+          $ref: '#/components/schemas/amount'
+        benefitsTotalAmount:
+          $ref: '#/components/schemas/amount'
+        bonusesTotalAmount:
+          $ref: '#/components/schemas/amount'
+        addOnsTotalAmount:
+          $ref: '#/components/schemas/amount'
+        taxesTotalAmount:
+          $ref: '#/components/schemas/amount'
+        trueUpsTotalAmount:
+          $ref: '#/components/schemas/amount'
+        oysterFeesTotalAmount:
+          $ref: '#/components/schemas/amount'
+        engagement:
+          type:
+          - object
+          - 'null'
+          properties:
+            name:
+              type: string
+            cutoffMonthDay:
+              type: integer
+            engagementType:
+              type: string
+            type:
+              type: string
+          required:
+          - name
+          - cutoffMonthDay
+          - engagementType
+          - type
+      required:
+      - id
+      - engagementId
+      - currencyCode
+      - monthlyPaymentsTotalAmount
+      - allowancesTotalAmount
+      - benefitsTotalAmount
+      - bonusesTotalAmount
+      - addOnsTotalAmount
+      - taxesTotalAmount
+      - trueUpsTotalAmount
+      - oysterFeesTotalAmount
+      - engagement
+    payrollRecords:
+      type: array
+      items:
+        $ref: '#/components/schemas/payrollRecord'
+    meta:
+      type: object
+      properties:
+        items:
+          type: integer
+        count:
+          type: integer
+        page:
+          type: integer
+        pages:
+          type: integer
+        firstUrl:
+          type: string
+        lastUrl:
+          type: string
+        pageUrl:
+          type: string
+        nextUrl:
+          type: string
+        prevUrl:
+          type: string
+        deprecation:
+          type: object
+          properties:
+            at:
+              type: string
+            sunset:
+              type: string
+            link:
+              type: object
+              properties:
+                rel:
+                  type: string
+                url:
+                  type: string
+      required:
+      - items
+      - count
+      - page
+      - pages
+      - firstUrl
+      - lastUrl
+      - pageUrl
+      - nextUrl
+      - prevUrl
+    payrolls:
+      type: array
+      items:
+        $ref: '#/components/schemas/payroll'
+    amount:
+      type: object
+      properties:
+        decimal:
+          type: string
+          pattern: ^\d+([.]\d+)?$
+        currencyCode:
+          type: string
+          minLength: 3
+          maxLength: 3
+      required:
+      - decimal
+      - currencyCode
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+x-provenance:
+  method: searched
+  source: https://docs.oysterhr.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.oysterhr.com/reference/delete_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/delete_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-document-document-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/delete_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-engagements-engagement-id-offerings.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-enrollments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-company.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes.md
+  - https://docs.oysterhr.com/reference/get_v1-departments.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-allowances.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-bonuses.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-documents.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-identity-verification.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-payslips.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id-sources-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements-agreement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-annually.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-monthly.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form-documents-field-or-document-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-tasks.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-role-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier-breakdown.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices.md
+  - https://docs.oysterhr.com/reference/get_v1-meta-operations-operation-key.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-payroll-team-members-terminations-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-pay-types.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id-charges.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charges-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-payouts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id-records.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll.md
+  - https://docs.oysterhr.com/reference/get_v1-public-holidays.md
+  - https://docs.oysterhr.com/reference/get_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id-sources-source-type.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks-dispatches.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/patch_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-employments-id-personal-details.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-reseller-customers-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/post_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/post_v1-benefits-engagements-engagement-id-enrollments.md
+  - https://docs.oysterhr.com/reference/post_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-approved.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-declined.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-sessions.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-decline.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-agreements-agreement-id-verify.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-document.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-onboarding-form-complete.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-team-member-invite.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-dispute.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-cancellation.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-documents.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-initiate.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-payroll-team-members-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/post_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-attachment.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-reject.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-entries.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-confirm.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks-id-test.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/put_v1-hiring-employments-id-onboarding-form-documents-field-id.md
+  merge:
+    pages: 140
+    deduped: 378
+    conflicts_kept_first: 0

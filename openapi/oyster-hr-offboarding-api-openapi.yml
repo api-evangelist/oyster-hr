@@ -1,0 +1,1732 @@
+openapi: 3.2.0
+info:
+  title: Endpoints Offboarding API
+  version: v1
+servers:
+- url: https://api.oysterhr.com
+  description: Production server
+- url: https://api-sandbox.oysterhr.com
+  description: Sandbox server
+tags:
+- name: Offboarding
+paths:
+  /v1/offboardings/:
+    get:
+      summary: Returns list of offboardings
+      tags:
+      - Offboarding
+      description: This API endpoint allows you to retrieve a list of offboardings.
+      security:
+      - bearer_auth:
+        - read
+      responses:
+        '200':
+          description: Successfully retrieves a list of offboardings
+          content:
+            application/json:
+              examples:
+                Successfully retrieves a list of offboardings:
+                  value:
+                    data: []
+                    meta:
+                      items: 100
+                      count: 0
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/offboardings?page=1&perPage=100
+                      lastUrl: /v1/offboardings?page=1&perPage=100
+                      pageUrl: /v1/offboardings?page=1&perPage=100
+                      nextUrl: /v1/offboardings?page=&perPage=100
+                      prevUrl: /v1/offboardings?page=&perPage=100
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/offboardings'
+                  meta:
+                    $ref: '#/components/schemas/meta'
+                required:
+                - data
+                - meta
+      operationId: getV1Offboardings
+      x-operation-id-source: derived
+  /v1/offboardings/contractors/resignations:
+    post:
+      summary: Create a draft resignation for a contractor
+      tags:
+      - Offboarding
+      description: 'This API endpoint allows you to create a draft resignation for a contractor.
+
+
+        **This endpoint requires the `X-Oyster-Actor-Email` header when using client credentials authentication.**'
+      security:
+      - bearer_auth:
+        - manage
+      parameters: []
+      responses:
+        '200':
+          description: Successfully creates a resignation
+          content:
+            application/json:
+              examples:
+                Successfully creates a resignation:
+                  value:
+                    data:
+                      id: A5af31e4
+                      engagement:
+                        id: B0b779a8
+                        name: Willie Mraz
+                        countryCode: US
+                        startDate: '2022-10-15'
+                        probationEndOn: null
+                      state: DRAFT
+                      initiatedAt: null
+                      cancelledAt: null
+                      cancelReason: null
+                      requestorId: A91f5060
+                      requestor:
+                        id: A91f5060
+                        name: Emely Langworth
+                        email: co_employer1@paucek.test
+                      category: null
+                      lastDayOn: null
+                      lastWorkingDayOn: null
+                      estimatedPayrollMonth: 2024-10
+                      pto:
+                        intendedPto: null
+                        ptoDaysRemaining: null
+                        reportedPtoTaken: null
+                        ptoInaccurateNote: null
+                      mutualTermination: null
+                      notes: Some notes
+                      roeCode: null
+                      additionalPayments: null
+                      proposedOffboardingDate: '2024-10-15'
+                      reason: null
+                      earlyOffboardingRequested: null
+                      earlyOffboardingReason: null
+                      commissionDetails: null
+                      teamMemberOwedCommission: null
+                      communicatedWithTeamMember: false
+                      communicatedWithManager: null
+                      noteToTheContractor: null
+                      lastPayment: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/offboarding'
+                required:
+                - data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                engagementId:
+                  type: string
+                  minLength: 1
+                  pattern: ^[\w+\-]{8,9}$
+                proposedOffboardingDate:
+                  type: string
+                  format: date
+                  minLength: 1
+                notes:
+                  type: string
+                  minLength: 1
+              required:
+              - engagementId
+              - proposedOffboardingDate
+            examples:
+              Successfully creates a resignation:
+                summary: Successfully creates a resignation
+                value:
+                  engagementId: B0b779a8
+                  proposedOffboardingDate: '2024-10-15'
+                  notes: Some notes
+      operationId: postV1OffboardingsContractorsResignations
+      x-operation-id-source: derived
+  /v1/offboardings/contractors/terminations:
+    post:
+      summary: Create a draft termination for a contractor
+      tags:
+      - Offboarding
+      description: 'This API endpoint allows you to create a draft offboarding for a contractor.
+
+
+        **This endpoint requires the `X-Oyster-Actor-Email` header when using client credentials authentication.**'
+      security:
+      - bearer_auth:
+        - manage
+      parameters: []
+      responses:
+        '200':
+          description: Successfully initiate an offboarding
+          content:
+            application/json:
+              examples:
+                Successfully initiate an offboarding:
+                  value:
+                    data:
+                      id: A5af31e4
+                      engagement:
+                        id: B0b779a8
+                        name: Willie Mraz
+                        countryCode: US
+                        startDate: '2022-10-15'
+                        probationEndOn: null
+                      state: DRAFT
+                      initiatedAt: null
+                      cancelledAt: null
+                      cancelReason: null
+                      requestorId: A91f5060
+                      requestor:
+                        id: A91f5060
+                        name: Emely Langworth
+                        email: co_employer1@paucek.test
+                      category: null
+                      lastDayOn: null
+                      lastWorkingDayOn: null
+                      estimatedPayrollMonth: 2024-10
+                      pto:
+                        intendedPto: null
+                        ptoDaysRemaining: null
+                        reportedPtoTaken: null
+                        ptoInaccurateNote: null
+                      mutualTermination: null
+                      notes: null
+                      roeCode: null
+                      additionalPayments: null
+                      proposedOffboardingDate: '2024-10-15'
+                      reason: null
+                      earlyOffboardingRequested: null
+                      earlyOffboardingReason: null
+                      commissionDetails: null
+                      teamMemberOwedCommission: null
+                      communicatedWithTeamMember: null
+                      communicatedWithManager: null
+                      noteToTheContractor: Some note
+                      lastPayment:
+                        decimal: '1000.00'
+                        currencyCode: USD
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/offboarding'
+                required:
+                - data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                engagementId:
+                  type: string
+                  minLength: 1
+                  pattern: ^[\w+\-]{8,9}$
+                proposedOffboardingDate:
+                  type: string
+                  format: date
+                  minLength: 1
+                noteToTheContractor:
+                  type: string
+                  minLength: 1
+                lastPayment:
+                  type: object
+                  properties:
+                    decimal:
+                      type: string
+                      minLength: 1
+                      pattern: ^[0-9]+(\.[0-9]{2,})?$
+                    currencyCode:
+                      type: string
+                      minLength: 1
+                      pattern: ^[A-Z]{3}$
+                  required:
+                  - decimal
+                  - currencyCode
+              required:
+              - engagementId
+              - proposedOffboardingDate
+              - lastPayment
+            examples:
+              Successfully initiate an offboarding:
+                summary: Successfully initiate an offboarding
+                value:
+                  engagementId: B0b779a8
+                  proposedOffboardingDate: '2024-10-15'
+                  noteToTheContractor: Some note
+                  lastPayment:
+                    decimal: '1000.00'
+                    currencyCode: USD
+      operationId: postV1OffboardingsContractorsTerminations
+      x-operation-id-source: derived
+  /v1/offboardings/employments/resignations:
+    post:
+      summary: Create a draft resignation for an employment
+      tags:
+      - Offboarding
+      description: 'This API endpoint allows you to create a draft resignation for an employment.
+
+
+        **This endpoint requires the `X-Oyster-Actor-Email` header when using client credentials authentication.**'
+      security:
+      - bearer_auth:
+        - manage
+      parameters: []
+      responses:
+        '200':
+          description: Successfully creates a resignation
+          content:
+            application/json:
+              examples:
+                Successfully creates a resignation:
+                  value:
+                    data:
+                      id: A5af31e4
+                      engagement:
+                        id: A5540727
+                        name: Willie Mraz
+                        countryCode: US
+                        startDate: '2022-10-15'
+                        probationEndOn: null
+                      state: DRAFT
+                      initiatedAt: null
+                      cancelledAt: null
+                      cancelReason: null
+                      requestorId: A91f5060
+                      requestor:
+                        id: A91f5060
+                        name: Emely Langworth
+                        email: co_employer1@paucek.test
+                      category:
+                        id: B473f979
+                        name: Better Opportunity
+                        parentCategory:
+                          id: Aac4f7e8
+                          name: Resignation
+                      lastDayOn: null
+                      lastWorkingDayOn: null
+                      estimatedPayrollMonth: 2024-10
+                      pto:
+                        intendedPto: 11.5
+                        ptoDaysRemaining: null
+                        reportedPtoTaken: 23.5
+                        ptoInaccurateNote: null
+                      mutualTermination: null
+                      notes: Some notes
+                      roeCode: null
+                      additionalPayments: null
+                      proposedOffboardingDate: '2024-10-15'
+                      reason: Some reason
+                      earlyOffboardingRequested: null
+                      earlyOffboardingReason: null
+                      commissionDetails: null
+                      teamMemberOwedCommission: null
+                      communicatedWithTeamMember: false
+                      communicatedWithManager: false
+                      noteToTheContractor: null
+                      lastPayment: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/offboarding'
+                required:
+                - data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                engagementId:
+                  type: string
+                  minLength: 1
+                  pattern: ^[\w+\-]{8,9}$
+                categoryId:
+                  type: string
+                  minLength: 1
+                  pattern: ^[\w+\-]{8,9}$
+                proposedOffboardingDate:
+                  type: string
+                  format: date
+                  minLength: 1
+                intendedPto:
+                  type: number
+                  minimum: 0
+                communicatedWithManager:
+                  type: boolean
+                reason:
+                  type: string
+                  minLength: 1
+                notes:
+                  type: string
+                  minLength: 1
+                reportedPtoTaken:
+                  type: number
+                  minimum: 0
+              required:
+              - engagementId
+              - categoryId
+              - proposedOffboardingDate
+              - intendedPto
+              - communicatedWithManager
+            examples:
+              Successfully creates a resignation:
+                summary: Successfully creates a resignation
+                value:
+                  engagementId: A5540727
+                  categoryId: B473f979
+                  proposedOffboardingDate: '2024-10-15'
+                  intendedPto: 11.5
+                  communicatedWithManager: false
+                  reason: Some reason
+                  notes: Some notes
+                  reportedPtoTaken: 23.5
+      operationId: postV1OffboardingsEmploymentsResignations
+      x-operation-id-source: derived
+  /v1/offboardings/employments/terminations:
+    post:
+      summary: Create a draft termination for an employment
+      tags:
+      - Offboarding
+      description: 'This API endpoint allows you to create a draft offboarding for an employment.
+
+
+        **This endpoint requires the `X-Oyster-Actor-Email` header when using client credentials authentication.**'
+      security:
+      - bearer_auth:
+        - manage
+      parameters: []
+      responses:
+        '200':
+          description: Successfully creates a draft offboarding
+          content:
+            application/json:
+              examples:
+                Successfully creates a draft offboarding:
+                  value:
+                    data:
+                      id: A5af31e4
+                      engagement:
+                        id: A5540727
+                        name: Willie Mraz
+                        countryCode: US
+                        startDate: '2022-10-15'
+                        probationEndOn: null
+                      state: DRAFT
+                      initiatedAt: null
+                      cancelledAt: null
+                      cancelReason: null
+                      requestorId: A91f5060
+                      requestor:
+                        id: A91f5060
+                        name: Emely Langworth
+                        email: co_employer1@paucek.test
+                      category:
+                        id: B473f979
+                        name: Tardiness
+                        parentCategory:
+                          id: Aac4f7e8
+                          name: Termination
+                      lastDayOn: null
+                      lastWorkingDayOn: null
+                      estimatedPayrollMonth: 2024-10
+                      pto:
+                        intendedPto: null
+                        ptoDaysRemaining: null
+                        reportedPtoTaken: null
+                        ptoInaccurateNote: Note about pto
+                      mutualTermination: null
+                      notes: Note
+                      roeCode: null
+                      additionalPayments:
+                      - payTypeId: Af3c7409
+                        amount:
+                          decimal: null
+                          currencyCode: null
+                        allowance: null
+                        redundancyPayment: null
+                        paymentPeriod: null
+                        paymentPeriodDuration: null
+                        paymentFrequency: MONTHLY
+                        numRecurringPayments: 4
+                        percentOfAnnualGross: '10.3'
+                        note: Note
+                      proposedOffboardingDate: '2024-10-15'
+                      reason: Reason
+                      earlyOffboardingRequested: true
+                      earlyOffboardingReason: Reason for early offboarding
+                      commissionDetails: Commission details
+                      teamMemberOwedCommission: false
+                      communicatedWithTeamMember: false
+                      communicatedWithManager: null
+                      noteToTheContractor: null
+                      lastPayment: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/offboarding'
+                required:
+                - data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                engagementId:
+                  type: string
+                  minLength: 1
+                  pattern: ^[\w+\-]{8,9}$
+                categoryId:
+                  type: string
+                  minLength: 1
+                  pattern: ^[\w+\-]{8,9}$
+                proposedOffboardingDate:
+                  type: string
+                  format: date
+                  minLength: 1
+                reason:
+                  type: string
+                  minLength: 1
+                notes:
+                  type: string
+                  minLength: 1
+                ptoInaccurateNote:
+                  type: string
+                  minLength: 1
+                earlyOffboardingReason:
+                  type: string
+                  minLength: 1
+                commissionDetails:
+                  type: string
+                  minLength: 1
+                earlyOffboardingRequested:
+                  type: boolean
+                teamMemberOwedCommission:
+                  type: boolean
+                communicatedWithTeamMember:
+                  type: boolean
+                additionalPayments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      payTypeId:
+                        type: string
+                        minLength: 1
+                        pattern: ^[\w+\-]{8,9}$
+                      paymentFrequency:
+                        type: string
+                        minLength: 1
+                        enum:
+                        - ONE_TIME
+                        - MONTHLY
+                        - QUARTERLY
+                        - BIANNUAL
+                        - YEARLY
+                      numRecurringPayments:
+                        type: integer
+                        minimum: 1
+                      amount:
+                        type: object
+                        properties:
+                          decimal:
+                            type: string
+                            minLength: 1
+                            pattern: ^[0-9]+(\.[0-9]{2,})?$
+                          currencyCode:
+                            type: string
+                            minLength: 1
+                            pattern: ^[A-Z]{3}$
+                        required:
+                        - decimal
+                        - currencyCode
+                      percentOfAnnualGross:
+                        type: number
+                        minimum: 0
+                      note:
+                        type: string
+                        minLength: 1
+                    required:
+                    - payTypeId
+              required:
+              - engagementId
+              - categoryId
+              - proposedOffboardingDate
+            examples:
+              Successfully creates a draft offboarding:
+                summary: Successfully creates a draft offboarding
+                value:
+                  engagementId: A5540727
+                  categoryId: B473f979
+                  proposedOffboardingDate: '2024-10-15'
+                  reason: Reason
+                  notes: Note
+                  ptoInaccurateNote: Note about pto
+                  earlyOffboardingReason: Reason for early offboarding
+                  commissionDetails: Commission details
+                  earlyOffboardingRequested: true
+                  teamMemberOwedCommission: false
+                  communicatedWithTeamMember: false
+                  additionalPayments:
+                  - payTypeId: Af3c7409
+                    percentOfAnnualGross: 10.3
+                    note: Note
+                    paymentFrequency: MONTHLY
+                    numRecurringPayments: 4
+      operationId: postV1OffboardingsEmploymentsTerminations
+      x-operation-id-source: derived
+  /v1/offboardings/payroll_team_members/terminations:
+    post:
+      summary: Create a draft termination for a payroll team member
+      tags:
+      - Offboarding
+      description: 'This API endpoint allows you to create a draft offboarding for a payroll team member.
+
+
+        **This endpoint requires the `X-Oyster-Actor-Email` header when using client credentials authentication.**'
+      security:
+      - bearer_auth:
+        - manage
+      parameters: []
+      responses:
+        '200':
+          description: Successfully creates a draft offboarding
+          content:
+            application/json:
+              examples:
+                Successfully creates a draft offboarding:
+                  value:
+                    data:
+                      id: A5af31e4
+                      engagement:
+                        id: A5540727
+                        name: Willie Mraz
+                        countryCode: US
+                        startDate: '2022-10-15'
+                        probationEndOn: null
+                      state: DRAFT
+                      initiatedAt: null
+                      cancelledAt: null
+                      cancelReason: null
+                      requestorId: A91f5060
+                      requestor:
+                        id: A91f5060
+                        name: Emely Langworth
+                        email: co_employer1@paucek.test
+                      category:
+                        id: Aac4f7e8
+                        name: Termination
+                      lastDayOn: '2024-10-20'
+                      lastWorkingDayOn: '2024-10-15'
+                      estimatedPayrollMonth: 2024-10
+                      pto:
+                        intendedPto: null
+                        ptoDaysRemaining: '34.0'
+                        reportedPtoTaken: null
+                        ptoInaccurateNote: null
+                      mutualTermination: true
+                      notes: Some notes
+                      roeCode: null
+                      additionalPayments:
+                      - payTypeId: Af3c7409
+                        amount:
+                          decimal: null
+                          currencyCode: null
+                        allowance: Health allowance
+                        redundancyPayment: Payment type
+                        paymentPeriod: days
+                        paymentPeriodDuration: 23
+                        paymentFrequency: null
+                        numRecurringPayments: null
+                        percentOfAnnualGross: null
+                        note: null
+                      proposedOffboardingDate: '2024-10-20'
+                      reason: null
+                      earlyOffboardingRequested: null
+                      earlyOffboardingReason: null
+                      commissionDetails: null
+                      teamMemberOwedCommission: null
+                      communicatedWithTeamMember: false
+                      communicatedWithManager: null
+                      noteToTheContractor: null
+                      lastPayment: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/offboarding'
+                required:
+                - data
+        '422':
+          description: Operation cannot be performed
+          content:
+            application/json:
+              examples:
+                Operation cannot be performed:
+                  value:
+                    errors:
+                    - message: ROE Code can only be submitted for Canadian team members
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                engagementId:
+                  type: string
+                  minLength: 1
+                  pattern: ^[\w+\-]{8,9}$
+                categoryId:
+                  type: string
+                  minLength: 1
+                  pattern: ^[\w+\-]{8,9}$
+                lastWorkingDayOn:
+                  type: string
+                  format: date
+                  minLength: 1
+                lastDayOn:
+                  type: string
+                  format: date
+                  minLength: 1
+                mutualTermination:
+                  type: boolean
+                roeCode:
+                  type: string
+                  minLength: 1
+                notes:
+                  type: string
+                  minLength: 1
+                ptoDaysRemaining:
+                  type: number
+                  minimum: 0
+                additionalPayments:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      payTypeId:
+                        type: string
+                        minLength: 1
+                        pattern: ^[\w+\-]{8,9}$
+                      amount:
+                        type: object
+                        properties:
+                          decimal:
+                            type: string
+                            minLength: 1
+                            pattern: ^[0-9]+(\.[0-9]{2,})?$
+                        required:
+                        - decimal
+                      allowance:
+                        type: string
+                        minLength: 1
+                      redundancyPayment:
+                        type: string
+                        minLength: 1
+                      paymentPeriod:
+                        type: string
+                        minLength: 1
+                        enum:
+                        - days
+                        - weeks
+                      paymentPeriodDuration:
+                        type: integer
+                    required:
+                    - payTypeId
+                payrollPayoutMonthChange:
+                  type: object
+                  properties:
+                    reason:
+                      type: string
+                      minLength: 1
+                    proposedPayrollPayoutMonth:
+                      type: string
+                      minLength: 1
+                      pattern: ^\d{4}-(?:0[1-9]|1[0-2])$
+                  required:
+                  - reason
+                  - proposedPayrollPayoutMonth
+              required:
+              - engagementId
+              - categoryId
+              - lastWorkingDayOn
+              - lastDayOn
+              - mutualTermination
+            examples:
+              Successfully creates a draft offboarding:
+                summary: Successfully creates a draft offboarding
+                value:
+                  engagementId: A5540727
+                  categoryId: Aac4f7e8
+                  lastWorkingDayOn: '2024-10-15'
+                  lastDayOn: '2024-10-20'
+                  mutualTermination: true
+                  notes: Some notes
+                  ptoDaysRemaining: 34
+                  additionalPayments:
+                  - payTypeId: Af3c7409
+                    allowance: Health allowance
+                    redundancyPayment: Payment type
+                    paymentPeriod: days
+                    paymentPeriodDuration: 23
+      operationId: postV1OffboardingsPayrollTeamMembersTerminations
+      x-operation-id-source: derived
+  /v1/offboardings/payroll_team_members/terminations/rulesets:
+    get:
+      summary: Retrieve rulesets for drafting an offboarding for a payroll team member
+      tags:
+      - Offboarding
+      description: 'Use engagement_id to fetch the ruleset relating to a specific engagement.
+
+        Use country_code to fetch the ruleset for a particular country.'
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: engagement_id
+        in: query
+        required: false
+        description: The ID of a specific engagement
+        schema:
+          type: string
+      - name: country_code
+        in: query
+        required: false
+        description: The country code for the engagement, e.g. GB
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful access to the ruleset
+          content:
+            application/json:
+              examples:
+                Successful access to the ruleset:
+                  value:
+                    data:
+                      rulesetId: OFFBOARDING_PAYROLL_TERMINATION
+                      scope:
+                        engagementId: A5540727
+                      schemas:
+                        post:
+                          type: object
+                          properties:
+                            engagementId:
+                              type: string
+                              minLength: 1
+                              pattern: ^[\w+\-]{8,9}$
+                            categoryId:
+                              type: string
+                              minLength: 1
+                              pattern: ^[\w+\-]{8,9}$
+                            lastWorkingDayOn:
+                              type: string
+                              format: date
+                              minLength: 1
+                            lastDayOn:
+                              type: string
+                              format: date
+                              minLength: 1
+                            mutualTermination:
+                              type: boolean
+                            notes:
+                              type: string
+                              minLength: 1
+                            ptoDaysRemaining:
+                              type: number
+                              minimum: 0
+                            additionalPayments:
+                              type: array
+                              items:
+                                type: object
+                                properties:
+                                  payTypeId:
+                                    type: string
+                                    minLength: 1
+                                    pattern: ^[\w+\-]{8,9}$
+                                  amount:
+                                    type: object
+                                    properties:
+                                      decimal:
+                                        type: string
+                                        minLength: 1
+                                        pattern: ^[0-9]+(\.[0-9]{2,})?$
+                                    required:
+                                    - decimal
+                                  allowance:
+                                    type: string
+                                    minLength: 1
+                                  redundancyPayment:
+                                    type: string
+                                    minLength: 1
+                                  paymentPeriod:
+                                    type: string
+                                    minLength: 1
+                                    enum:
+                                    - days
+                                    - weeks
+                                  paymentPeriodDuration:
+                                    type: integer
+                                required:
+                                - payTypeId
+                            payrollPayoutMonthChange:
+                              type: object
+                              properties:
+                                reason:
+                                  type: string
+                                  minLength: 1
+                                proposedPayrollPayoutMonth:
+                                  type: string
+                                  minLength: 1
+                                  pattern: ^\d{4}-(?:0[1-9]|1[0-2])$
+                              required:
+                              - reason
+                              - proposedPayrollPayoutMonth
+                          required:
+                          - engagementId
+                          - categoryId
+                          - lastWorkingDayOn
+                          - lastDayOn
+                          - mutualTermination
+        '400':
+          description: Missing required parameter
+          content:
+            application/json:
+              examples:
+                Missing required parameter:
+                  value:
+                    errors:
+                    - message: provide either engagement_id or country_code
+      operationId: getV1OffboardingsPayrollTeamMembersTerminationsRulesets
+      x-operation-id-source: derived
+  /v1/offboardings/sources/{employment_type}/categories:
+    get:
+      summary: Returns list of offboarding categories
+      tags:
+      - Offboarding
+      description: This API endpoint allows you to retrieve a list of offboarding categories.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: employment_type
+        in: path
+        description: employments, resignations, or payroll_team_members
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieves a list of offboarding categories
+          content:
+            application/json:
+              examples:
+                Successfully retrieves a list of offboarding categories:
+                  value:
+                    data:
+                    - id: Aac4f7e8
+                      name: Termination
+                      secondaryOffboardingCategories:
+                      - id: B473f979
+                        name: Tardiness
+                    meta:
+                      items: 100
+                      count: 1
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/offboardings/sources/payroll_team_members/categories?page=1&perPage=100
+                      lastUrl: /v1/offboardings/sources/payroll_team_members/categories?page=1&perPage=100
+                      pageUrl: /v1/offboardings/sources/payroll_team_members/categories?page=1&perPage=100
+                      nextUrl: /v1/offboardings/sources/payroll_team_members/categories?page=&perPage=100
+                      prevUrl: /v1/offboardings/sources/payroll_team_members/categories?page=&perPage=100
+      operationId: getV1OffboardingsSourcesByEmploymentTypeCategories
+      x-operation-id-source: derived
+  /v1/offboardings/sources/{employment_type}/pay_types:
+    get:
+      summary: Returns list of offboarding pay types
+      tags:
+      - Offboarding
+      description: This API endpoint allows you to retrieve a list of offboarding pay types.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: employment_type
+        in: path
+        description: payroll_team_members or employments
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully lists offboarding pay types
+          content:
+            application/json:
+              examples:
+                Successfully lists offboarding pay types:
+                  value:
+                    data:
+                    - id: Af3c7409
+                      name: Severance Pay
+                      percentageValue: false
+                      absoluteValue: true
+                    meta:
+                      items: 100
+                      count: 1
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/offboardings/sources/payroll_team_members/pay_types?page=1&perPage=100
+                      lastUrl: /v1/offboardings/sources/payroll_team_members/pay_types?page=1&perPage=100
+                      pageUrl: /v1/offboardings/sources/payroll_team_members/pay_types?page=1&perPage=100
+                      nextUrl: /v1/offboardings/sources/payroll_team_members/pay_types?page=&perPage=100
+                      prevUrl: /v1/offboardings/sources/payroll_team_members/pay_types?page=&perPage=100
+      operationId: getV1OffboardingsSourcesByEmploymentTypePayTypes
+      x-operation-id-source: derived
+  /v1/offboardings/{id}:
+    get:
+      summary: Returns an offboarding
+      tags:
+      - Offboarding
+      description: This API endpoint allows you to retrieve an offboarding.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: id
+        in: path
+        description: Offboarding ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully returns an offboarding
+          content:
+            application/json:
+              examples:
+                Successfully returns an offboarding:
+                  value:
+                    data:
+                      id: A5af31e4
+                      engagement:
+                        id: A5540727
+                        name: Alice
+                        countryCode: GB
+                        startDate: '2022-10-15'
+                        probationEndOn: null
+                      state: INITIATED
+                      initiatedAt: '2022-10-15T12:34:56Z'
+                      cancelledAt: null
+                      cancelReason: null
+                      requestorId: Be6a8269
+                      requestor:
+                        id: Be6a8269
+                        name: Shirlee Cremin
+                        email: co_employer2@swift.example
+                      category: null
+                      lastDayOn: null
+                      lastWorkingDayOn: null
+                      estimatedPayrollMonth: 2022-11
+                      pto:
+                        intendedPto: null
+                        ptoDaysRemaining: null
+                        reportedPtoTaken: null
+                        ptoInaccurateNote: null
+                      mutualTermination: null
+                      notes: null
+                      roeCode: null
+                      additionalPayments: null
+                      proposedOffboardingDate: '2022-11-15'
+                      reason: FOO BAR
+                      earlyOffboardingRequested: null
+                      earlyOffboardingReason: null
+                      commissionDetails: null
+                      teamMemberOwedCommission: null
+                      communicatedWithTeamMember: false
+                      communicatedWithManager: null
+                      noteToTheContractor: null
+                      lastPayment: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/offboarding'
+                required:
+                - data
+      operationId: getV1OffboardingsById
+      x-operation-id-source: derived
+  /v1/offboardings/{id}/agreements:
+    get:
+      summary: Returns list of agreements for an offboarding
+      tags:
+      - Offboarding
+      description: This API endpoint allows you to retrieve a list of agreements for an offboarding.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: id
+        in: path
+        description: Offboarding ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieves a list of agreements
+          content:
+            application/json:
+              examples:
+                Successfully retrieves a list of agreements:
+                  value:
+                    data:
+                    - id: A83ca69e
+                      name: Termination of Service Agreement
+                      type: TERMINATION_OF_SERVICE_AGREEMENT
+                      parties:
+                      - TEAM_MEMBER
+                      state: PENDING
+                    meta:
+                      items: 100
+                      count: 1
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/offboardings/A5af31e4/agreements?page=1&perPage=100
+                      lastUrl: /v1/offboardings/A5af31e4/agreements?page=1&perPage=100
+                      pageUrl: /v1/offboardings/A5af31e4/agreements?page=1&perPage=100
+                      nextUrl: /v1/offboardings/A5af31e4/agreements?page=&perPage=100
+                      prevUrl: /v1/offboardings/A5af31e4/agreements?page=&perPage=100
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/agreements'
+                  meta:
+                    $ref: '#/components/schemas/meta'
+                required:
+                - data
+                - meta
+      operationId: getV1OffboardingsByIdAgreements
+      x-operation-id-source: derived
+  /v1/offboardings/{id}/cancellation:
+    post:
+      summary: Request cancellation for an initiated offboarding
+      tags:
+      - Offboarding
+      description: 'This API endpoint allows you to request cancellation for an initiated offboarding for any engagement type.
+
+
+        **This endpoint requires the `X-Oyster-Actor-Email` header when using client credentials authentication.**'
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: id
+        in: path
+        description: Offboarding ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully request cancellation for an offboarding
+          content:
+            application/json:
+              examples:
+                Successfully request cancellation for an offboarding:
+                  value:
+                    data:
+                      id: A5af31e4
+                      engagement:
+                        id: A5540727
+                        name: Willie Mraz
+                        countryCode: GB
+                        startDate: '2022-10-15'
+                        probationEndOn: null
+                      state: CANCELLATION_REQUESTED
+                      initiatedAt: '2022-10-15T12:34:56Z'
+                      cancelledAt: '2022-10-15T12:34:56Z'
+                      cancelReason: Some cancellation reason
+                      requestorId: Be6a8269
+                      requestor:
+                        id: Be6a8269
+                        name: Gov. Candance Littel
+                        email: co_employer2@becker.test
+                      category: null
+                      lastDayOn: null
+                      lastWorkingDayOn: null
+                      estimatedPayrollMonth: 2022-11
+                      pto:
+                        intendedPto: null
+                        ptoDaysRemaining: null
+                        reportedPtoTaken: null
+                        ptoInaccurateNote: null
+                      mutualTermination: null
+                      notes: null
+                      roeCode: null
+                      additionalPayments: null
+                      proposedOffboardingDate: '2022-11-15'
+                      reason: FOO BAR
+                      earlyOffboardingRequested: null
+                      earlyOffboardingReason: null
+                      commissionDetails: null
+                      teamMemberOwedCommission: null
+                      communicatedWithTeamMember: false
+                      communicatedWithManager: null
+                      noteToTheContractor: null
+                      lastPayment: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/offboarding'
+                required:
+                - data
+        '422':
+          description: Cancellation is only possible for initiated offboardings
+          content:
+            application/json:
+              examples:
+                Cancellation is only possible for initiated offboardings:
+                  value:
+                    errors:
+                    - message: Cancellation is only possible for initiated offboardings
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                cancellationReason:
+                  type: string
+                  minLength: 1
+              required:
+              - cancellationReason
+            examples:
+              Successfully request cancellation for an offboarding:
+                summary: Successfully request cancellation for an offboarding
+                value:
+                  cancellationReason: Some cancellation reason
+      operationId: postV1OffboardingsByIdCancellation
+      x-operation-id-source: derived
+  /v1/offboardings/{id}/documents:
+    post:
+      summary: Attach documents to a draft offboarding
+      tags:
+      - Offboarding
+      description: This API endpoint allows you to attach documents to a draft offboarding. Not available for payroll team members.
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: id
+        in: path
+        description: Offboarding ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully attaches document to an offboarding
+          content:
+            application/json:
+              examples:
+                Successfully attaches document to an offboarding:
+                  value:
+                    data:
+                      id: A5af31e4
+                      engagement:
+                        id: A5540727
+                        name: Willie Mraz
+                        countryCode: GB
+                        startDate: '2022-10-15'
+                        probationEndOn: null
+                      state: DRAFT
+                      initiatedAt: '2022-10-15T12:34:56Z'
+                      cancelledAt: null
+                      cancelReason: null
+                      requestorId: Be6a8269
+                      requestor:
+                        id: Be6a8269
+                        name: Gov. Candance Littel
+                        email: co_employer2@becker.test
+                      category: null
+                      lastDayOn: null
+                      lastWorkingDayOn: null
+                      estimatedPayrollMonth: 2022-11
+                      pto:
+                        intendedPto: null
+                        ptoDaysRemaining: null
+                        reportedPtoTaken: null
+                        ptoInaccurateNote: null
+                      mutualTermination: null
+                      notes: null
+                      roeCode: null
+                      additionalPayments: null
+                      proposedOffboardingDate: '2022-11-15'
+                      reason: FOO BAR
+                      earlyOffboardingRequested: null
+                      earlyOffboardingReason: null
+                      commissionDetails: null
+                      teamMemberOwedCommission: null
+                      communicatedWithTeamMember: false
+                      communicatedWithManager: null
+                      noteToTheContractor: null
+                      lastPayment: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/offboarding'
+                required:
+                - data
+        '422':
+          description: Attaching documents is not possible for payroll team members
+          content:
+            application/json:
+              examples:
+                File extension is not allowed:
+                  value:
+                    errors:
+                    - message: Invalid file type. Only application/pdf, image/png, image/jpeg, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document file types are allowed.
+                Attaching documents is only possible for draft offboardings:
+                  value:
+                    errors:
+                    - message: Attaching documents is only possible for draft offboardings
+                Attaching documents is not possible for payroll team members:
+                  value:
+                    errors:
+                    - message: Attaching documents is not possible for payroll team members
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                title:
+                  type: string
+                description:
+                  type: string
+              required:
+              - file
+              - title
+              - description
+      operationId: postV1OffboardingsByIdDocuments
+      x-operation-id-source: derived
+  /v1/offboardings/{id}/initiate:
+    post:
+      summary: Initiate offboarding
+      tags:
+      - Offboarding
+      description: 'This API endpoint allows you to initiate an offboarding that is in draft state for any engagement type. You will receive a complete response with the updated offboarding details.
+
+
+        **This endpoint requires the `X-Oyster-Actor-Email` header when using client credentials authentication.**'
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: id
+        in: path
+        description: Offboarding ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully initiate an offboarding
+          content:
+            application/json:
+              examples:
+                Successfully initiate an offboarding:
+                  value:
+                    data:
+                      id: A5af31e4
+                      engagement:
+                        id: A5540727
+                        name: Willie Mraz
+                        countryCode: GB
+                        startDate: '2022-10-15'
+                        probationEndOn: null
+                      state: INITIATED
+                      initiatedAt: '2022-10-15T12:34:56Z'
+                      cancelledAt: null
+                      cancelReason: null
+                      requestorId: A91f5060
+                      requestor:
+                        id: A91f5060
+                        name: Emely Langworth
+                        email: co_employer1@paucek.test
+                      category: null
+                      lastDayOn: null
+                      lastWorkingDayOn: null
+                      estimatedPayrollMonth: 2022-11
+                      pto:
+                        intendedPto: null
+                        ptoDaysRemaining: null
+                        reportedPtoTaken: null
+                        ptoInaccurateNote: null
+                      mutualTermination: null
+                      notes: null
+                      roeCode: null
+                      additionalPayments: null
+                      proposedOffboardingDate: '2022-11-15'
+                      reason: FOO BAR
+                      earlyOffboardingRequested: null
+                      earlyOffboardingReason: null
+                      commissionDetails: null
+                      teamMemberOwedCommission: null
+                      communicatedWithTeamMember: false
+                      communicatedWithManager: null
+                      noteToTheContractor: null
+                      lastPayment: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/offboarding'
+                required:
+                - data
+        '422':
+          description: Initiation is only possible for draft offboardings
+          content:
+            application/json:
+              examples:
+                Initiation is only possible for draft offboardings:
+                  value:
+                    errors:
+                    - message: Initiation is only possible for draft offboardings
+      operationId: postV1OffboardingsByIdInitiate
+      x-operation-id-source: derived
+components:
+  schemas:
+    meta:
+      type: object
+      properties:
+        items:
+          type: integer
+        count:
+          type: integer
+        page:
+          type: integer
+        pages:
+          type: integer
+        firstUrl:
+          type: string
+        lastUrl:
+          type: string
+        pageUrl:
+          type: string
+        nextUrl:
+          type: string
+        prevUrl:
+          type: string
+        deprecation:
+          type: object
+          properties:
+            at:
+              type: string
+            sunset:
+              type: string
+            link:
+              type: object
+              properties:
+                rel:
+                  type: string
+                url:
+                  type: string
+      required:
+      - items
+      - count
+      - page
+      - pages
+      - firstUrl
+      - lastUrl
+      - pageUrl
+      - nextUrl
+      - prevUrl
+    agreement:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        state:
+          enum:
+          - PENDING
+          - DRAFT
+          - VERIFIED
+          - READY_TO_SIGN
+          - SIGNED
+        type:
+          type: string
+        parties:
+          type: array
+          items:
+            type: string
+            enum:
+            - COMPANY
+            - TEAM_MEMBER
+            - OYSTER
+        preview:
+          type: object
+          properties:
+            url:
+              type: string
+            contentType:
+              type: string
+      required:
+      - id
+      - name
+      - state
+      - type
+      - parties
+    offboardings:
+      type: array
+      items:
+        $ref: '#/components/schemas/offboarding'
+    offboarding:
+      type: object
+      properties:
+        id:
+          type: string
+        engagement:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            countryCode:
+              type: string
+          required:
+          - id
+          - name
+          - countryCode
+        state:
+          type: string
+        cancelledAt:
+          type:
+          - string
+          - 'null'
+        initiatedAt:
+          type:
+          - string
+          - 'null'
+        cancelReason:
+          type:
+          - string
+          - 'null'
+        requestorId:
+          type:
+          - string
+          - 'null'
+        category:
+          type:
+          - object
+          - 'null'
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            parentCategory:
+              type:
+              - object
+              - 'null'
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+              required:
+              - id
+              - name
+          required:
+          - id
+          - name
+        lastDayOn:
+          type:
+          - string
+          - 'null'
+      required:
+      - id
+      - engagement
+      - state
+      - cancelledAt
+      - initiatedAt
+      - cancelReason
+      - requestorId
+      - category
+      - lastDayOn
+    agreements:
+      type: array
+      items:
+        $ref: '#/components/schemas/agreement'
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+x-provenance:
+  method: searched
+  source: https://docs.oysterhr.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.oysterhr.com/reference/delete_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/delete_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-document-document-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/delete_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-engagements-engagement-id-offerings.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-enrollments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-company.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes.md
+  - https://docs.oysterhr.com/reference/get_v1-departments.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-allowances.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-bonuses.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-documents.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-identity-verification.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-payslips.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id-sources-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements-agreement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-annually.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-monthly.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form-documents-field-or-document-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-tasks.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-role-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier-breakdown.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices.md
+  - https://docs.oysterhr.com/reference/get_v1-meta-operations-operation-key.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-payroll-team-members-terminations-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-pay-types.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id-charges.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charges-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-payouts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id-records.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll.md
+  - https://docs.oysterhr.com/reference/get_v1-public-holidays.md
+  - https://docs.oysterhr.com/reference/get_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id-sources-source-type.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks-dispatches.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/patch_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-employments-id-personal-details.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-reseller-customers-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/post_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/post_v1-benefits-engagements-engagement-id-enrollments.md
+  - https://docs.oysterhr.com/reference/post_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-approved.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-declined.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-sessions.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-decline.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-agreements-agreement-id-verify.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-document.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-onboarding-form-complete.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-team-member-invite.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-dispute.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-cancellation.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-documents.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-initiate.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-payroll-team-members-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/post_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-attachment.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-reject.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-entries.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-confirm.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks-id-test.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/put_v1-hiring-employments-id-onboarding-form-documents-field-id.md
+  merge:
+    pages: 140
+    deduped: 378
+    conflicts_kept_first: 0

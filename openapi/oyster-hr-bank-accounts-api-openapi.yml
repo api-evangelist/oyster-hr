@@ -1,0 +1,851 @@
+openapi: 3.2.0
+info:
+  title: Endpoints Bank Accounts API
+  version: v1
+servers:
+- url: https://api.oysterhr.com
+  description: Production server
+- url: https://api-sandbox.oysterhr.com
+  description: Sandbox server
+tags:
+- name: Bank Accounts
+paths:
+  /v1/bank_accounts:
+    get:
+      summary: Retrieve bank accounts
+      tags:
+      - Bank Accounts
+      description: Returns TM bank accounts for a company.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: engagement_id
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                    - engagementId: B0b779a8
+                      bankAccountId: Bcfb72c6
+                      payoutUsage: null
+                      isPrimary: true
+                      currencyCode: GBP
+                      countryCode: GB
+                      details:
+                        bankAccountName: David Wallace
+                        accountNumber: null
+                        iban: GB29NWBK60161331926819
+                        swiftBicCode: NWBKGB2LLIQ
+                        branchCode: null
+                        bankCode: null
+                        recipientCity: West Jin
+                        recipientStreet: 79630 Pollich Springs
+                        recipientCountry: CO
+                        recipientZipPostCode: '43826'
+                        recipientStateOrProvince: SAN
+                        intermediaryAccountNumber: null
+                        intermediaryIban: null
+                        intermediaryBranchCode: null
+                        intermediarySwiftBicCode: null
+                        contactNotes: null
+                        contactEmail: null
+                    - engagementId: A5540727
+                      bankAccountId: Af7b1993
+                      payoutUsage: null
+                      isPrimary: true
+                      currencyCode: USD
+                      countryCode: US
+                      details:
+                        bankAccountName: David Wallace
+                        accountNumber: '123456789012'
+                        iban: null
+                        swiftBicCode: null
+                        branchCode: '071004200'
+                        bankCode: null
+                        recipientCity: Schuppehaven
+                        recipientStreet: 22980 Greg Crossing
+                        recipientCountry: TT
+                        recipientZipPostCode: '51200'
+                        recipientStateOrProvince: SFO
+                        intermediaryAccountNumber: null
+                        intermediaryIban: null
+                        intermediaryBranchCode: null
+                        intermediarySwiftBicCode: null
+                        contactNotes: null
+                        contactEmail: null
+                    meta:
+                      items: 10
+                      count: 2
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/bank_accounts?perPage=10&page=1&engagementId=
+                      lastUrl: /v1/bank_accounts?perPage=10&page=1&engagementId=
+                      pageUrl: /v1/bank_accounts?perPage=10&page=1&engagementId=
+                      nextUrl: /v1/bank_accounts?perPage=10&page=&engagementId=
+                      prevUrl: /v1/bank_accounts?perPage=10&page=&engagementId=
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/bankAccounts'
+                  meta:
+                    $ref: '#/components/schemas/meta'
+                required:
+                - data
+                - meta
+      operationId: getV1BankAccounts
+      x-operation-id-source: derived
+    post:
+      summary: Create bank account
+      tags:
+      - Bank Accounts
+      description: Creates a new bank account for an engagement. Returns newly created bank account
+      security:
+      - bearer_auth:
+        - manage
+      parameters: []
+      responses:
+        '200':
+          description: responds with successful body
+          content:
+            application/json:
+              examples:
+                responds with successful body:
+                  value:
+                    data:
+                      engagementId: A5540727
+                      bankAccountId: Af7b1993
+                      payoutUsage: null
+                      isPrimary: true
+                      currencyCode: USD
+                      countryCode: US
+                      details:
+                        bankAccountName: David Wallas
+                        accountNumber: '123456789'
+                        iban: null
+                        swiftBicCode: null
+                        branchCode: '123456789'
+                        bankCode: null
+                        recipientCity: New York
+                        recipientStreet: Street
+                        recipientCountry: US
+                        recipientZipPostCode: '10001'
+                        recipientStateOrProvince: NY
+                        intermediaryAccountNumber: null
+                        intermediaryIban: null
+                        intermediaryBranchCode: null
+                        intermediarySwiftBicCode: null
+                        contactNotes: null
+                        contactEmail: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/bankAccount'
+                required:
+                - data
+        '422':
+          description: Unprocessable - rulesetId incorrect
+          content:
+            application/json:
+              examples:
+                Unprocessable:
+                  value:
+                    errors:
+                    - message: Invalid country code U!
+                    - message: Invalid currency code US!
+                Unprocessable - rulesetId incorrect:
+                  value:
+                    errors:
+                    - message: Can't find ruleset with given ID
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                engagementId:
+                  type: string
+                  minLength: 1
+                  pattern: ^[\w+\-]{8,9}$
+                isPrimary:
+                  type: boolean
+                currencyCode:
+                  type: string
+                  minLength: 3
+                  maxLength: 3
+                countryCode:
+                  type: string
+                  minLength: 2
+                  maxLength: 2
+                details:
+                  type: object
+                useForExpenses:
+                  type: boolean
+                rulesetId:
+                  type: string
+              required:
+              - engagementId
+              - isPrimary
+              - currencyCode
+              - countryCode
+              - details
+            examples:
+              responds with successful body:
+                summary: responds with successful body
+                value:
+                  engagementId: A5540727
+                  isPrimary: true
+                  countryCode: US
+                  currencyCode: USD
+                  rulesetId: USD-US
+                  details:
+                    bankAccountName: David Wallas
+                    accountNumber: '123456789'
+                    branchCode: '123456789'
+                    recipientCity: New York
+                    recipientStateOrProvince: NY
+                    recipientZipPostCode: '10001'
+                    recipientCountry: US
+                    recipientStreet: Street
+      operationId: postV1BankAccounts
+      x-operation-id-source: derived
+  /v1/bank_accounts/rulesets:
+    get:
+      summary: Retrieve bank account rulesets
+      tags:
+      - Bank Accounts
+      description: Returns rulesets.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: currency_code
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: country_code
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: engagement_type
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                    - rulesetId: BRL-BR
+                      scope: {}
+                      schemas:
+                        post:
+                          type: object
+                          properties:
+                            engagementId:
+                              type: string
+                            isPrimary:
+                              type: boolean
+                            useForExpenses:
+                              type: boolean
+                            currencyCode:
+                              type: string
+                              pattern: ^[A-Z]{3}$
+                            countryCode:
+                              type: string
+                              pattern: ^[a-zA-Z]{2}$
+                            details:
+                              type: object
+                              properties:
+                                accountNumber:
+                                  title: Account number
+                                  type: string
+                                  pattern: ^[0-9]{4,12}(-)?[0-9Xx]$
+                                branchCode:
+                                  title: Branch code
+                                  type: string
+                                  pattern: ^[0-9]{4}$
+                                swiftBicCode:
+                                  title: SWIFT/BIC
+                                  type: string
+                                  pattern: ^([A-z0-9]{8}|[A-z0-9]{11})$
+                                bankCode:
+                                  title: Bank code
+                                  type: string
+                                  pattern: ^[0-9]{3}$
+                                bankAccountName:
+                                  title: Account holder name (exactly as defined on your bank account)
+                                  type: string
+                                  pattern: ^[A-z0-9 .,()_'-/]{1,255}$
+                                recipientStreet:
+                                  title: Recipient street
+                                  type: string
+                                  pattern: ^[A-z0-9 .,()_'-/]{1,200}$
+                                recipientCity:
+                                  title: Recipient city
+                                  type: string
+                                  pattern: ^[A-z0-9 .,()_'-/]{1,50}$
+                                recipientStateOrProvince:
+                                  title: Recipient state or province
+                                  type: string
+                                  pattern: ^[A-z0-9 .,()_'-/]{1,50}$
+                                recipientZipPostCode:
+                                  title: Recipient zip post code
+                                  type: string
+                                  pattern: ^[A-z0-9 .,()_'-/]{1,15}$
+                                recipientCountry:
+                                  title: Recipient country
+                                  type: string
+                                  pattern: ^[A-Z]{2}$
+                                beneficiaryIdentificationType:
+                                  title: Beneficiary identification type
+                                  enum:
+                                  - CPF
+                                  - CNPJ
+                                beneficiaryIdentificationValue:
+                                  title: Beneficiary identification value
+                                  type: string
+                                  pattern: ^[0-9.-]{11,20}$
+                              required:
+                              - accountNumber
+                              - branchCode
+                              - bankCode
+                              - bankAccountName
+                              - recipientStreet
+                              - recipientCity
+                              - recipientCountry
+                              - beneficiaryIdentificationType
+                              - beneficiaryIdentificationValue
+                          required:
+                          - engagementId
+                          - isPrimary
+                          - currencyCode
+                          - countryCode
+                          - details
+                        patch:
+                          type: object
+                          properties:
+                            isPrimary:
+                              type: boolean
+                            useForExpenses:
+                              type: boolean
+                          required: []
+                    meta:
+                      items: 10
+                      count: 1
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/bank_accounts/rulesets?perPage=10&page=1&currencyCode=BRL&countryCode=BR&engagementType=employment
+                      lastUrl: /v1/bank_accounts/rulesets?perPage=10&page=1&currencyCode=BRL&countryCode=BR&engagementType=employment
+                      pageUrl: /v1/bank_accounts/rulesets?perPage=10&page=1&currencyCode=BRL&countryCode=BR&engagementType=employment
+                      nextUrl: /v1/bank_accounts/rulesets?perPage=10&page=&currencyCode=BRL&countryCode=BR&engagementType=employment
+                      prevUrl: /v1/bank_accounts/rulesets?perPage=10&page=&currencyCode=BRL&countryCode=BR&engagementType=employment
+      operationId: getV1BankAccountsRulesets
+      x-operation-id-source: derived
+  /v1/bank_accounts/{id}:
+    delete:
+      summary: Delete bank account
+      tags:
+      - Bank Accounts
+      description: Deletes non primary bank accounts
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: id
+        in: path
+        description: Bank account ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                Unprocessable Entity:
+                  value:
+                    errors:
+                    - message: Managing bank accounts for an FTE from this country is not currently supported.
+      operationId: deleteV1BankAccountsById
+      x-operation-id-source: derived
+    get:
+      summary: Retrieve Bank Account details
+      tags:
+      - Bank Accounts
+      description: Returns details about bank account
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: id
+        in: path
+        description: Bank account ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                      engagementId: A5540727
+                      bankAccountId: Af7b1993
+                      payoutUsage: null
+                      isPrimary: true
+                      currencyCode: USD
+                      countryCode: US
+                      details:
+                        bankAccountName: David Wallace
+                        accountNumber: '123456789012'
+                        iban: null
+                        swiftBicCode: null
+                        branchCode: '071004200'
+                        bankCode: null
+                        recipientCity: North Krishna
+                        recipientStreet: 91744 Joel Drives
+                        recipientCountry: TT
+                        recipientZipPostCode: '99841'
+                        recipientStateOrProvince: SFO
+                        intermediaryAccountNumber: null
+                        intermediaryIban: null
+                        intermediaryBranchCode: null
+                        intermediarySwiftBicCode: null
+                        contactNotes: null
+                        contactEmail: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/bankAccount'
+                required:
+                - data
+      operationId: getV1BankAccountsById
+      x-operation-id-source: derived
+    patch:
+      summary: Update bank account
+      tags:
+      - Bank Accounts
+      description: Updates a bank account
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: id
+        in: path
+        description: Bank account ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully updated bank account
+          content:
+            application/json:
+              examples:
+                Successfully updated bank account:
+                  value:
+                    data:
+                      engagementId: A5540727
+                      bankAccountId: Af7b1993
+                      payoutUsage: null
+                      isPrimary: false
+                      currencyCode: USD
+                      countryCode: US
+                      details:
+                        bankAccountName: David Wallace
+                        accountNumber: '271111111111'
+                        iban: null
+                        swiftBicCode: null
+                        branchCode: '123344558'
+                        bankCode: null
+                        recipientCity: Walterside
+                        recipientStreet: 761 Gabriella Row
+                        recipientCountry: US
+                        recipientZipPostCode: 59047-9913
+                        recipientStateOrProvince: NE
+                        intermediaryAccountNumber: null
+                        intermediaryIban: null
+                        intermediaryBranchCode: null
+                        intermediarySwiftBicCode: null
+                        contactNotes: null
+                        contactEmail: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/bankAccount'
+                required:
+                - data
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                Unprocessable Entity:
+                  value:
+                    errors:
+                    - message: Managing bank accounts for an FTE from this country is not currently supported.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                isPrimary:
+                  type: boolean
+                useForExpenses:
+                  type: boolean
+                alternativeBankAccountId:
+                  type: string
+                  minLength: 1
+                  pattern: ^[\w+\-]{8,9}$
+            examples:
+              Successfully updated bank account:
+                summary: Successfully updated bank account
+                value:
+                  isPrimary: false
+                  alternativeBankAccountId: Bcfb72c6
+      operationId: patchV1BankAccountsById
+      x-operation-id-source: derived
+components:
+  schemas:
+    bankAccounts:
+      type: array
+      items:
+        $ref: '#/components/schemas/bankAccount'
+    meta:
+      type: object
+      properties:
+        items:
+          type: integer
+        count:
+          type: integer
+        page:
+          type: integer
+        pages:
+          type: integer
+        firstUrl:
+          type: string
+        lastUrl:
+          type: string
+        pageUrl:
+          type: string
+        nextUrl:
+          type: string
+        prevUrl:
+          type: string
+        deprecation:
+          type: object
+          properties:
+            at:
+              type: string
+            sunset:
+              type: string
+            link:
+              type: object
+              properties:
+                rel:
+                  type: string
+                url:
+                  type: string
+      required:
+      - items
+      - count
+      - page
+      - pages
+      - firstUrl
+      - lastUrl
+      - pageUrl
+      - nextUrl
+      - prevUrl
+    bankAccount:
+      type: object
+      properties:
+        engagementId:
+          type: string
+        bankAccountId:
+          type: string
+        payoutUsage:
+          type:
+          - string
+          - 'null'
+        isPrimary:
+          type: boolean
+        currencyCode:
+          type: string
+        countryCode:
+          type: string
+        details:
+          type: object
+          properties:
+            accountNumber:
+              type:
+              - string
+              - 'null'
+            iban:
+              type:
+              - string
+              - 'null'
+            swiftBicCode:
+              type:
+              - string
+              - 'null'
+            branchCode:
+              type:
+              - string
+              - 'null'
+            bankAccountName:
+              type:
+              - string
+              - 'null'
+            recipientCountry:
+              type:
+              - string
+              - 'null'
+            recipientCity:
+              type:
+              - string
+              - 'null'
+            recipientStreet:
+              type:
+              - string
+              - 'null'
+            recipientZipPostCode:
+              type:
+              - string
+              - 'null'
+            recipientStateOrProvince:
+              type:
+              - string
+              - 'null'
+            intermediaryIban:
+              type:
+              - string
+              - 'null'
+            intermediaryBranchCode:
+              type:
+              - string
+              - 'null'
+            intermediaryAccountNumber:
+              type:
+              - string
+              - 'null'
+            intermediarySwiftBicCode:
+              type:
+              - string
+              - 'null'
+            contactNotes:
+              type:
+              - string
+              - 'null'
+            contactEmail:
+              type:
+              - string
+              - 'null'
+      required:
+      - engagementId
+      - bankAccountId
+      - currencyCode
+      - countryCode
+      - isPrimary
+      - details
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+x-provenance:
+  method: searched
+  source: https://docs.oysterhr.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.oysterhr.com/reference/delete_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/delete_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-document-document-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/delete_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-engagements-engagement-id-offerings.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-enrollments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-company.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes.md
+  - https://docs.oysterhr.com/reference/get_v1-departments.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-allowances.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-bonuses.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-documents.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-identity-verification.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-payslips.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id-sources-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements-agreement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-annually.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-monthly.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form-documents-field-or-document-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-tasks.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-role-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier-breakdown.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices.md
+  - https://docs.oysterhr.com/reference/get_v1-meta-operations-operation-key.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-payroll-team-members-terminations-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-pay-types.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id-charges.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charges-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-payouts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id-records.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll.md
+  - https://docs.oysterhr.com/reference/get_v1-public-holidays.md
+  - https://docs.oysterhr.com/reference/get_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id-sources-source-type.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks-dispatches.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/patch_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-employments-id-personal-details.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-reseller-customers-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/post_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/post_v1-benefits-engagements-engagement-id-enrollments.md
+  - https://docs.oysterhr.com/reference/post_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-approved.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-declined.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-sessions.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-decline.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-agreements-agreement-id-verify.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-document.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-onboarding-form-complete.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-team-member-invite.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-dispute.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-cancellation.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-documents.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-initiate.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-payroll-team-members-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/post_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-attachment.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-reject.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-entries.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-confirm.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks-id-test.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/put_v1-hiring-employments-id-onboarding-form-documents-field-id.md
+  merge:
+    pages: 140
+    deduped: 378
+    conflicts_kept_first: 0

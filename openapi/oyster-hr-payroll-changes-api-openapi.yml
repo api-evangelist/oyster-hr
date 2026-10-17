@@ -1,0 +1,927 @@
+openapi: 3.2.0
+info:
+  title: Endpoints Payroll Changes API
+  version: v1
+servers:
+- url: https://api.oysterhr.com
+  description: Production server
+- url: https://api-sandbox.oysterhr.com
+  description: Sandbox server
+tags:
+- name: Payroll Changes
+paths:
+  /v1/payroll_changes:
+    get:
+      summary: Retrieve all payroll changes
+      tags:
+      - Payroll Changes
+      description: Returns company's payroll changes.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: from
+        in: query
+        required: false
+        description: Start date for filtering payroll changes (YYYY-MM format)
+        schema:
+          type: string
+      - name: to
+        in: query
+        required: false
+        description: End date for filtering payroll changes (YYYY-MM format)
+        schema:
+          type: string
+      - name: engagement_id
+        in: query
+        required: false
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                No payroll changes:
+                  value:
+                    data: []
+                    meta:
+                      items: 100
+                      count: 0
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/payroll_changes?perPage=100&from=&to=&engagementId=&page=1
+                      lastUrl: /v1/payroll_changes?perPage=100&from=&to=&engagementId=&page=1
+                      pageUrl: /v1/payroll_changes?perPage=100&from=&to=&engagementId=&page=1
+                      nextUrl: /v1/payroll_changes?perPage=100&from=&to=&engagementId=&page=
+                      prevUrl: /v1/payroll_changes?perPage=100&from=&to=&engagementId=&page=
+                Successful:
+                  value:
+                    data:
+                    - id: F6170e83
+                      type: MEALS
+                      engagement:
+                        id: D16f4c4e
+                        name: Evan Mayer
+                        type: EMPLOYMENT
+                      amount:
+                        decimal: '35575.00'
+                        currencyCode: EUR
+                      month: '10'
+                      year: '2022'
+                      notes: Ut sint nostrum et.
+                      state: PLANNED
+                    meta:
+                      items: 100
+                      count: 1
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/payroll_changes?perPage=100&from=&to=&engagementId=D16f4c4e&page=1
+                      lastUrl: /v1/payroll_changes?perPage=100&from=&to=&engagementId=D16f4c4e&page=1
+                      pageUrl: /v1/payroll_changes?perPage=100&from=&to=&engagementId=D16f4c4e&page=1
+                      nextUrl: /v1/payroll_changes?perPage=100&from=&to=&engagementId=D16f4c4e&page=
+                      prevUrl: /v1/payroll_changes?perPage=100&from=&to=&engagementId=D16f4c4e&page=
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/payrollChanges'
+                  meta:
+                    $ref: '#/components/schemas/meta'
+                required:
+                - data
+                - meta
+      operationId: getV1PayrollChanges
+      x-operation-id-source: derived
+    post:
+      summary: Create payroll change
+      tags:
+      - Payroll Changes
+      description: Creates a payroll change for the engagement.
+      security:
+      - bearer_auth:
+        - read
+      parameters: []
+      responses:
+        '200':
+          description: Successfully created payroll change
+          content:
+            application/json:
+              examples:
+                Successfully created payroll change:
+                  value:
+                    data:
+                      id: A4b03f72
+                      type: BONUS
+                      engagement:
+                        id: A5540727
+                        name: Mafalda Fahey
+                        type: EMPLOYMENT
+                      amount:
+                        decimal: '150.30'
+                        currencyCode: EUR
+                      month: '3'
+                      year: '2024'
+                      notes: This is a bonus
+                      state: PLANNED
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/payrollChange'
+                required:
+                - data
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              examples:
+                Unprocessable entity:
+                  value:
+                    errors:
+                    - message: Provided payroll change currency USD doesn't match the contract currency EUR.
+              schema:
+                $ref: '#/components/schemas/errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                engagementId:
+                  type: string
+                  minLength: 1
+                  pattern: ^[\w+\-]{8,9}$
+                type:
+                  type: string
+                  minLength: 1
+                  pattern: ^[A-Z_]+$
+                amount:
+                  type: object
+                  properties:
+                    decimal:
+                      type: string
+                      minLength: 1
+                      pattern: ^[0-9]+(\.[0-9]{2,})?$
+                    currencyCode:
+                      type: string
+                      minLength: 1
+                      pattern: ^[A-Z]{3}$
+                  required:
+                  - decimal
+                  - currencyCode
+                month:
+                  type: string
+                  minLength: 1
+                  pattern: ^(0?[1-9]|1[0-2])$
+                year:
+                  type: string
+                  minLength: 1
+                  pattern: ^\d{4}$
+                notes:
+                  type: string
+                  minLength: 1
+              required:
+              - engagementId
+              - type
+              - amount
+              - month
+              - year
+            examples:
+              Successfully created payroll change:
+                summary: Successfully created payroll change
+                value:
+                  engagementId: A5540727
+                  type: BONUS
+                  amount:
+                    decimal: '150.30'
+                    currencyCode: EUR
+                  month: '3'
+                  year: '2024'
+                  notes: This is a bonus
+      operationId: postV1PayrollChanges
+      x-operation-id-source: derived
+  /v1/payroll_changes/ruleset:
+    get:
+      summary: Retrieve payroll changes ruleset
+      tags:
+      - Payroll Changes
+      description: Returns payroll changes ruleset for given Engagement ID.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: engagement_id
+        in: query
+        description: Engagement ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 'Successfully retrieve the ruleset '
+          content:
+            application/json:
+              examples:
+                'Successfully retrieve the ruleset ':
+                  value:
+                    data:
+                      rulesetId: DEFAULT
+                      scope:
+                        engagementId: A5540727
+                      schemas:
+                        post:
+                          type: object
+                          properties:
+                            engagementId:
+                              type: string
+                              minLength: 1
+                              pattern: ^[\w+\-]{8,9}$
+                            type:
+                              type: string
+                              minLength: 1
+                              pattern: ^[A-Z_]+$
+                            amount:
+                              type: object
+                              properties:
+                                decimal:
+                                  type: string
+                                  minLength: 1
+                                  pattern: ^[0-9]+(\.[0-9]{2,})?$
+                                currencyCode:
+                                  type: string
+                                  minLength: 1
+                                  pattern: ^[A-Z]{3}$
+                              required:
+                              - decimal
+                              - currencyCode
+                            month:
+                              type: string
+                              minLength: 1
+                              pattern: ^(0?[1-9]|1[0-2])$
+                            year:
+                              type: string
+                              minLength: 1
+                              pattern: ^\d{4}$
+                            notes:
+                              type: string
+                              minLength: 1
+                          required:
+                          - engagementId
+                          - type
+                          - amount
+                          - month
+                          - year
+                          if:
+                            properties:
+                              year:
+                                const: '2022'
+                          then:
+                            properties:
+                              month:
+                                enum:
+                                - '11'
+                                - '12'
+                          else:
+                            properties:
+                              month:
+                                enum:
+                                - '1'
+                                - '2'
+                                - '3'
+                                - '4'
+                                - '5'
+                                - '6'
+                                - '7'
+                                - '8'
+                                - '9'
+                                - '10'
+                                - '11'
+                                - '12'
+                      context:
+                        currencyCode: EUR
+                        cutoffDate: '2022-10-10'
+                      sources:
+                        types:
+                          params: {}
+      operationId: getV1PayrollChangesRuleset
+      x-operation-id-source: derived
+  /v1/payroll_changes/rulesets/default:
+    get:
+      summary: Retrieve default payroll changes ruleset
+      tags:
+      - Payroll Changes
+      description: Returns default payroll changes ruleset for given Engagement ID.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: engagement_id
+        in: query
+        description: Engagement ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: 'Successfully retrieve the ruleset '
+          content:
+            application/json:
+              examples:
+                'Successfully retrieve the ruleset ':
+                  value:
+                    data:
+                      rulesetId: DEFAULT
+                      scope:
+                        engagementId: A5540727
+                      schemas:
+                        post:
+                          type: object
+                          properties:
+                            engagementId:
+                              type: string
+                              minLength: 1
+                              pattern: ^[\w+\-]{8,9}$
+                            type:
+                              type: string
+                              minLength: 1
+                              pattern: ^[A-Z_]+$
+                            amount:
+                              type: object
+                              properties:
+                                decimal:
+                                  type: string
+                                  minLength: 1
+                                  pattern: ^[0-9]+(\.[0-9]{2,})?$
+                                currencyCode:
+                                  type: string
+                                  minLength: 1
+                                  pattern: ^[A-Z]{3}$
+                              required:
+                              - decimal
+                              - currencyCode
+                            month:
+                              type: string
+                              minLength: 1
+                              pattern: ^(0?[1-9]|1[0-2])$
+                            year:
+                              type: string
+                              minLength: 1
+                              pattern: ^\d{4}$
+                            notes:
+                              type: string
+                              minLength: 1
+                          required:
+                          - engagementId
+                          - type
+                          - amount
+                          - month
+                          - year
+                          if:
+                            properties:
+                              year:
+                                const: '2022'
+                          then:
+                            properties:
+                              month:
+                                enum:
+                                - '11'
+                                - '12'
+                          else:
+                            properties:
+                              month:
+                                enum:
+                                - '1'
+                                - '2'
+                                - '3'
+                                - '4'
+                                - '5'
+                                - '6'
+                                - '7'
+                                - '8'
+                                - '9'
+                                - '10'
+                                - '11'
+                                - '12'
+                      context:
+                        currencyCode: EUR
+                        cutoffDate: '2022-10-10'
+                      sources:
+                        types:
+                          params: {}
+      operationId: getV1PayrollChangesRulesetsDefault
+      x-operation-id-source: derived
+  /v1/payroll_changes/rulesets/default/sources/types:
+    get:
+      summary: Retrieve default payroll changes rulesets for source types
+      tags:
+      - Payroll Changes
+      description: Returns default data on the types of payroll changes available, including the value identifier and the corresponding title for each payroll change type.
+      security:
+      - bearer_auth:
+        - read
+      responses:
+        '200':
+          description: Successfully retrieve source types
+          content:
+            application/json:
+              examples:
+                Successfully retrieve source types:
+                  value:
+                    data:
+                    - value: BONUS
+                      title: Bonus
+                    - value: COMMISSION
+                      title: Commission
+                    - value: EMPLOYER_PENSION_RETIREMENT_CONTRIBUTION
+                      title: Employer Pension Retirement Contribution
+                    - value: HEALTH_INSURANCE
+                      title: Health Insurance
+                    - value: RISK_INSURANCE
+                      title: Risk Insurance
+                    - value: TRAVEL_ALLOWANCE
+                      title: Travel Allowance
+                    - value: WORK_FROM_HOME_ALLOWANCE
+                      title: Work From Home Allowance
+                    - value: WELLBEING
+                      title: Wellbeing
+                    - value: MEALS
+                      title: Meals
+      operationId: getV1PayrollChangesRulesetsDefaultSourcesTypes
+      x-operation-id-source: derived
+  /v1/payroll_changes/sources/types:
+    get:
+      summary: Retrieve payroll changes rulesets for source types
+      tags:
+      - Payroll Changes
+      description: Returns data on the types of payroll changes available, including the value identifier and the corresponding title for each payroll change type.
+      security:
+      - bearer_auth:
+        - read
+      responses:
+        '200':
+          description: Successfully retrieve source types
+          content:
+            application/json:
+              examples:
+                Successfully retrieve source types:
+                  value:
+                    data:
+                    - value: BONUS
+                      title: Bonus
+                    - value: COMMISSION
+                      title: Commission
+                    - value: EMPLOYER_PENSION_RETIREMENT_CONTRIBUTION
+                      title: Employer Pension Retirement Contribution
+                    - value: HEALTH_INSURANCE
+                      title: Health Insurance
+                    - value: RISK_INSURANCE
+                      title: Risk Insurance
+                    - value: TRAVEL_ALLOWANCE
+                      title: Travel Allowance
+                    - value: WORK_FROM_HOME_ALLOWANCE
+                      title: Work From Home Allowance
+                    - value: WELLBEING
+                      title: Wellbeing
+                    - value: MEALS
+                      title: Meals
+      operationId: getV1PayrollChangesSourcesTypes
+      x-operation-id-source: derived
+  /v1/payroll_changes/{id}:
+    delete:
+      summary: Cancel payroll change
+      tags:
+      - Payroll Changes
+      description: Cancels a payroll change.
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: id
+        in: path
+        description: Payroll Change ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully cancels payroll change
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              examples:
+                Unprocessable entity:
+                  value:
+                    errors:
+                    - message: This payroll change is past the cutoff date and cannot be canceled
+              schema:
+                $ref: '#/components/schemas/errors'
+      operationId: deleteV1PayrollChangesById
+      x-operation-id-source: derived
+    get:
+      summary: Retrieve a payroll change
+      tags:
+      - Payroll Changes
+      description: Returns a payroll change.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: id
+        in: path
+        description: Payroll Change ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieve payroll change
+          content:
+            application/json:
+              examples:
+                Successfully retrieve payroll change:
+                  value:
+                    data:
+                      id: A4b03f72
+                      type: BONUS
+                      engagement:
+                        id: A5540727
+                        name: John Doe
+                        type: EMPLOYMENT
+                      amount:
+                        decimal: '1500.00'
+                        currencyCode: EUR
+                      month: '1'
+                      year: '2024'
+                      notes: this is a note
+                      state: PLANNED
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/payrollChange'
+                required:
+                - data
+      operationId: getV1PayrollChangesById
+      x-operation-id-source: derived
+    patch:
+      summary: Update a payroll change
+      tags:
+      - Payroll Changes
+      description: Update a payroll change.
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: id
+        in: path
+        description: Payroll Change ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully update payroll change
+          content:
+            application/json:
+              examples:
+                Successfully update payroll change:
+                  value:
+                    data:
+                      id: A4b03f72
+                      type: BONUS
+                      engagement:
+                        id: A5540727
+                        name: John Doe
+                        type: EMPLOYMENT
+                      amount:
+                        decimal: '2000.00'
+                        currencyCode: EUR
+                      month: '1'
+                      year: '2024'
+                      notes: this is a note
+                      state: PLANNED
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/payrollChange'
+                required:
+                - data
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: object
+                  properties:
+                    decimal:
+                      type: string
+                      minLength: 1
+                      pattern: ^[0-9]+(\.[0-9]{2,})?$
+                    currencyCode:
+                      type: string
+                      minLength: 1
+                      pattern: ^[A-Z]{3}$
+                  required:
+                  - decimal
+                  - currencyCode
+              required:
+              - amount
+            examples:
+              Successfully update payroll change:
+                summary: Successfully update payroll change
+                value:
+                  amount:
+                    decimal: '2000.00'
+                    currencyCode: EUR
+      operationId: patchV1PayrollChangesById
+      x-operation-id-source: derived
+components:
+  schemas:
+    payrollChange:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+        engagement:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type:
+              - string
+              - 'null'
+            type:
+              type: string
+              pattern: ^[A-Z_]+$
+          required:
+          - id
+          - name
+          - type
+        month:
+          type: string
+          pattern: ^0?[1-9]$|^1[0-2]$
+        year:
+          type: string
+          pattern: ^\d{4}$
+        notes:
+          type: string
+        state:
+          type: string
+          enum:
+          - PLANNED
+          - CANCELED
+          - APPLIED
+        amount:
+          $ref: '#/components/schemas/amount'
+      required:
+      - id
+      - type
+      - engagement
+      - month
+      - year
+      - notes
+      - state
+      - amount
+    meta:
+      type: object
+      properties:
+        items:
+          type: integer
+        count:
+          type: integer
+        page:
+          type: integer
+        pages:
+          type: integer
+        firstUrl:
+          type: string
+        lastUrl:
+          type: string
+        pageUrl:
+          type: string
+        nextUrl:
+          type: string
+        prevUrl:
+          type: string
+        deprecation:
+          type: object
+          properties:
+            at:
+              type: string
+            sunset:
+              type: string
+            link:
+              type: object
+              properties:
+                rel:
+                  type: string
+                url:
+                  type: string
+      required:
+      - items
+      - count
+      - page
+      - pages
+      - firstUrl
+      - lastUrl
+      - pageUrl
+      - nextUrl
+      - prevUrl
+    errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+            required:
+            - message
+      required:
+      - errors
+    payrollChanges:
+      type: array
+      items:
+        $ref: '#/components/schemas/payrollChange'
+    amount:
+      type: object
+      properties:
+        decimal:
+          type: string
+          pattern: ^\d+([.]\d+)?$
+        currencyCode:
+          type: string
+          minLength: 3
+          maxLength: 3
+      required:
+      - decimal
+      - currencyCode
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+x-provenance:
+  method: searched
+  source: https://docs.oysterhr.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.oysterhr.com/reference/delete_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/delete_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-document-document-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/delete_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-engagements-engagement-id-offerings.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-enrollments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-company.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes.md
+  - https://docs.oysterhr.com/reference/get_v1-departments.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-allowances.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-bonuses.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-documents.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-identity-verification.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-payslips.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id-sources-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements-agreement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-annually.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-monthly.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form-documents-field-or-document-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-tasks.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-role-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier-breakdown.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices.md
+  - https://docs.oysterhr.com/reference/get_v1-meta-operations-operation-key.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-payroll-team-members-terminations-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-pay-types.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id-charges.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charges-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-payouts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id-records.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll.md
+  - https://docs.oysterhr.com/reference/get_v1-public-holidays.md
+  - https://docs.oysterhr.com/reference/get_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id-sources-source-type.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks-dispatches.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/patch_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-employments-id-personal-details.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-reseller-customers-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/post_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/post_v1-benefits-engagements-engagement-id-enrollments.md
+  - https://docs.oysterhr.com/reference/post_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-approved.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-declined.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-sessions.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-decline.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-agreements-agreement-id-verify.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-document.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-onboarding-form-complete.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-team-member-invite.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-dispute.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-cancellation.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-documents.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-initiate.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-payroll-team-members-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/post_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-attachment.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-reject.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-entries.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-confirm.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks-id-test.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/put_v1-hiring-employments-id-onboarding-form-documents-field-id.md
+  merge:
+    pages: 140
+    deduped: 378
+    conflicts_kept_first: 0

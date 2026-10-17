@@ -1,0 +1,2323 @@
+openapi: 3.2.0
+info:
+  title: Endpoints Invoices API
+  version: v1
+servers:
+- url: https://api.oysterhr.com
+  description: Production server
+- url: https://api-sandbox.oysterhr.com
+  description: Sandbox server
+tags:
+- name: Invoices
+paths:
+  /v1/invoices:
+    get:
+      summary: Retrieve all invoices
+      tags:
+      - Invoices
+      description: Returns company's invoices.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: reference_codes[]
+        in: query
+        required: false
+        description: Filter by reference codes
+        schema:
+          type: array
+          items:
+            type: string
+      - name: payroll_period_from
+        in: query
+        required: false
+        description: Filter by payroll period start date (YYYY-MM format)
+        schema:
+          type: string
+      - name: payroll_period_to
+        in: query
+        required: false
+        description: Filter by payroll period end date (YYYY-MM format)
+        schema:
+          type: string
+      - name: issue_date_from
+        in: query
+        required: false
+        description: Filter by issue date start (YYYY-MM-DD format)
+        schema:
+          type: string
+      - name: issue_date_to
+        in: query
+        required: false
+        description: Filter by issue date end (YYYY-MM-DD format)
+        schema:
+          type: string
+      - name: types[]
+        in: query
+        required: false
+        description: Filter by invoice types
+        schema:
+          type: array
+          items:
+            enum:
+            - PREFUNDING
+            - SETTLEMENT
+            - MONTHLY_PAYMENT
+            - CLOSING
+            - DEPOSIT
+            - MANUAL
+            - MANUAL_GLOBAL_PAYROLL
+            - MANUAL_SALARY_INSIGHTS
+            - SCALE
+            - PLATFORM_PLAN
+            - SALARY_INSIGHTS
+            - GLOBAL_PAYROLL
+            - OYSTER_FEES
+            - MANUAL_PREFUNDING
+            - MANUAL_SETTLEMENT
+            - MANUAL_OYSTER_FEES
+            - PAYG_CONTRACTOR
+            - EXPENSES
+            - CONTRACTOR_MONTHLY_PAYMENT
+            - CONTRACTOR_FEES
+            - MANUAL_INVOICE_BY_OYSTER
+      - name: statuses[]
+        in: query
+        required: false
+        description: Filter by invoice statuses
+        schema:
+          type: array
+          items:
+            enum:
+            - DISPUTED
+            - VOIDED
+            - WAITING_APPROVAL
+            - READY_FOR_REVIEW
+            - APPROVED
+            - AUTO_APPROVED
+      - name: engagement_ids[]
+        in: query
+        required: false
+        description: Filter by engagement IDs
+        schema:
+          type: array
+          items:
+            type: string
+      - name: customer_ids[]
+        in: query
+        required: false
+        description: Filter by customer IDs
+        schema:
+          type: array
+          items:
+            type: string
+      - name: charge_statuses[]
+        in: query
+        required: false
+        description: Filter by charge statuses
+        schema:
+          type: array
+          items:
+            enum:
+            - PENDING
+            - DIRECT_DEBIT_IN_PROGRESS
+            - DIRECT_DEBIT_FAILED
+            - CHARGED_BACK
+            - PAID
+            - WAITING_FOR_WIRE_TRANSFER
+            - NO_PAYMENT
+            - OVERDUE
+            - PARTIALLY_PAID
+            - VOIDED
+      - name: payout_statuses[]
+        in: query
+        required: false
+        description: Filter by payout statuses
+        schema:
+          type: array
+          items:
+            enum:
+            - NO_PAYMENT
+            - NOT_INITIATED
+            - INITIATED
+            - IN_PROGRESS
+            - PAID
+            - RETURNED
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                No invoices:
+                  value:
+                    data: []
+                    meta:
+                      items: 100
+                      count: 0
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/invoices?perPage=100&payrollPeriodFrom=&payrollPeriodTo=&issueDateFrom=&issueDateTo=&page=1
+                      lastUrl: /v1/invoices?perPage=100&payrollPeriodFrom=&payrollPeriodTo=&issueDateFrom=&issueDateTo=&page=1
+                      pageUrl: /v1/invoices?perPage=100&payrollPeriodFrom=&payrollPeriodTo=&issueDateFrom=&issueDateTo=&page=1
+                      nextUrl: /v1/invoices?perPage=100&payrollPeriodFrom=&payrollPeriodTo=&issueDateFrom=&issueDateTo=&page=
+                      prevUrl: /v1/invoices?perPage=100&payrollPeriodFrom=&payrollPeriodTo=&issueDateFrom=&issueDateTo=&page=
+                Successful:
+                  value:
+                    data:
+                    - id: C743e99a
+                      referenceCode: OY-IMPA-ANNA-A2f05d13-ea3
+                      type: MANUAL
+                      status: WAITING_APPROVAL
+                      payrollMonth: null
+                      payrollYear: null
+                      issueDate: '2022-10-15'
+                      dueDate: '2022-10-18'
+                      amount:
+                        decimal: '546.23'
+                        currencyCode: USD
+                      charge:
+                        id: E9d2a753
+                        status: PENDING
+                        amount:
+                          decimal: '546.23'
+                          currencyCode: USD
+                        amountDue:
+                          decimal: '546.23'
+                          currencyCode: USD
+                      payout:
+                        id: F5cbaf60
+                        status: NOT_INITIATED
+                        amount:
+                          decimal: '546.23'
+                          currencyCode: USD
+                    - id: Ba234d31
+                      referenceCode: OY-IMPA-ANNA-A2f05d13-739
+                      type: MANUAL
+                      status: WAITING_APPROVAL
+                      payrollMonth: null
+                      payrollYear: null
+                      issueDate: '2022-10-15'
+                      dueDate: '2022-10-18'
+                      amount:
+                        decimal: '867.08'
+                        currencyCode: USD
+                      charge:
+                        id: C1070889
+                        status: PENDING
+                        amount:
+                          decimal: '867.08'
+                          currencyCode: USD
+                        amountDue:
+                          decimal: '867.08'
+                          currencyCode: USD
+                      payout:
+                        id: De0dc77c
+                        status: NOT_INITIATED
+                        amount:
+                          decimal: '867.08'
+                          currencyCode: USD
+                    - id: A01e1dad
+                      referenceCode: OY-IMPA-ANNA-A2f05d13-05e
+                      type: MANUAL
+                      status: WAITING_APPROVAL
+                      payrollMonth: null
+                      payrollYear: null
+                      issueDate: '2022-10-15'
+                      dueDate: '2022-10-18'
+                      amount:
+                        decimal: '490.34'
+                        currencyCode: USD
+                      charge:
+                        id: A857d642
+                        status: PENDING
+                        amount:
+                          decimal: '490.34'
+                          currencyCode: USD
+                        amountDue:
+                          decimal: '490.34'
+                          currencyCode: USD
+                      payout:
+                        id: B1277a59
+                        status: NOT_INITIATED
+                        amount:
+                          decimal: '490.34'
+                          currencyCode: USD
+                    meta:
+                      items: 100
+                      count: 3
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/invoices?perPage=100&payrollPeriodFrom=&payrollPeriodTo=&issueDateFrom=&issueDateTo=&page=1
+                      lastUrl: /v1/invoices?perPage=100&payrollPeriodFrom=&payrollPeriodTo=&issueDateFrom=&issueDateTo=&page=1
+                      pageUrl: /v1/invoices?perPage=100&payrollPeriodFrom=&payrollPeriodTo=&issueDateFrom=&issueDateTo=&page=1
+                      nextUrl: /v1/invoices?perPage=100&payrollPeriodFrom=&payrollPeriodTo=&issueDateFrom=&issueDateTo=&page=
+                      prevUrl: /v1/invoices?perPage=100&payrollPeriodFrom=&payrollPeriodTo=&issueDateFrom=&issueDateTo=&page=
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/invoices'
+                  meta:
+                    $ref: '#/components/schemas/meta'
+                required:
+                - data
+                - meta
+      operationId: getV1Invoices
+      x-operation-id-source: derived
+  /v1/invoices/sources/statuses:
+    get:
+      summary: Retrieve invoices rulesets for source statuses
+      tags:
+      - Invoices
+      description: Returns data on the statuses of invoices available, including the value identifier and the corresponding title for each invoice status
+      security:
+      - bearer_auth:
+        - read
+      responses:
+        '200':
+          description: Successfully retrieve source statuses
+          content:
+            application/json:
+              examples:
+                Successfully retrieve source statuses:
+                  value:
+                    data:
+                    - value: DISPUTED
+                      title: Disputed
+                    - value: VOIDED
+                      title: Voided
+                    - value: WAITING_APPROVAL
+                      title: Waiting Approval
+                    - value: READY_FOR_REVIEW
+                      title: Ready For Review
+                    - value: APPROVED
+                      title: Approved
+                    - value: AUTO_APPROVED
+                      title: Auto Approved
+      operationId: getV1InvoicesSourcesStatuses
+      x-operation-id-source: derived
+  /v1/invoices/sources/types:
+    get:
+      summary: Retrieve invoices rulesets for source types
+      tags:
+      - Invoices
+      description: Returns data on the types of invoices available, including the value identifier and the corresponding title for each invoice type
+      security:
+      - bearer_auth:
+        - read
+      responses:
+        '200':
+          description: Successfully retrieve source types
+          content:
+            application/json:
+              examples:
+                Successfully retrieve source types:
+                  value:
+                    data:
+                    - value: PREFUNDING
+                      title: Prefunding
+                    - value: SETTLEMENT
+                      title: Settlement
+                    - value: MONTHLY_PAYMENT
+                      title: Monthly Payment
+                    - value: CLOSING
+                      title: Closing
+                    - value: DEPOSIT
+                      title: Deposit
+                    - value: MANUAL
+                      title: Manual
+                    - value: MANUAL_GLOBAL_PAYROLL
+                      title: Manual Global Payroll
+                    - value: MANUAL_SALARY_INSIGHTS
+                      title: Manual Salary Insights
+                    - value: SCALE
+                      title: Scale
+                    - value: PLATFORM_PLAN
+                      title: Platform Plan
+                    - value: SALARY_INSIGHTS
+                      title: Salary Insights
+                    - value: GLOBAL_PAYROLL
+                      title: Global Payroll
+                    - value: OYSTER_FEES
+                      title: Oyster Fees
+                    - value: MANUAL_PREFUNDING
+                      title: Manual Prefunding
+                    - value: MANUAL_SETTLEMENT
+                      title: Manual Settlement
+                    - value: MANUAL_OYSTER_FEES
+                      title: Manual Oyster Fees
+                    - value: PAYG_CONTRACTOR
+                      title: Payg Contractor
+                    - value: EXPENSES
+                      title: Expenses
+                    - value: CONTRACTOR_MONTHLY_PAYMENT
+                      title: Contractor Monthly Payment
+                    - value: CONTRACTOR_FEES
+                      title: Contractor Fees
+                    - value: MANUAL_INVOICE_BY_OYSTER
+                      title: Manual Invoice By Oyster
+      operationId: getV1InvoicesSourcesTypes
+      x-operation-id-source: derived
+  /v1/invoices/{identifier}:
+    get:
+      summary: Retrieve an invoice
+      tags:
+      - Invoices
+      description: Returns an invoice.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: identifier
+        in: path
+        description: Invoice ID or Reference Code
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieve customer invoice
+          content:
+            application/json:
+              examples:
+                Successfully retrieve invoice:
+                  value:
+                    data:
+                      id: A01e1dad
+                      referenceCode: OY-IMPA-ANNA-A2f05d13-05e
+                      type: MANUAL
+                      status: WAITING_APPROVAL
+                      payrollMonth: '10'
+                      payrollYear: '2022'
+                      issueDate: '2022-10-15'
+                      dueDate: '2022-10-18'
+                      amount:
+                        decimal: '490.34'
+                        currencyCode: USD
+                      taxPercentage: null
+                      taxAmount:
+                        decimal: '0.00'
+                        currencyCode: USD
+                      files:
+                        document:
+                          title: file
+                          url: http://api.example.com/83ca06bb5063276c088b5ebb85bced3a/document.pdf
+                          contentType: application/pdf
+                        breakdown:
+                          title: supporting_file
+                          url: null
+                          contentType: null
+                      lineItems:
+                      - description: Quis totam illum. Modi eum accusamus. Modi dolorem impedit.
+                        quantity: 1
+                        unitPrice:
+                          decimal: '972.83'
+                          currencyCode: USD
+                        amount:
+                          decimal: '972.83'
+                          currencyCode: USD
+                      - description: Atque odit rerum. Ipsam rerum quia. Sit odio quo.
+                        quantity: 5
+                        unitPrice:
+                          decimal: '723.89'
+                          currencyCode: USD
+                        amount:
+                          decimal: '3619.45'
+                          currencyCode: USD
+                      appliedCredit: []
+                      charge:
+                        id: A857d642
+                        status: PENDING
+                        amount:
+                          decimal: '490.34'
+                          currencyCode: USD
+                        amountDue:
+                          decimal: '490.34'
+                          currencyCode: USD
+                      payout: null
+                Successfully retrieve settlement invoice:
+                  value:
+                    data:
+                      id: A01e1dad
+                      referenceCode: OY-IMPA-ANNA-A2f05d13-05e
+                      type: SETTLEMENT
+                      status: WAITING_APPROVAL
+                      payrollMonth: null
+                      payrollYear: null
+                      issueDate: '2022-10-15'
+                      dueDate: '2022-10-18'
+                      amount:
+                        decimal: '490.34'
+                        currencyCode: USD
+                      taxPercentage: null
+                      taxAmount:
+                        decimal: '0.00'
+                        currencyCode: USD
+                      files:
+                        document:
+                          title: file
+                          url: http://api.example.com/83ca06bb5063276c088b5ebb85bced3a/document.pdf
+                          contentType: application/pdf
+                        breakdown:
+                          title: supporting_file
+                          url: null
+                          contentType: null
+                      lineItems:
+                      - description: Quis totam illum. Modi eum accusamus. Modi dolorem impedit.
+                        quantity: 1
+                        unitPrice:
+                          decimal: '972.83'
+                          currencyCode: USD
+                        amount:
+                          decimal: '972.83'
+                          currencyCode: USD
+                      - description: Atque odit rerum. Ipsam rerum quia. Sit odio quo.
+                        quantity: 5
+                        unitPrice:
+                          decimal: '723.89'
+                          currencyCode: USD
+                        amount:
+                          decimal: '3619.45'
+                          currencyCode: USD
+                      appliedCredit: []
+                      charge:
+                        id: A857d642
+                        status: PENDING
+                        amount:
+                          decimal: '490.34'
+                          currencyCode: USD
+                        amountDue:
+                          decimal: '490.34'
+                          currencyCode: USD
+                      payout: null
+                      actualTotal:
+                        decimal: '490.34'
+                        currencyCode: USD
+                      prefundingTotal:
+                        decimal: '1000.00'
+                        currencyCode: USD
+                      settlementTotal:
+                        decimal: '490.34'
+                        currencyCode: USD
+                Successfully retrieve global payroll invoice:
+                  value:
+                    data:
+                      id: A01e1dad
+                      referenceCode: OY-IMPA-ANNA-A2f05d13-ad7
+                      type: GLOBAL_PAYROLL
+                      status: DRAFT
+                      payrollMonth: null
+                      payrollYear: null
+                      issueDate: '2022-10-15'
+                      dueDate: '2022-10-18'
+                      amount:
+                        decimal: '233.84'
+                        currencyCode: USD
+                      taxPercentage: null
+                      taxAmount:
+                        decimal: '0.00'
+                        currencyCode: USD
+                      files:
+                        document:
+                          title: file
+                          url: http://api.example.com/83ca06bb5063276c088b5ebb85bced3a/document.pdf
+                          contentType: application/pdf
+                        breakdown:
+                          title: supporting_file
+                          url: null
+                          contentType: null
+                      lineItems:
+                      - description: Nihil qui et. Quam ipsam molestias. Sunt et dolorum.
+                        quantity: 3
+                        unitPrice:
+                          decimal: '850.89'
+                          currencyCode: USD
+                        amount:
+                          decimal: '2552.67'
+                          currencyCode: USD
+                      - description: Hic omnis modi. Recusandae laborum occaecati. Id dolor ducimus.
+                        quantity: 5
+                        unitPrice:
+                          decimal: '543.94'
+                          currencyCode: USD
+                        amount:
+                          decimal: '2719.70'
+                          currencyCode: USD
+                      appliedCredit: []
+                      charge: null
+                      payout: null
+                      payrollEntity:
+                        id: Ae8d029f
+                        name: sample eor 00001
+                        cutoffMonthDay: 6
+                Successfully retrieve customer invoice:
+                  value:
+                    data:
+                      id: A01e1dad
+                      referenceCode: OY-IMPA-ANNA-A2f05d13-739
+                      type: PREFUNDING
+                      status: READY_FOR_REVIEW
+                      payrollMonth: '10'
+                      payrollYear: '2022'
+                      issueDate: '2022-10-15'
+                      dueDate: '2022-10-18'
+                      amount:
+                        decimal: '867.08'
+                        currencyCode: USD
+                      taxPercentage: null
+                      taxAmount:
+                        decimal: '0.00'
+                        currencyCode: USD
+                      files:
+                        document:
+                          title: file
+                          url: http://api.example.com/83ca06bb5063276c088b5ebb85bced3a/document.pdf
+                          contentType: application/pdf
+                        breakdown:
+                          title: supporting_file
+                          url: null
+                          contentType: null
+                      lineItems:
+                      - description: Ipsam rerum quia. Sit odio quo. Est accusantium aut.
+                        quantity: 4
+                        unitPrice:
+                          decimal: '997.18'
+                          currencyCode: USD
+                        amount:
+                          decimal: '3988.72'
+                          currencyCode: USD
+                      - description: Aut ea quae. Dignissimos omnis consequatur. Maxime est ullam.
+                        quantity: 2
+                        unitPrice:
+                          decimal: '947.32'
+                          currencyCode: USD
+                        amount:
+                          decimal: '1894.64'
+                          currencyCode: USD
+                      appliedCredit: []
+                      charge:
+                        id: A857d642
+                        status: PENDING
+                        amount:
+                          decimal: '867.08'
+                          currencyCode: USD
+                        amountDue:
+                          decimal: '867.08'
+                          currencyCode: USD
+                      payout: null
+                      customer:
+                        id: B7875a51
+                        name: company 00002 name
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/invoice'
+                required:
+                - data
+      operationId: getV1InvoicesByIdentifier
+      x-operation-id-source: derived
+  /v1/invoices/{identifier}/approve:
+    post:
+      summary: Approve invoice
+      tags:
+      - Invoices
+      description: 'Approves an invoice.
+
+
+        **This endpoint requires the `X-Oyster-Actor-Email` header when using client credentials authentication.**'
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: identifier
+        in: path
+        description: Invoice ID or Reference code
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+        '422':
+          description: Operation cannot be performed
+          content:
+            application/json:
+              examples:
+                Operation cannot be performed:
+                  value:
+                    errors:
+                    - message: The invoice is not in the right state to be approved
+              schema:
+                $ref: '#/components/schemas/errors'
+      operationId: postV1InvoicesByIdentifierApprove
+      x-operation-id-source: derived
+  /v1/invoices/{identifier}/breakdown:
+    get:
+      summary: Retrieve invoice breakdown
+      tags:
+      - Invoices
+      description: 'Returns the per-team-member / per-payroll-component breakdown for an invoice. Supported types: PREFUNDING, DEPOSIT, SETTLEMENT, OYSTER_FEES, MANUAL_PREFUNDING, MANUAL_SETTLEMENT, MANUAL_OYSTER_FEES. Manual types (MANUAL_*) return one amount per component (prefunding-style); MANUAL_SETTLEMENT is SETTLEMENT-only and does not use the three-row automatic settlement format (PREFUNDING + ACTUAL + SETTLEMENT).'
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: identifier
+        in: path
+        description: Invoice ID or Reference Code
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully retrieve invoice breakdown
+          content:
+            application/json:
+              examples:
+                Successfully retrieve prefunding invoice breakdown:
+                  value:
+                    data:
+                    - engagementId: CtAtP7ts
+                      engagementName: C
+                      region: United Kingdom of Great Britain and Northern Ireland
+                      startDate: '2022-08-15'
+                      terminationDate: '2022-10-14'
+                      serviceMonth: 2022-10
+                      cutoffDate: '2022-10-06'
+                      fxRate:
+                        from: PLN
+                        to: EUR
+                        rate: '0.25'
+                      total:
+                        decimal: '1235.00'
+                        currencyCode: EUR
+                      components:
+                      - type: Wellbeing
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '100.00'
+                            currencyCode: PLN
+                      - type: Signing Bonus
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '120.00'
+                            currencyCode: PLN
+                      - type: WFH Allowance
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '2000.00'
+                            currencyCode: PLN
+                      - type: Health Fee
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '200.00'
+                            currencyCode: EUR
+                      - type: Oyster Life Insurance
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '225.00'
+                            currencyCode: EUR
+                      - type: Oyster Benefits Fee
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '255.00'
+                            currencyCode: EUR
+                    - engagementId: ue213VVh
+                      engagementName: B
+                      region: United Kingdom of Great Britain and Northern Ireland
+                      startDate: '2022-10-14'
+                      terminationDate: null
+                      serviceMonth: 2022-10
+                      cutoffDate: '2022-10-06'
+                      fxRate:
+                        from: PLN
+                        to: EUR
+                        rate: '0.25'
+                      total:
+                        decimal: '1235.00'
+                        currencyCode: EUR
+                      components:
+                      - type: Wellbeing
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '100.00'
+                            currencyCode: PLN
+                      - type: Signing Bonus
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '120.00'
+                            currencyCode: PLN
+                      - type: WFH Allowance
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '2000.00'
+                            currencyCode: PLN
+                      - type: Health Fee
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '200.00'
+                            currencyCode: EUR
+                      - type: Oyster Life Insurance
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '225.00'
+                            currencyCode: EUR
+                      - type: Oyster Benefits Fee
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '255.00'
+                            currencyCode: EUR
+                    - engagementId: Lu5epoMU
+                      engagementName: Treasa Bogan Jr.
+                      region: Poland
+                      startDate: '2022-08-15'
+                      terminationDate: '2022-12-31'
+                      serviceMonth: 2022-10
+                      cutoffDate: '2022-10-11'
+                      fxRate:
+                        from: PLN
+                        to: EUR
+                        rate: '0.25'
+                      total:
+                        decimal: '1235.00'
+                        currencyCode: EUR
+                      components:
+                      - type: Wellbeing
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '100.00'
+                            currencyCode: PLN
+                      - type: Signing Bonus
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '120.00'
+                            currencyCode: PLN
+                      - type: WFH Allowance
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '2000.00'
+                            currencyCode: PLN
+                      - type: Health Fee
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '200.00'
+                            currencyCode: EUR
+                      - type: Oyster Life Insurance
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '225.00'
+                            currencyCode: EUR
+                      - type: Oyster Benefits Fee
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '255.00'
+                            currencyCode: EUR
+                    meta:
+                      items: 100
+                      count: 3
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/invoices/A01e1dad/breakdown?page=1&perPage=100
+                      lastUrl: /v1/invoices/A01e1dad/breakdown?page=1&perPage=100
+                      pageUrl: /v1/invoices/A01e1dad/breakdown?page=1&perPage=100
+                      nextUrl: /v1/invoices/A01e1dad/breakdown?page=&perPage=100
+                      prevUrl: /v1/invoices/A01e1dad/breakdown?page=&perPage=100
+                Successfully retrieve deposit invoice breakdown:
+                  value:
+                    data:
+                    - engagementId: ue213VVh
+                      engagementName: B
+                      region: United Kingdom of Great Britain and Northern Ireland
+                      startDate: '2022-10-14'
+                      terminationDate: null
+                      serviceMonth: 2022-10
+                      cutoffDate: '2022-10-06'
+                      fxRate:
+                        from: PLN
+                        to: EUR
+                        rate: '0.25'
+                      total:
+                        decimal: '1235.00'
+                        currencyCode: EUR
+                      components:
+                      - type: Wellbeing
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '100.00'
+                            currencyCode: PLN
+                      - type: Signing Bonus
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '120.00'
+                            currencyCode: PLN
+                      - type: WFH Allowance
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '2000.00'
+                            currencyCode: PLN
+                      - type: Health Fee
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '200.00'
+                            currencyCode: EUR
+                      - type: Oyster Life Insurance
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '225.00'
+                            currencyCode: EUR
+                      - type: Oyster Benefits Fee
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '255.00'
+                            currencyCode: EUR
+                    - engagementId: Lu5epoMU
+                      engagementName: Treasa Bogan Jr.
+                      region: Poland
+                      startDate: '2022-08-15'
+                      terminationDate: '2022-12-31'
+                      serviceMonth: 2022-10
+                      cutoffDate: '2022-10-11'
+                      fxRate:
+                        from: PLN
+                        to: EUR
+                        rate: '0.25'
+                      total:
+                        decimal: '1235.00'
+                        currencyCode: EUR
+                      components:
+                      - type: Wellbeing
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '100.00'
+                            currencyCode: PLN
+                      - type: Signing Bonus
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '120.00'
+                            currencyCode: PLN
+                      - type: WFH Allowance
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '2000.00'
+                            currencyCode: PLN
+                      - type: Health Fee
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '200.00'
+                            currencyCode: EUR
+                      - type: Oyster Life Insurance
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '225.00'
+                            currencyCode: EUR
+                      - type: Oyster Benefits Fee
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '255.00'
+                            currencyCode: EUR
+                    meta:
+                      items: 100
+                      count: 2
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/invoices/A01e1dad/breakdown?page=1&perPage=100
+                      lastUrl: /v1/invoices/A01e1dad/breakdown?page=1&perPage=100
+                      pageUrl: /v1/invoices/A01e1dad/breakdown?page=1&perPage=100
+                      nextUrl: /v1/invoices/A01e1dad/breakdown?page=&perPage=100
+                      prevUrl: /v1/invoices/A01e1dad/breakdown?page=&perPage=100
+                Successfully retrieve settlement invoice breakdown:
+                  value:
+                    data:
+                    - engagementId: CtAtP7ts
+                      engagementName: C
+                      region: United Kingdom of Great Britain and Northern Ireland
+                      startDate: '2022-08-15'
+                      terminationDate: '2022-10-14'
+                      serviceMonth: 2022-10
+                      cutoffDate: null
+                      fxRate:
+                        from: PLN
+                        to: EUR
+                        rate: '0.25'
+                      total:
+                        decimal: '-352.50'
+                        currencyCode: EUR
+                      components:
+                      - type: Wellbeing
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '100.00'
+                            currencyCode: PLN
+                        - type: ACTUAL
+                          amount:
+                            decimal: '240.00'
+                            currencyCode: PLN
+                        - type: SETTLEMENT
+                          amount:
+                            decimal: '140.00'
+                            currencyCode: PLN
+                      - type: Signing Bonus
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '120.00'
+                            currencyCode: PLN
+                        - type: ACTUAL
+                          amount:
+                            decimal: '300.00'
+                            currencyCode: PLN
+                        - type: SETTLEMENT
+                          amount:
+                            decimal: '180.00'
+                            currencyCode: PLN
+                      - type: WFH Allowance
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '2000.00'
+                            currencyCode: PLN
+                        - type: ACTUAL
+                          amount:
+                            decimal: '270.00'
+                            currencyCode: PLN
+                        - type: SETTLEMENT
+                          amount:
+                            decimal: '-1730.00'
+                            currencyCode: PLN
+                      - type: Health Fee
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '200.00'
+                            currencyCode: EUR
+                        - type: ACTUAL
+                          amount:
+                            decimal: '200.00'
+                            currencyCode: EUR
+                        - type: SETTLEMENT
+                          amount:
+                            decimal: '0.00'
+                            currencyCode: EUR
+                      - type: Oyster Life Insurance
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '225.00'
+                            currencyCode: EUR
+                        - type: ACTUAL
+                          amount:
+                            decimal: '225.00'
+                            currencyCode: EUR
+                        - type: SETTLEMENT
+                          amount:
+                            decimal: '0.00'
+                            currencyCode: EUR
+                      - type: Oyster Benefits Fee
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '255.00'
+                            currencyCode: EUR
+                        - type: ACTUAL
+                          amount:
+                            decimal: '255.00'
+                            currencyCode: EUR
+                        - type: SETTLEMENT
+                          amount:
+                            decimal: '0.00'
+                            currencyCode: EUR
+                    - engagementId: ue213VVh
+                      engagementName: B
+                      region: United Kingdom of Great Britain and Northern Ireland
+                      startDate: '2022-10-14'
+                      terminationDate: null
+                      serviceMonth: 2022-10
+                      cutoffDate: '2022-10-06'
+                      fxRate:
+                        from: PLN
+                        to: EUR
+                        rate: '0.25'
+                      total:
+                        decimal: '-352.50'
+                        currencyCode: EUR
+                      components:
+                      - type: Wellbeing
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '100.00'
+                            currencyCode: PLN
+                        - type: ACTUAL
+                          amount:
+                            decimal: '240.00'
+                            currencyCode: PLN
+                        - type: SETTLEMENT
+                          amount:
+                            decimal: '140.00'
+                            currencyCode: PLN
+                      - type: Signing Bonus
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '120.00'
+                            currencyCode: PLN
+                        - type: ACTUAL
+                          amount:
+                            decimal: '300.00'
+                            currencyCode: PLN
+                        - type: SETTLEMENT
+                          amount:
+                            decimal: '180.00'
+                            currencyCode: PLN
+                      - type: WFH Allowance
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '2000.00'
+                            currencyCode: PLN
+                        - type: ACTUAL
+                          amount:
+                            decimal: '270.00'
+                            currencyCode: PLN
+                        - type: SETTLEMENT
+                          amount:
+                            decimal: '-1730.00'
+                            currencyCode: PLN
+                      - type: Health Fee
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '200.00'
+                            currencyCode: EUR
+                        - type: ACTUAL
+                          amount:
+                            decimal: '200.00'
+                            currencyCode: EUR
+                        - type: SETTLEMENT
+                          amount:
+                            decimal: '0.00'
+                            currencyCode: EUR
+                      - type: Oyster Life Insurance
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '225.00'
+                            currencyCode: EUR
+                        - type: ACTUAL
+                          amount:
+                            decimal: '225.00'
+                            currencyCode: EUR
+                        - type: SETTLEMENT
+                          amount:
+                            decimal: '0.00'
+                            currencyCode: EUR
+                      - type: Oyster Benefits Fee
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '255.00'
+                            currencyCode: EUR
+                        - type: ACTUAL
+                          amount:
+                            decimal: '255.00'
+                            currencyCode: EUR
+                        - type: SETTLEMENT
+                          amount:
+                            decimal: '0.00'
+                            currencyCode: EUR
+                    - engagementId: Lu5epoMU
+                      engagementName: Treasa Bogan Jr.
+                      region: Poland
+                      startDate: '2022-08-15'
+                      terminationDate: '2022-12-31'
+                      serviceMonth: 2022-10
+                      cutoffDate: '2022-10-11'
+                      fxRate:
+                        from: PLN
+                        to: EUR
+                        rate: '0.25'
+                      total:
+                        decimal: '-352.50'
+                        currencyCode: EUR
+                      components:
+                      - type: Wellbeing
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '100.00'
+                            currencyCode: PLN
+                        - type: ACTUAL
+                          amount:
+                            decimal: '240.00'
+                            currencyCode: PLN
+                        - type: SETTLEMENT
+                          amount:
+                            decimal: '140.00'
+                            currencyCode: PLN
+                      - type: Signing Bonus
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '120.00'
+                            currencyCode: PLN
+                        - type: ACTUAL
+                          amount:
+                            decimal: '300.00'
+                            currencyCode: PLN
+                        - type: SETTLEMENT
+                          amount:
+                            decimal: '180.00'
+                            currencyCode: PLN
+                      - type: WFH Allowance
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '2000.00'
+                            currencyCode: PLN
+                        - type: ACTUAL
+                          amount:
+                            decimal: '270.00'
+                            currencyCode: PLN
+                        - type: SETTLEMENT
+                          amount:
+                            decimal: '-1730.00'
+                            currencyCode: PLN
+                      - type: Health Fee
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '200.00'
+                            currencyCode: EUR
+                        - type: ACTUAL
+                          amount:
+                            decimal: '200.00'
+                            currencyCode: EUR
+                        - type: SETTLEMENT
+                          amount:
+                            decimal: '0.00'
+                            currencyCode: EUR
+                      - type: Oyster Life Insurance
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '225.00'
+                            currencyCode: EUR
+                        - type: ACTUAL
+                          amount:
+                            decimal: '225.00'
+                            currencyCode: EUR
+                        - type: SETTLEMENT
+                          amount:
+                            decimal: '0.00'
+                            currencyCode: EUR
+                      - type: Oyster Benefits Fee
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '255.00'
+                            currencyCode: EUR
+                        - type: ACTUAL
+                          amount:
+                            decimal: '255.00'
+                            currencyCode: EUR
+                        - type: SETTLEMENT
+                          amount:
+                            decimal: '0.00'
+                            currencyCode: EUR
+                    meta:
+                      items: 100
+                      count: 3
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/invoices/A01e1dad/breakdown?page=1&perPage=100
+                      lastUrl: /v1/invoices/A01e1dad/breakdown?page=1&perPage=100
+                      pageUrl: /v1/invoices/A01e1dad/breakdown?page=1&perPage=100
+                      nextUrl: /v1/invoices/A01e1dad/breakdown?page=&perPage=100
+                      prevUrl: /v1/invoices/A01e1dad/breakdown?page=&perPage=100
+                Successfully retrieve oyster fees invoice breakdown:
+                  value:
+                    data:
+                    - engagementId: CtAtP7ts
+                      engagementName: C
+                      region: United Kingdom of Great Britain and Northern Ireland
+                      startDate: '2022-08-15'
+                      terminationDate: '2022-10-14'
+                      serviceMonth: 2022-10
+                      cutoffDate: '2022-10-06'
+                      fxRate:
+                        from: EUR
+                        to: EUR
+                        rate: '1.0'
+                      total:
+                        decimal: '567.42'
+                        currencyCode: EUR
+                      components:
+                      - type: Oyster Subscription fee
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '419.40'
+                            currencyCode: EUR
+                      - type: Health and Safety fee
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '28.13'
+                            currencyCode: EUR
+                      - type: Visa fee
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '69.90'
+                            currencyCode: EUR
+                      - type: Offboarding fee
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '49.99'
+                            currencyCode: EUR
+                      - type: Oyster Benefits Fee
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '0.00'
+                            currencyCode: EUR
+                      customer:
+                        id: A2f05d13
+                        name: Bakery LTD
+                    - engagementId: ue213VVh
+                      engagementName: B
+                      region: United Kingdom of Great Britain and Northern Ireland
+                      startDate: '2022-10-14'
+                      terminationDate: null
+                      serviceMonth: 2022-10
+                      cutoffDate: '2022-10-06'
+                      fxRate:
+                        from: EUR
+                        to: EUR
+                        rate: '1.0'
+                      total:
+                        decimal: '632.42'
+                        currencyCode: EUR
+                      components:
+                      - type: Oyster Subscription fee
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '419.40'
+                            currencyCode: EUR
+                      - type: Health and Safety fee
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '28.13'
+                            currencyCode: EUR
+                      - type: Visa fee
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '69.90'
+                            currencyCode: EUR
+                      - type: Offboarding fee
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '49.99'
+                            currencyCode: EUR
+                      - type: Oyster Benefits Fee
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '65.00'
+                            currencyCode: EUR
+                      customer:
+                        id: A2f05d13
+                        name: Bakery LTD
+                    - engagementId: Lu5epoMU
+                      engagementName: Treasa Bogan Jr.
+                      region: Poland
+                      startDate: '2022-08-15'
+                      terminationDate: '2022-12-31'
+                      serviceMonth: 2022-10
+                      cutoffDate: '2022-10-11'
+                      fxRate:
+                        from: EUR
+                        to: EUR
+                        rate: '1.0'
+                      total:
+                        decimal: '632.42'
+                        currencyCode: EUR
+                      components:
+                      - type: Oyster Subscription fee
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '419.40'
+                            currencyCode: EUR
+                      - type: Health and Safety fee
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '28.13'
+                            currencyCode: EUR
+                      - type: Visa fee
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '69.90'
+                            currencyCode: EUR
+                      - type: Offboarding fee
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '49.99'
+                            currencyCode: EUR
+                      - type: Oyster Benefits Fee
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '65.00'
+                            currencyCode: EUR
+                      customer:
+                        id: A2f05d13
+                        name: Bakery LTD
+                    meta:
+                      items: 100
+                      count: 3
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/invoices/A01e1dad/breakdown?page=1&perPage=100
+                      lastUrl: /v1/invoices/A01e1dad/breakdown?page=1&perPage=100
+                      pageUrl: /v1/invoices/A01e1dad/breakdown?page=1&perPage=100
+                      nextUrl: /v1/invoices/A01e1dad/breakdown?page=&perPage=100
+                      prevUrl: /v1/invoices/A01e1dad/breakdown?page=&perPage=100
+                Successfully retrieve manual prefunding invoice breakdown:
+                  value:
+                    data:
+                    - engagementId: AdaLovelace
+                      engagementName: Ada Lovelace
+                      region: Poland
+                      startDate: '2022-08-15'
+                      terminationDate: '2022-12-31'
+                      serviceMonth: 2022-10
+                      cutoffDate: '2022-10-11'
+                      fxRate:
+                        from: PLN
+                        to: EUR
+                        rate: '0.25'
+                      total:
+                        decimal: '700.00'
+                        currencyCode: EUR
+                      components:
+                      - type: Wellbeing
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '100.00'
+                            currencyCode: PLN
+                      - type: Signing Bonus
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '120.00'
+                            currencyCode: PLN
+                      - type: WFH Allowance
+                        amounts:
+                        - type: PREFUNDING
+                          amount:
+                            decimal: '2580.00'
+                            currencyCode: PLN
+                    meta:
+                      items: 100
+                      count: 1
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/invoices/A01e1dad/breakdown?page=1&perPage=100
+                      lastUrl: /v1/invoices/A01e1dad/breakdown?page=1&perPage=100
+                      pageUrl: /v1/invoices/A01e1dad/breakdown?page=1&perPage=100
+                      nextUrl: /v1/invoices/A01e1dad/breakdown?page=&perPage=100
+                      prevUrl: /v1/invoices/A01e1dad/breakdown?page=&perPage=100
+                Successfully retrieve manual settlement invoice breakdown:
+                  value:
+                    data:
+                    - engagementId: AdaLovelace
+                      engagementName: Ada Lovelace
+                      region: Poland
+                      startDate: '2022-08-15'
+                      terminationDate: '2022-12-31'
+                      serviceMonth: 2022-10
+                      cutoffDate: '2022-10-11'
+                      fxRate:
+                        from: PLN
+                        to: EUR
+                        rate: '0.25'
+                      total:
+                        decimal: '700.00'
+                        currencyCode: EUR
+                      components:
+                      - type: Wellbeing
+                        amounts:
+                        - type: SETTLEMENT
+                          amount:
+                            decimal: '100.00'
+                            currencyCode: PLN
+                      - type: Signing Bonus
+                        amounts:
+                        - type: SETTLEMENT
+                          amount:
+                            decimal: '120.00'
+                            currencyCode: PLN
+                      - type: WFH Allowance
+                        amounts:
+                        - type: SETTLEMENT
+                          amount:
+                            decimal: '2580.00'
+                            currencyCode: PLN
+                    meta:
+                      items: 100
+                      count: 1
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/invoices/A01e1dad/breakdown?page=1&perPage=100
+                      lastUrl: /v1/invoices/A01e1dad/breakdown?page=1&perPage=100
+                      pageUrl: /v1/invoices/A01e1dad/breakdown?page=1&perPage=100
+                      nextUrl: /v1/invoices/A01e1dad/breakdown?page=&perPage=100
+                      prevUrl: /v1/invoices/A01e1dad/breakdown?page=&perPage=100
+                Successfully retrieve manual oyster fees invoice breakdown:
+                  value:
+                    data:
+                    - engagementId: AdaLovelace
+                      engagementName: Ada Lovelace
+                      region: Poland
+                      startDate: '2022-08-15'
+                      terminationDate: '2022-12-31'
+                      serviceMonth: 2022-10
+                      cutoffDate: '2022-10-11'
+                      fxRate:
+                        from: EUR
+                        to: EUR
+                        rate: '1.0'
+                      total:
+                        decimal: '700.00'
+                        currencyCode: EUR
+                      components:
+                      - type: Health Fee
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '200.00'
+                            currencyCode: EUR
+                      - type: Oyster Benefits Fee
+                        amounts:
+                        - type: ACTUAL
+                          amount:
+                            decimal: '500.00'
+                            currencyCode: EUR
+                      customer:
+                        id: A2f05d13
+                        name: Bakery LTD
+                    meta:
+                      items: 100
+                      count: 1
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/invoices/A01e1dad/breakdown?page=1&perPage=100
+                      lastUrl: /v1/invoices/A01e1dad/breakdown?page=1&perPage=100
+                      pageUrl: /v1/invoices/A01e1dad/breakdown?page=1&perPage=100
+                      nextUrl: /v1/invoices/A01e1dad/breakdown?page=&perPage=100
+                      prevUrl: /v1/invoices/A01e1dad/breakdown?page=&perPage=100
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/invoiceBreakdown'
+                required:
+                - data
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              examples:
+                Unprocessable entity:
+                  value:
+                    errors:
+                    - message: 'Unsupported invoice type, supported invoice types: PREFUNDING, DEPOSIT, SETTLEMENT, OYSTER_FEES, MANUAL_PREFUNDING, MANUAL_SETTLEMENT, MANUAL_OYSTER_FEES'
+              schema:
+                $ref: '#/components/schemas/errors'
+      operationId: getV1InvoicesByIdentifierBreakdown
+      x-operation-id-source: derived
+  /v1/invoices/{identifier}/dispute:
+    post:
+      summary: Dispute invoice
+      tags:
+      - Invoices
+      description: 'Disputes an invoice.
+
+
+        **This endpoint requires the `X-Oyster-Actor-Email` header when using client credentials authentication.**'
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: identifier
+        in: path
+        description: Invoice ID or Reference code
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+        '422':
+          description: Operation cannot be performed
+          content:
+            application/json:
+              examples:
+                Operation cannot be performed:
+                  value:
+                    errors:
+                    - message: The invoice state or type can not be disputed
+              schema:
+                $ref: '#/components/schemas/errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  minLength: 3
+              required:
+              - reason
+            examples:
+              Successful:
+                summary: Successful
+                value:
+                  reason: Invalid invoice
+      operationId: postV1InvoicesByIdentifierDispute
+      x-operation-id-source: derived
+components:
+  schemas:
+    chargeCollectionItem:
+      type:
+      - object
+      - 'null'
+      required:
+      - id
+      - status
+      - amount
+      - amountDue
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+          - NO_PAYMENT
+          - PENDING
+          - WAITING_FOR_WIRE_TRANSFER
+          - OVERDUE
+          - DIRECT_DEBIT_IN_PROGRESS
+          - DIRECT_DEBIT_FAILED
+          - CHARGED_BACK
+          - PAID
+          - PARTIALLY_PAID
+          - VOIDED
+        amount:
+          $ref: '#/components/schemas/amount'
+        amountDue:
+          $ref: '#/components/schemas/amount'
+    payoutCollectionItem:
+      type:
+      - object
+      - 'null'
+      required:
+      - id
+      - status
+      - amount
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+          enum:
+          - NOT_INITIATED
+          - INITIATED
+          - IN_PROGRESS
+          - PAID
+          - RETURNED
+          - NO_PAYMENT
+          - SENT
+        amount:
+          $ref: '#/components/schemas/amount'
+    contractorInvoice:
+      type: object
+      description: Additional properties specific to contractor invoices.
+      properties:
+        type:
+          type: string
+          enum:
+          - PAYG_CONTRACTOR
+          - EXPENSES
+          - CONTRACTOR_MONTHLY_PAYMENT
+          - CONTRACTOR_FEES
+          - MANUAL_INVOICE_BY_OYSTER
+        contractors:
+          type: array
+          items:
+            type: object
+            required:
+            - id
+            - name
+            properties:
+              id:
+                type: string
+              name:
+                type: string
+      required:
+      - contractors
+    invoiceBase:
+      type: object
+      description: Base properties for all invoices.
+      properties:
+        id:
+          type: string
+        referenceCode:
+          type: string
+        type:
+          type: string
+          enum:
+          - DEPOSIT
+          - PREFUNDING
+          - SETTLEMENT
+          - MANUAL
+          - CONTRACTORS_FEE
+          - MONTHLY_PAYMENT
+          - AD_HOC_PAYMENT
+          - EXPENSE_REIMBURSEMENT
+          - GLOBAL_PAYROLL
+          - SCALE
+          - SALARY_INSIGHTS
+          - TRUE_UPS
+          - OYSTER_FEES
+          - MANUAL_PREFUNDING
+          - MANUAL_SETTLEMENT
+          - MANUAL_OYSTER_FEES
+          - MANUAL_INVOICE_BY_OYSTER
+        status:
+          type: string
+        payrollMonth:
+          type:
+          - string
+          - 'null'
+        payrollYear:
+          type:
+          - string
+          - 'null'
+        issueDate:
+          type:
+          - string
+          - 'null'
+          format: date
+        charge:
+          $ref: '#/components/schemas/chargeCollectionItem'
+        payout:
+          $ref: '#/components/schemas/payoutCollectionItem'
+        dueDate:
+          type:
+          - string
+          - 'null'
+          format: date
+        amount:
+          $ref: '#/components/schemas/amount'
+        taxPercentage:
+          type:
+          - string
+          - 'null'
+        taxAmount:
+          $ref: '#/components/schemas/amount'
+        files:
+          type: object
+          required:
+          - document
+          - breakdown
+          properties:
+            document:
+              type: object
+              required:
+              - title
+              - url
+              - contentType
+              properties:
+                title:
+                  type:
+                  - string
+                  - 'null'
+                url:
+                  type:
+                  - string
+                  - 'null'
+                contentType:
+                  type:
+                  - string
+                  - 'null'
+            breakdown:
+              type: object
+              properties:
+                title:
+                  type:
+                  - string
+                  - 'null'
+                url:
+                  type:
+                  - string
+                  - 'null'
+                contentType:
+                  type:
+                  - string
+                  - 'null'
+        lineItems:
+          type: array
+          items:
+            type: object
+            required:
+            - description
+            - quantity
+            - unitPrice
+            - amount
+            properties:
+              description:
+                type: string
+              quantity:
+                type: number
+              unitPrice:
+                $ref: '#/components/schemas/amount'
+              amount:
+                $ref: '#/components/schemas/amount'
+        appliedCredit:
+          type: array
+          items:
+            type: object
+            required:
+            - referenceCode
+            - appliedAt
+            - amount
+            properties:
+              referenceCode:
+                type: string
+              appliedAt:
+                type: string
+                format: date-time
+              amount:
+                $ref: '#/components/schemas/amount'
+        customer:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+          description: Contains the ID and name of the associated customer. This field is present if the invoice is linked to a customer account.
+    invoiceBreakdown:
+      type: array
+      items:
+        type: object
+        required:
+        - engagementId
+        - engagementName
+        - region
+        - startDate
+        - terminationDate
+        - serviceMonth
+        - cutoffDate
+        - fxRate
+        - total
+        - components
+        properties:
+          engagementId:
+            type: string
+          engagementName:
+            type: string
+          region:
+            type: string
+          startDate:
+            type: string
+            format: date
+          terminationDate:
+            type:
+            - string
+            - 'null'
+            format: date
+          serviceMonth:
+            type: string
+            format: date
+          cutoffDate:
+            type:
+            - string
+            - 'null'
+            format: date
+          fxRate:
+            type: object
+            required:
+            - from
+            - to
+            - rate
+            properties:
+              from:
+                type: string
+              to:
+                type: string
+              rate:
+                type: string
+          total:
+            $ref: '#/components/schemas/invoiceAmount'
+          components:
+            $ref: '#/components/schemas/invoiceBreakdownComponents'
+    meta:
+      type: object
+      properties:
+        items:
+          type: integer
+        count:
+          type: integer
+        page:
+          type: integer
+        pages:
+          type: integer
+        firstUrl:
+          type: string
+        lastUrl:
+          type: string
+        pageUrl:
+          type: string
+        nextUrl:
+          type: string
+        prevUrl:
+          type: string
+        deprecation:
+          type: object
+          properties:
+            at:
+              type: string
+            sunset:
+              type: string
+            link:
+              type: object
+              properties:
+                rel:
+                  type: string
+                url:
+                  type: string
+      required:
+      - items
+      - count
+      - page
+      - pages
+      - firstUrl
+      - lastUrl
+      - pageUrl
+      - nextUrl
+      - prevUrl
+    globalPayrollInvoice:
+      type: object
+      description: Additional properties specific to global payroll invoices.
+      properties:
+        type:
+          type: string
+          enum:
+          - GLOBAL_PAYROLL
+        payrollEntity:
+          type: object
+          properties:
+            id:
+              type: string
+            name:
+              type: string
+            cutoffMonthDay:
+              type: number
+          required:
+          - id
+          - name
+          - cutoffMonthDay
+      required:
+      - payrollEntity
+    errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+            required:
+            - message
+      required:
+      - errors
+    invoiceAmount:
+      type: object
+      properties:
+        decimal:
+          type: string
+          pattern: ^-?\d+([.]\d+)?$
+        currencyCode:
+          type: string
+          minLength: 3
+          maxLength: 3
+      required:
+      - decimal
+      - currencyCode
+    invoiceBreakdownComponents:
+      type: array
+      items:
+        type: object
+        required:
+        - type
+        - amounts
+        properties:
+          type:
+            type: string
+          amounts:
+            $ref: '#/components/schemas/invoiceBreakdownComponentAmounts'
+    invoiceBreakdownComponentAmounts:
+      type: array
+      items:
+        type: object
+        required:
+        - type
+        - amount
+        properties:
+          type:
+            type: string
+          amount:
+            $ref: '#/components/schemas/invoiceAmount'
+    invoice:
+      type: object
+      required:
+      - id
+      - referenceCode
+      - type
+      - status
+      - payrollMonth
+      - payrollYear
+      - issueDate
+      - dueDate
+      - amount
+      - taxPercentage
+      - taxAmount
+      - files
+      - lineItems
+      - appliedCredit
+      allOf:
+      - $ref: '#/components/schemas/invoiceBase'
+      anyOf:
+      - $ref: '#/components/schemas/settlementInvoice'
+      - $ref: '#/components/schemas/globalPayrollInvoice'
+      - $ref: '#/components/schemas/contractorInvoice'
+      - $ref: '#/components/schemas/invoiceBase'
+      discriminator:
+        propertyName: type
+        mapping:
+          SETTLEMENT: '#/components/schemas/settlementInvoice'
+          GLOBAL_PAYROLL: '#/components/schemas/globalPayrollInvoice'
+          CONTRACTOR: '#/components/schemas/contractorInvoice'
+          OTHER_INVOICE_TYPES: '#/components/schemas/invoiceBase'
+    settlementInvoice:
+      type: object
+      description: Additional properties specific to settlement invoices.
+      properties:
+        type:
+          type: string
+          enum:
+          - SETTLEMENT
+        actualTotal:
+          $ref: '#/components/schemas/amount'
+        prefundingTotal:
+          $ref: '#/components/schemas/amount'
+        settlementTotal:
+          $ref: '#/components/schemas/amount'
+      required:
+      - actualTotal
+      - prefundingTotal
+      - settlementTotal
+    invoices:
+      type: array
+      items:
+        type: object
+        properties:
+          id:
+            type: string
+          referenceCode:
+            type: string
+          type:
+            type: string
+            enum:
+            - DEPOSIT
+            - PREFUNDING
+            - SETTLEMENT
+            - MANUAL
+            - CONTRACTORS_FEE
+            - MONTHLY_PAYMENT
+            - AD_HOC_PAYMENT
+            - EXPENSE_REIMBURSEMENT
+            - GLOBAL_PAYROLL
+            - SCALE
+            - SALARY_INSIGHTS
+            - TRUE_UPS
+            - OYSTER_FEES
+            - MANUAL_PREFUNDING
+            - MANUAL_SETTLEMENT
+            - MANUAL_OYSTER_FEES
+            - MANUAL_INVOICE_BY_OYSTER
+          status:
+            type: string
+            enum:
+            - VOIDED
+            - WAITING_APPROVAL
+            - READY_FOR_REVIEW
+            - APPROVED
+            - AUTO_APPROVED
+            - DISPUTED
+          payrollMonth:
+            type:
+            - string
+            - 'null'
+          payrollYear:
+            type:
+            - string
+            - 'null'
+          issueDate:
+            type:
+            - string
+            - 'null'
+            format: date
+          dueDate:
+            type:
+            - string
+            - 'null'
+            format: date
+          amount:
+            $ref: '#/components/schemas/amount'
+          charge:
+            $ref: '#/components/schemas/chargeCollectionItem'
+          payout:
+            $ref: '#/components/schemas/payoutCollectionItem'
+        required:
+        - id
+        - referenceCode
+        - type
+        - status
+        - payrollMonth
+        - payrollYear
+        - issueDate
+        - dueDate
+        - amount
+        - charge
+        - payout
+    amount:
+      type: object
+      properties:
+        decimal:
+          type: string
+          pattern: ^\d+([.]\d+)?$
+        currencyCode:
+          type: string
+          minLength: 3
+          maxLength: 3
+      required:
+      - decimal
+      - currencyCode
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+x-provenance:
+  method: searched
+  source: https://docs.oysterhr.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.oysterhr.com/reference/delete_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/delete_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-document-document-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/delete_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-engagements-engagement-id-offerings.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-enrollments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-company.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes.md
+  - https://docs.oysterhr.com/reference/get_v1-departments.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-allowances.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-bonuses.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-documents.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-identity-verification.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-payslips.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id-sources-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements-agreement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-annually.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-monthly.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form-documents-field-or-document-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-tasks.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-role-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier-breakdown.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices.md
+  - https://docs.oysterhr.com/reference/get_v1-meta-operations-operation-key.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-payroll-team-members-terminations-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-pay-types.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id-charges.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charges-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-payouts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id-records.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll.md
+  - https://docs.oysterhr.com/reference/get_v1-public-holidays.md
+  - https://docs.oysterhr.com/reference/get_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id-sources-source-type.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks-dispatches.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/patch_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-employments-id-personal-details.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-reseller-customers-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/post_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/post_v1-benefits-engagements-engagement-id-enrollments.md
+  - https://docs.oysterhr.com/reference/post_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-approved.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-declined.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-sessions.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-decline.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-agreements-agreement-id-verify.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-document.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-onboarding-form-complete.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-team-member-invite.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-dispute.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-cancellation.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-documents.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-initiate.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-payroll-team-members-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/post_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-attachment.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-reject.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-entries.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-confirm.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks-id-test.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/put_v1-hiring-employments-id-onboarding-form-documents-field-id.md
+  merge:
+    pages: 140
+    deduped: 378
+    conflicts_kept_first: 0

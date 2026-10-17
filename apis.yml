@@ -127,34 +127,20 @@ common:
   url: finops/oyster-hr-finops.yml
 
 apis:
-- aid: oyster-hr:oyster-hr-authentication
-  name: Oyster HR Hr Authentication Openapi.Yml API
-  description: The Hr Authentication Openapi.Yml API from Oyster HR — 1 operation(s) for hr authentication openapi.yml.
+- aid: oyster-hr:oyster-hr-authentication-api
+  name: Oyster HR Authentication API
+  description: The Authentication API from Oyster HR — 1 operation(s) for authentication.
   humanURL: https://www.oysterhr.com/developer-api
   baseURL: https://api.oysterhr.com/v1
   tags:
-  - Hr Authentication Openapi.Yml
+  - Authentication
   properties:
   - type: OpenAPI
-    url: openapi/oyster-hr-authentication-openapi.yml
+    url: openapi/oyster-hr-authentication-api-openapi.yml
   - type: Documentation
     url: https://docs.oysterhr.com/
   - type: JSONSchema
     url: json-schema/oyster-hr-token-schema.json
-- aid: oyster-hr:oyster-hr-endpoints
-  name: Oyster HR Contract Changes API
-  description: 'With the Contract Changes API, you can manage your team''s contract change requests.
-
-    You can access details of a specific request, cancel change requests, and view a list of all requests.'
-  humanURL: https://www.oysterhr.com/developer-api
-  baseURL: https://api.oysterhr.com/v1
-  tags:
-  - Contract Changes
-  properties:
-  - type: OpenAPI
-    url: openapi/oyster-hr-endpoints-openapi.yml
-  - type: Documentation
-    url: https://docs.oysterhr.com/
   - type: JSONSchema
     url: json-schema/oyster-hr-employment-schema.json
   - type: JSONSchema
@@ -167,7 +153,615 @@ apis:
     url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
   - type: JSONSchema
     url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+- aid: oyster-hr:oyster-hr-bank-accounts-api
+  name: Oyster HR Bank Accounts API
+  description: The Bank Accounts API from Oyster HR — 3 operation(s) for bank accounts.
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Bank Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-bank-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+- aid: oyster-hr:oyster-hr-benefits-api
+  name: Oyster HR Benefits API
+  description: The Benefits API from Oyster HR — 4 operation(s) for benefits.
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Benefits
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-benefits-api-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+- aid: oyster-hr:oyster-hr-company-api
+  name: Oyster HR Company API
+  description: The Company API from Oyster HR — 1 operation(s) for company.
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Company
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-company-api-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+- aid: oyster-hr:oyster-hr-consent-api
+  name: Oyster HR Consent API
+  description: The Consent API from Oyster HR — 1 operation(s) for consent.
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Consent
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-consent-api-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+- aid: oyster-hr:oyster-hr-contract-changes-api
+  name: Oyster HR Contract Changes API
+  description: >-
+    With the Contract Changes API, you can manage your team's contract change requests.
 
+    You can access details of a specific request, cancel change requests, and view a list of all requests.
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Contract Changes
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-contract-changes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+- aid: oyster-hr:oyster-hr-cost-estimate-api
+  name: Oyster HR Cost Estimate API
+  description: The Cost Estimate API from Oyster HR — 2 operation(s) for cost estimate.
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Cost Estimate
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-cost-estimate-api-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+- aid: oyster-hr:oyster-hr-credit-notes-api
+  name: Oyster HR Credit notes API
+  description: The Credit notes API from Oyster HR — 4 operation(s) for credit notes.
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Credit notes
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-credit-notes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+- aid: oyster-hr:oyster-hr-departments-api
+  name: Oyster HR Departments API
+  description: The Departments API from Oyster HR — 1 operation(s) for departments.
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Departments
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-departments-api-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+- aid: oyster-hr:oyster-hr-employments-api
+  name: Oyster HR Employments API
+  description: The Employments API from Oyster HR — 20 operation(s) for employments.
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Employments
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-employments-api-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+- aid: oyster-hr:oyster-hr-engagements-api
+  name: Oyster HR Engagements API
+  description: The Engagements API from Oyster HR — 6 operation(s) for engagements.
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Engagements
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-engagements-api-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+- aid: oyster-hr:oyster-hr-expenses-api
+  name: Oyster HR Expenses API
+  description: "Expenses API allows you to remotely manage expenses of your team. \nApprove or decline\
+    \ a specific expense, get info about a specific expense or receive real-time information about all\
+    \ expenses."
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Expenses
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-expenses-api-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+- aid: oyster-hr:oyster-hr-identity-verification-api
+  name: Oyster HR Identity Verification API
+  description: The Identity Verification API from Oyster HR — 4 operation(s) for identity verification.
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Identity Verification
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-identity-verification-api-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+- aid: oyster-hr:oyster-hr-invoices-api
+  name: Oyster HR Invoices API
+  description: The Invoices API from Oyster HR — 7 operation(s) for invoices.
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Invoices
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-invoices-api-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+- aid: oyster-hr:oyster-hr-offboarding-api
+  name: Oyster HR Offboarding API
+  description: The Offboarding API from Oyster HR — 14 operation(s) for offboarding.
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Offboarding
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-offboarding-api-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+- aid: oyster-hr:oyster-hr-operations-api
+  name: Oyster HR Operations API
+  description: The Operations API from Oyster HR — 1 operation(s) for operations.
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Operations
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-operations-api-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+- aid: oyster-hr:oyster-hr-oysterhr-prepay-api
+  name: Oyster HR @oysterhr/prepay API
+  description: The @oysterhr/prepay API from Oyster HR — 13 operation(s) for @oysterhr/prepay.
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - '@oysterhr/prepay'
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-oysterhr-prepay-api-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+- aid: oyster-hr:oyster-hr-payments-api
+  name: Oyster HR Payments API
+  description: The Payments API from Oyster HR — 6 operation(s) for payments.
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Payments
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-payments-api-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+- aid: oyster-hr:oyster-hr-payroll-api
+  name: Oyster HR Payroll API
+  description: The Payroll API from Oyster HR — 3 operation(s) for payroll.
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Payroll
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-payroll-api-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+- aid: oyster-hr:oyster-hr-payroll-changes-api
+  name: Oyster HR Payroll Changes API
+  description: The Payroll Changes API from Oyster HR — 6 operation(s) for payroll changes.
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Payroll Changes
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-payroll-changes-api-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+- aid: oyster-hr:oyster-hr-reseller-api
+  name: Oyster HR Reseller API
+  description: The Reseller API from Oyster HR — 2 operation(s) for reseller.
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Reseller
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-reseller-api-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+- aid: oyster-hr:oyster-hr-time-off-api
+  name: Oyster HR Time Off API
+  description: >-
+    With the Time Off API, you can manage your team's time off requests.
+
+    You can approve or decline specific time off requests, access information about a particular request,
+    and get updates on all time off requests.
+
+    It also provides details on time off entitlements for each engagement within the company
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Time Off
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-time-off-api-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+- aid: oyster-hr:oyster-hr-time-tracking-api
+  name: Oyster HR Time Tracking API
+  description: The Time Tracking API from Oyster HR — 8 operation(s) for time tracking.
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Time Tracking
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-time-tracking-api-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
+- aid: oyster-hr:oyster-hr-webhooks-api
+  name: Oyster HR Webhooks API
+  description: The Webhooks API from Oyster HR — 4 operation(s) for webhooks.
+  humanURL: https://www.oysterhr.com/developer-api
+  baseURL: https://api.oysterhr.com/v1
+  tags:
+  - Webhooks
+  properties:
+  - type: OpenAPI
+    url: openapi/oyster-hr-webhooks-api-openapi.yml
+  - type: Documentation
+    url: https://docs.oysterhr.com/
+  - type: JSONSchema
+    url: json-schema/oyster-hr-token-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-contract-change-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-employment-cost-estimate-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-engagement-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheet-schema.json
+  - type: JSONSchema
+    url: json-schema/oyster-hr-time-tracking-time-sheets-schema.json
 x-readme-harvest:
   date: '2026-10-14'
   ops: 141

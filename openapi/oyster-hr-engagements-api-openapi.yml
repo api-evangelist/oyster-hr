@@ -1,0 +1,1251 @@
+openapi: 3.2.0
+info:
+  title: Endpoints Engagements API
+  version: v1
+servers:
+- url: https://api.oysterhr.com
+  description: Production server
+- url: https://api-sandbox.oysterhr.com
+  description: Sandbox server
+tags:
+- name: Engagements
+paths:
+  /v1/engagements:
+    get:
+      summary: Retrieve all engagements
+      tags:
+      - Engagements
+      description: Returns a list of engagements
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                No engagements:
+                  value:
+                    data: []
+                    meta:
+                      items: 100
+                      count: 0
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/engagements?perPage=100&page=1
+                      lastUrl: /v1/engagements?perPage=100&page=1
+                      pageUrl: /v1/engagements?perPage=100&page=1
+                      nextUrl: /v1/engagements?perPage=100&page=
+                      prevUrl: /v1/engagements?perPage=100&page=
+                Successful:
+                  value:
+                    data:
+                    - id: Ga3b36b4
+                      engagementId: Ga3b36b4
+                      modifiedAt: '2022-10-15T12:34:56Z'
+                      startDate: '2022-10-15'
+                      engagementType: CONTRACT
+                      type: CONTRACT
+                      state: IN_PROGRESS
+                      role: Corporate Hospitality Manager Consultant
+                      countryCode: GB
+                      personalDetails:
+                        name: The Hon. Bobbie Haag
+                        addresses:
+                          livingAddress: null
+                          mailingAddress: null
+                      employment: null
+                      contract:
+                        id: Bc7afde1
+                        contractId: Bc7afde1
+                        name: Danny Keebler
+                        email: soila_rosenbaum@prosacco.example
+                        workEmail: null
+                        billingType: FIXED
+                        taxIdNumber: null
+                      benefitEnrollments: []
+                      terminations: []
+                      department: null
+                    - id: E420a9d8
+                      engagementId: E420a9d8
+                      modifiedAt: '2022-10-15T12:34:56Z'
+                      startDate: '2022-10-15'
+                      engagementType: CONTRACT
+                      type: CONTRACT
+                      state: IN_PROGRESS
+                      role: Senior Sales Representative Consultant
+                      countryCode: GB
+                      personalDetails:
+                        name: Shaina Pollich
+                        addresses:
+                          livingAddress: null
+                          mailingAddress: null
+                      employment: null
+                      contract:
+                        id: A116a07d
+                        contractId: A116a07d
+                        name: Joel Murazik
+                        email: krishna@bahringer.test
+                        workEmail: null
+                        billingType: FIXED
+                        taxIdNumber: null
+                      benefitEnrollments: []
+                      terminations: []
+                      department: null
+                    - id: C6c9d557
+                      engagementId: C6c9d557
+                      modifiedAt: '2022-10-15T12:34:56Z'
+                      startDate: '2022-10-15'
+                      engagementType: EMPLOYMENT
+                      type: EMPLOYMENT
+                      state: DRAFT
+                      role: Senior Retail Orchestrator Consultant
+                      countryCode: GB
+                      personalDetails:
+                        name: null
+                        addresses:
+                          livingAddress: null
+                          mailingAddress: null
+                      employment:
+                        id: C6c9d557
+                        employmentId: C6c9d557
+                        fullLegalName: Candida Stamm
+                        email: zachariah_mohr@thompson.example
+                        workEmail: null
+                        employmentType: null
+                        type: null
+                        lastDayOn: null
+                        salary:
+                          decimal: '120345.00'
+                          currencyCode: EUR
+                        payrollTeamMember: false
+                      contract: null
+                      benefitEnrollments: []
+                      terminations: []
+                      department: null
+                    - id: B0b779a8
+                      engagementId: B0b779a8
+                      modifiedAt: '2022-10-15T12:34:56Z'
+                      startDate: '2022-10-15'
+                      engagementType: EMPLOYMENT
+                      type: EMPLOYMENT
+                      state: DRAFT
+                      role: Administration Strategist Consultant
+                      countryCode: GB
+                      personalDetails:
+                        name: null
+                        addresses:
+                          livingAddress: null
+                          mailingAddress: null
+                      employment:
+                        id: B0b779a8
+                        employmentId: B0b779a8
+                        fullLegalName: Shirlee Cremin
+                        email: keila.dibbert@sipes.test
+                        workEmail: null
+                        employmentType: null
+                        type: null
+                        lastDayOn: null
+                        salary:
+                          decimal: '120345.00'
+                          currencyCode: EUR
+                        payrollTeamMember: false
+                      contract: null
+                      benefitEnrollments: []
+                      terminations: []
+                      department: null
+                    - id: A5540727
+                      engagementId: A5540727
+                      modifiedAt: '2022-10-15T12:34:56Z'
+                      startDate: '2022-10-15'
+                      engagementType: EMPLOYMENT
+                      type: EMPLOYMENT
+                      state: DRAFT
+                      role: Design Technician Consultant
+                      countryCode: GB
+                      personalDetails:
+                        name: null
+                        addresses:
+                          livingAddress: null
+                          mailingAddress: null
+                      employment:
+                        id: A5540727
+                        employmentId: A5540727
+                        fullLegalName: Mafalda Fahey
+                        email: michael.roberts@hintz.example
+                        workEmail: null
+                        employmentType: null
+                        type: null
+                        lastDayOn: null
+                        salary:
+                          decimal: '120345.00'
+                          currencyCode: EUR
+                        payrollTeamMember: false
+                      contract: null
+                      benefitEnrollments: []
+                      terminations: []
+                      department: null
+                    meta:
+                      items: 100
+                      count: 5
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/engagements?perPage=100&page=1
+                      lastUrl: /v1/engagements?perPage=100&page=1
+                      pageUrl: /v1/engagements?perPage=100&page=1
+                      nextUrl: /v1/engagements?perPage=100&page=
+                      prevUrl: /v1/engagements?perPage=100&page=
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/engagements'
+                  meta:
+                    $ref: '#/components/schemas/meta'
+                required:
+                - data
+                - meta
+      operationId: getV1Engagements
+      x-operation-id-source: derived
+  /v1/engagements/{id}:
+    get:
+      summary: Retrieve an individual engagement
+      tags:
+      - Engagements
+      description: Returns details for an engagement with a given engagement ID.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: id
+        in: path
+        description: Engagement ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                      id: A5540727
+                      engagementId: A5540727
+                      modifiedAt: '2022-10-15T12:34:56Z'
+                      startDate: '2022-10-15'
+                      engagementType: EMPLOYMENT
+                      type: EMPLOYMENT
+                      state: DRAFT
+                      role: Design Technician
+                      countryCode: US
+                      personalDetails:
+                        name: Elba Corwin
+                        addresses:
+                          livingAddress: null
+                          mailingAddress: null
+                      employment:
+                        id: A5540727
+                        employmentId: A5540727
+                        fullLegalName: null
+                        email: null
+                        workEmail: null
+                        employmentType: null
+                        type: null
+                        lastDayOn: null
+                        salary:
+                          decimal: '12345.00'
+                          currencyCode: EUR
+                        payrollTeamMember: false
+                      contract: null
+                      benefitEnrollments: []
+                      terminations: []
+                      department: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/engagement'
+                required:
+                - data
+      operationId: getV1EngagementsById
+      x-operation-id-source: derived
+  /v1/engagements/{id}/allowances:
+    get:
+      summary: Retrieve allowances for engagement
+      tags:
+      - Engagements
+      description: Returns a list of allowances for an engagement with a given engagement ID.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: id
+        in: path
+        description: Engagement ID
+        required: true
+        schema:
+          type: string
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                No allowances:
+                  value:
+                    data: []
+                    meta:
+                      items: 100
+                      count: 0
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/engagements/A5540727/allowances?perPage=100&page=1
+                      lastUrl: /v1/engagements/A5540727/allowances?perPage=100&page=1
+                      pageUrl: /v1/engagements/A5540727/allowances?perPage=100&page=1
+                      nextUrl: /v1/engagements/A5540727/allowances?perPage=100&page=
+                      prevUrl: /v1/engagements/A5540727/allowances?perPage=100&page=
+                Successful:
+                  value:
+                    data:
+                    - id: B37f4b09
+                      label: TRAVEL
+                      paymentFrequency: MONTHLY
+                      statutory: false
+                      amountDecimal: '1.00'
+                      selectedMonths:
+                      - 1
+                      - 2
+                      - 3
+                      - 4
+                      - 5
+                      - 6
+                      - 7
+                      - 8
+                      - 9
+                      - 10
+                      - 11
+                      - 12
+                    - id: A6c99852
+                      label: HEALTH_AND_WELLBEING
+                      paymentFrequency: MONTHLY
+                      statutory: false
+                      amountDecimal: '1.00'
+                      selectedMonths:
+                      - 1
+                      - 2
+                      - 3
+                      - 4
+                      - 5
+                      - 6
+                      - 7
+                      - 8
+                      - 9
+                      - 10
+                      - 11
+                      - 12
+                    meta:
+                      items: 100
+                      count: 2
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/engagements/A5540727/allowances?perPage=100&page=1
+                      lastUrl: /v1/engagements/A5540727/allowances?perPage=100&page=1
+                      pageUrl: /v1/engagements/A5540727/allowances?perPage=100&page=1
+                      nextUrl: /v1/engagements/A5540727/allowances?perPage=100&page=
+                      prevUrl: /v1/engagements/A5540727/allowances?perPage=100&page=
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/allowances'
+                  meta:
+                    $ref: '#/components/schemas/meta'
+                required:
+                - data
+                - meta
+      operationId: getV1EngagementsByIdAllowances
+      x-operation-id-source: derived
+  /v1/engagements/{id}/bonuses:
+    get:
+      summary: Retrieve bonuses for engagement
+      tags:
+      - Engagements
+      description: Returns a list of bonuses for an engagement with a given engagement ID.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: id
+        in: path
+        description: Engagement ID
+        required: true
+        schema:
+          type: string
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                No bonuses:
+                  value:
+                    data: []
+                    meta:
+                      items: 100
+                      count: 0
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/engagements/A5540727/bonuses?perPage=100&page=1
+                      lastUrl: /v1/engagements/A5540727/bonuses?perPage=100&page=1
+                      pageUrl: /v1/engagements/A5540727/bonuses?perPage=100&page=1
+                      nextUrl: /v1/engagements/A5540727/bonuses?perPage=100&page=
+                      prevUrl: /v1/engagements/A5540727/bonuses?perPage=100&page=
+                Successful:
+                  value:
+                    data:
+                    - id: B37f4b09
+                      label: VACATION_BONUS
+                      paymentFrequency: MONTHLY
+                      statutory: false
+                      guaranteed: false
+                      amountDecimal: '1.00'
+                      selectedMonths:
+                      - 1
+                      - 2
+                      - 3
+                      - 4
+                      - 5
+                      - 6
+                      - 7
+                      - 8
+                      - 9
+                      - 10
+                      - 11
+                      - 12
+                      prorated: true
+                    - id: A6c99852
+                      label: VACATION_BONUS
+                      paymentFrequency: MONTHLY
+                      statutory: false
+                      guaranteed: false
+                      amountDecimal: '1.00'
+                      selectedMonths:
+                      - 1
+                      - 2
+                      - 3
+                      - 4
+                      - 5
+                      - 6
+                      - 7
+                      - 8
+                      - 9
+                      - 10
+                      - 11
+                      - 12
+                      prorated: true
+                    meta:
+                      items: 100
+                      count: 2
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/engagements/A5540727/bonuses?perPage=100&page=1
+                      lastUrl: /v1/engagements/A5540727/bonuses?perPage=100&page=1
+                      pageUrl: /v1/engagements/A5540727/bonuses?perPage=100&page=1
+                      nextUrl: /v1/engagements/A5540727/bonuses?perPage=100&page=
+                      prevUrl: /v1/engagements/A5540727/bonuses?perPage=100&page=
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/bonuses'
+                  meta:
+                    $ref: '#/components/schemas/meta'
+                required:
+                - data
+                - meta
+      operationId: getV1EngagementsByIdBonuses
+      x-operation-id-source: derived
+  /v1/engagements/{id}/documents:
+    get:
+      summary: Retrieve documents for engagement
+      tags:
+      - Engagements
+      description: Returns a list of documents for an engagement with a given engagement ID. For access to this endpoint, please contact api-support@oysterhr.com
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: id
+        in: path
+        description: Engagement ID
+        required: true
+        schema:
+          type: string
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                No documents:
+                  value:
+                    data: []
+                    meta:
+                      items: 100
+                      count: 0
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/engagements/A5540727/documents?perPage=100&page=1
+                      lastUrl: /v1/engagements/A5540727/documents?perPage=100&page=1
+                      pageUrl: /v1/engagements/A5540727/documents?perPage=100&page=1
+                      nextUrl: /v1/engagements/A5540727/documents?perPage=100&page=
+                      prevUrl: /v1/engagements/A5540727/documents?perPage=100&page=
+                Successful:
+                  value:
+                    data:
+                    - id: E6a12091
+                      title: Other Document
+                      description: null
+                      url: http://localhost:3000/h/documents/E6a12091
+                      contentType: application/pdf
+                      type: UNDEFINED
+                    - id: Db3abb05
+                      title: Other Document
+                      description: null
+                      url: http://localhost:3000/h/documents/Db3abb05
+                      contentType: application/pdf
+                      type: UNDEFINED
+                    - id: C260d02f
+                      title: Other Document
+                      description: null
+                      url: http://localhost:3000/h/documents/C260d02f
+                      contentType: application/pdf
+                      type: UNDEFINED
+                    - id: Be7270e6
+                      title: Tax Document
+                      description: null
+                      url: http://localhost:3000/h/documents/Be7270e6
+                      contentType: application/pdf
+                      type: TAX_DOCUMENT
+                    meta:
+                      items: 100
+                      count: 4
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/engagements/A5540727/documents?perPage=100&page=1
+                      lastUrl: /v1/engagements/A5540727/documents?perPage=100&page=1
+                      pageUrl: /v1/engagements/A5540727/documents?perPage=100&page=1
+                      nextUrl: /v1/engagements/A5540727/documents?perPage=100&page=
+                      prevUrl: /v1/engagements/A5540727/documents?perPage=100&page=
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/documents'
+                  meta:
+                    $ref: '#/components/schemas/meta'
+                required:
+                - data
+                - meta
+      operationId: getV1EngagementsByIdDocuments
+      x-operation-id-source: derived
+  /v1/engagements/{id}/payslips:
+    get:
+      summary: Retrieve payslips for engagement
+      tags:
+      - Engagements
+      description: Returns a list of payslips for an engagement with a given engagement ID. For access to this endpoint, please contact api-support@oysterhr.com
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: id
+        in: path
+        description: Engagement ID
+        required: true
+        schema:
+          type: string
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                No payslips:
+                  value:
+                    data: []
+                    meta:
+                      items: 100
+                      count: 0
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/engagements/A5540727/payslips?perPage=100&page=1
+                      lastUrl: /v1/engagements/A5540727/payslips?perPage=100&page=1
+                      pageUrl: /v1/engagements/A5540727/payslips?perPage=100&page=1
+                      nextUrl: /v1/engagements/A5540727/payslips?perPage=100&page=
+                      prevUrl: /v1/engagements/A5540727/payslips?perPage=100&page=
+                Successful:
+                  value:
+                    data:
+                    - id: C260d02f
+                      title: Payslip
+                      description: null
+                      url: http://localhost:3000/h/documents/C260d02f
+                      contentType: application/pdf
+                      type: PAYSLIP
+                    - id: Be7270e6
+                      title: Payslip
+                      description: null
+                      url: http://localhost:3000/h/documents/Be7270e6
+                      contentType: application/pdf
+                      type: PAYSLIP
+                    - id: Aa2fc3a8
+                      title: Payslip
+                      description: null
+                      url: http://localhost:3000/h/documents/Aa2fc3a8
+                      contentType: application/pdf
+                      type: PAYSLIP
+                    meta:
+                      items: 100
+                      count: 3
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/engagements/A5540727/payslips?perPage=100&page=1
+                      lastUrl: /v1/engagements/A5540727/payslips?perPage=100&page=1
+                      pageUrl: /v1/engagements/A5540727/payslips?perPage=100&page=1
+                      nextUrl: /v1/engagements/A5540727/payslips?perPage=100&page=
+                      prevUrl: /v1/engagements/A5540727/payslips?perPage=100&page=
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/documents'
+                  meta:
+                    $ref: '#/components/schemas/meta'
+                required:
+                - data
+                - meta
+      operationId: getV1EngagementsByIdPayslips
+      x-operation-id-source: derived
+components:
+  schemas:
+    address:
+      type: object
+      properties:
+        addressId:
+          type: string
+        addressLine1:
+          type:
+          - string
+          - 'null'
+        addressLine2:
+          type:
+          - string
+          - 'null'
+        city:
+          type:
+          - string
+          - 'null'
+        region:
+          type:
+          - string
+          - 'null'
+        countryCode:
+          type:
+          - string
+          - 'null'
+        postalCode:
+          type:
+          - string
+          - 'null'
+      required:
+      - addressId
+      - addressLine1
+      - postalCode
+    engagement:
+      type: object
+      properties:
+        engagementId:
+          type: string
+        modifiedAt:
+          type: string
+          format: date-time
+        startDate:
+          type: string
+          format: date
+        engagementType:
+          enum:
+          - EMPLOYMENT
+          - CONTRACT
+        state:
+          type: string
+        role:
+          type: string
+        countryCode:
+          type: string
+        personalDetails:
+          type: object
+          properties:
+            name:
+              type:
+              - string
+              - 'null'
+            addresses:
+              type: object
+              properties:
+                livingAddress:
+                  type:
+                  - object
+                  - 'null'
+                  $ref: '#/components/schemas/address'
+                mailingAddress:
+                  type:
+                  - object
+                  - 'null'
+                  $ref: '#/components/schemas/address'
+            citizenships:
+              type: array
+              items:
+                type:
+                - string
+                - 'null'
+            dateOfBirth:
+              type:
+              - string
+              - 'null'
+            phoneNumbers:
+              type: object
+              properties:
+                default:
+                  type:
+                  - object
+                  - 'null'
+                  $ref: '#/components/schemas/phoneNumber'
+                emergency:
+                  type:
+                  - object
+                  - 'null'
+                  $ref: '#/components/schemas/phoneNumber'
+          required:
+          - name
+          - addresses
+        employment:
+          type:
+          - object
+          - 'null'
+          properties:
+            id:
+              type: string
+            employmentId:
+              type: string
+            fullLegalName:
+              type:
+              - string
+              - 'null'
+            email:
+              type:
+              - string
+              - 'null'
+            workEmail:
+              type:
+              - string
+              - 'null'
+            employmentType:
+              type:
+              - string
+              - 'null'
+              enum:
+              - FULL-TIME
+              - PART-TIME
+            type:
+              type:
+              - string
+              - 'null'
+              enum:
+              - FULL-TIME
+              - PART-TIME
+            lastDayOn:
+              type:
+              - string
+              - 'null'
+              format: date
+            salary:
+              $ref: '#/components/schemas/amount'
+            payrollTeamMember:
+              type: boolean
+          required:
+          - id
+          - employmentId
+          - fullLegalName
+          - email
+          - workEmail
+          - employmentType
+          - type
+          - lastDayOn
+          - salary
+          - payrollTeamMember
+        contract:
+          type:
+          - object
+          - 'null'
+          properties:
+            id:
+              type:
+              - string
+              - 'null'
+            contractId:
+              type:
+              - string
+              - 'null'
+            name:
+              type:
+              - string
+              - 'null'
+            email:
+              type:
+              - string
+              - 'null'
+            workEmail:
+              type:
+              - string
+              - 'null'
+            billingType:
+              type:
+              - string
+              - 'null'
+              enum:
+              - FIXED
+              - PAY_AS_YOU_GO
+              - MILESTONE
+            taxIdNumber:
+              type:
+              - string
+              - 'null'
+          required:
+          - id
+          - contractId
+          - name
+          - email
+          - workEmail
+          - billingType
+          - taxIdNumber
+        benefitEnrollments:
+          type: array
+          items:
+            type: object
+            properties:
+              benefitEnrollmentId:
+                type: string
+              plan:
+                type: object
+                properties:
+                  provider:
+                    type: string
+                  descriptiveName:
+                    type: string
+              name:
+                type: string
+              state:
+                type: string
+        terminations:
+          type: array
+          items:
+            type: object
+            properties:
+              state:
+                type: string
+              proposedDate:
+                type: string
+                format: date
+        department:
+          type:
+          - object
+          - 'null'
+          properties:
+            departmentId:
+              type: string
+            name:
+              type: string
+            description:
+              type: string
+      required:
+      - engagementId
+      - engagementType
+      - personalDetails
+      - startDate
+      - countryCode
+      - role
+    baseCompensation:
+      type: object
+      properties:
+        label:
+          enum:
+          - COMMISSION_AMOUNT
+          - COMMISSION_PERCENTAGE
+          - END_OF_YEAR
+          - HOLIDAY_BONUS
+          - PERFORMANCE
+          - RETENTION
+          - SIGN_ON_BONUS
+          - VACATION_BONUS
+          - HEALTH_AND_WELLBEING
+          - LEARNING_DEVELOPMENT
+          - SUSTENANCE
+          - TRAVEL
+        paymentFrequency:
+          enum:
+          - MONTHLY
+          - QUARTERLY
+          - BIANNUAL
+          - YEARLY
+          - ONE_TIME
+        statutory:
+          type: boolean
+        amountDecimal:
+          type: string
+          pattern: ^[0-9]+(\.[0-9]{2,})?$
+        selectedMonths:
+          type: array
+          items:
+            type: integer
+            minimum: 1
+            maximum: 12
+      required:
+      - label
+      - paymentFrequency
+      - statutory
+      - selectedMonths
+    bonuses:
+      type: array
+      items:
+        $ref: '#/components/schemas/bonus'
+    allowance:
+      type: object
+      $ref: '#/components/schemas/baseCompensation'
+    documents:
+      type: array
+      items:
+        $ref: '#/components/schemas/document'
+    phoneNumber:
+      type: object
+      properties:
+        countryCode:
+          type:
+          - string
+          - 'null'
+        number:
+          type: string
+      required:
+      - number
+    allowances:
+      type: array
+      items:
+        $ref: '#/components/schemas/allowance'
+    meta:
+      type: object
+      properties:
+        items:
+          type: integer
+        count:
+          type: integer
+        page:
+          type: integer
+        pages:
+          type: integer
+        firstUrl:
+          type: string
+        lastUrl:
+          type: string
+        pageUrl:
+          type: string
+        nextUrl:
+          type: string
+        prevUrl:
+          type: string
+        deprecation:
+          type: object
+          properties:
+            at:
+              type: string
+            sunset:
+              type: string
+            link:
+              type: object
+              properties:
+                rel:
+                  type: string
+                url:
+                  type: string
+      required:
+      - items
+      - count
+      - page
+      - pages
+      - firstUrl
+      - lastUrl
+      - pageUrl
+      - nextUrl
+      - prevUrl
+    bonus:
+      allOf:
+      - $ref: '#/components/schemas/baseCompensation'
+      - type: object
+        properties:
+          guaranteed:
+            type: boolean
+          amountAsPercentage:
+            type: string
+            pattern: ^[1-9]\d*(?:\.\d{1,6})?$
+        required:
+        - guaranteed
+    document:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        url:
+          type: string
+        contentType:
+          type: string
+        type:
+          type: string
+      required:
+      - id
+      - title
+      - description
+      - url
+      - contentType
+      - type
+    engagements:
+      type: array
+      items:
+        $ref: '#/components/schemas/engagement'
+    amount:
+      type: object
+      properties:
+        decimal:
+          type: string
+          pattern: ^\d+([.]\d+)?$
+        currencyCode:
+          type: string
+          minLength: 3
+          maxLength: 3
+      required:
+      - decimal
+      - currencyCode
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+x-provenance:
+  method: searched
+  source: https://docs.oysterhr.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.oysterhr.com/reference/delete_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/delete_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-document-document-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/delete_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-engagements-engagement-id-offerings.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-enrollments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-company.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes.md
+  - https://docs.oysterhr.com/reference/get_v1-departments.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-allowances.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-bonuses.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-documents.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-identity-verification.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-payslips.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id-sources-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements-agreement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-annually.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-monthly.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form-documents-field-or-document-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-tasks.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-role-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier-breakdown.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices.md
+  - https://docs.oysterhr.com/reference/get_v1-meta-operations-operation-key.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-payroll-team-members-terminations-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-pay-types.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id-charges.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charges-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-payouts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id-records.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll.md
+  - https://docs.oysterhr.com/reference/get_v1-public-holidays.md
+  - https://docs.oysterhr.com/reference/get_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id-sources-source-type.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks-dispatches.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/patch_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-employments-id-personal-details.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-reseller-customers-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/post_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/post_v1-benefits-engagements-engagement-id-enrollments.md
+  - https://docs.oysterhr.com/reference/post_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-approved.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-declined.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-sessions.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-decline.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-agreements-agreement-id-verify.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-document.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-onboarding-form-complete.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-team-member-invite.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-dispute.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-cancellation.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-documents.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-initiate.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-payroll-team-members-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/post_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-attachment.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-reject.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-entries.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-confirm.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks-id-test.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/put_v1-hiring-employments-id-onboarding-form-documents-field-id.md
+  merge:
+    pages: 140
+    deduped: 378
+    conflicts_kept_first: 0

@@ -1,0 +1,1715 @@
+openapi: 3.2.0
+info:
+  title: Endpoints @oysterhr/prepay API
+  version: v1
+servers:
+- url: https://api.oysterhr.com
+  description: Production server
+- url: https://api-sandbox.oysterhr.com
+  description: Sandbox server
+tags:
+- name: '@oysterhr/prepay'
+paths:
+  /v1/expenses:
+    get:
+      summary: Retrieve all expenses
+      tags:
+      - '@oysterhr/prepay'
+      description: Returns expense details for all engagements.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: query
+        in: query
+        required: false
+        description: Search expenses by name
+        schema:
+          type: string
+      - name: review_states[]
+        in: query
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - APPROVED
+            - DECLINED
+            - UNREVIEWED
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                No expenses:
+                  value:
+                    data: []
+                    meta:
+                      items: 100
+                      count: 0
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/expenses?page=1&perPage=100&query=&reviewStates[]=UNREVIEWED
+                      lastUrl: /v1/expenses?page=1&perPage=100&query=&reviewStates[]=UNREVIEWED
+                      pageUrl: /v1/expenses?page=1&perPage=100&query=&reviewStates[]=UNREVIEWED
+                      nextUrl: /v1/expenses?page=&perPage=100&query=&reviewStates[]=UNREVIEWED
+                      prevUrl: /v1/expenses?page=&perPage=100&query=&reviewStates[]=UNREVIEWED
+                Successful:
+                  value:
+                    data:
+                    - expenseId: C220cf49
+                      name: Unique Barry Allen figurine
+                      description: Dicta voluptas fugiat. Rerum aperiam placeat. Enim illo sit.
+                      amount:
+                        decimal: '489.60'
+                        currencyCode: EUR
+                      category: CAR
+                      incurredOn: '2022-10-15'
+                      submittedAt: '2022-10-15T12:34:56Z'
+                      reviewState: UNREVIEWED
+                      reviewedAt: null
+                      declineReason: null
+                      revertReason: null
+                      receiptAmount:
+                        decimal: '489.60'
+                        currencyCode: USD
+                      receiptUrl: null
+                      engagement:
+                        engagementId: C6c9d557
+                        name: Janette Nitzsche
+                        engagementType: EMPLOYMENT
+                      source: OYSTER
+                    - expenseId: Bcdad091
+                      name: Unique Terry McGinnis figurine
+                      description: Sapiente officia dicta. Facilis et esse. Accusamus rerum praesentium.
+                      amount:
+                        decimal: '548.46'
+                        currencyCode: EUR
+                      category: CAR
+                      incurredOn: '2022-10-15'
+                      submittedAt: '2022-10-15T12:34:56Z'
+                      reviewState: UNREVIEWED
+                      reviewedAt: null
+                      declineReason: null
+                      revertReason: null
+                      receiptAmount:
+                        decimal: '548.46'
+                        currencyCode: USD
+                      receiptUrl: null
+                      engagement:
+                        engagementId: B0b779a8
+                        name: Danny Keebler
+                        engagementType: EMPLOYMENT
+                      source: OYSTER
+                    - expenseId: A48674e0
+                      name: Veranda Java coffee
+                      description: Incidunt earum qui. Aspernatur sed repudiandae. Rerum rerum illo.
+                      amount:
+                        decimal: '703.33'
+                        currencyCode: EUR
+                      category: CAR
+                      incurredOn: '2022-10-15'
+                      submittedAt: '2022-10-15T12:34:56Z'
+                      reviewState: UNREVIEWED
+                      reviewedAt: null
+                      declineReason: null
+                      revertReason: null
+                      receiptAmount:
+                        decimal: '703.33'
+                        currencyCode: USD
+                      receiptUrl: null
+                      engagement:
+                        engagementId: A5540727
+                        name: Shirlee Cremin
+                        engagementType: EMPLOYMENT
+                      source: OYSTER
+                    meta:
+                      items: 100
+                      count: 3
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/expenses?page=1&perPage=100&query=&reviewStates[]=UNREVIEWED
+                      lastUrl: /v1/expenses?page=1&perPage=100&query=&reviewStates[]=UNREVIEWED
+                      pageUrl: /v1/expenses?page=1&perPage=100&query=&reviewStates[]=UNREVIEWED
+                      nextUrl: /v1/expenses?page=&perPage=100&query=&reviewStates[]=UNREVIEWED
+                      prevUrl: /v1/expenses?page=&perPage=100&query=&reviewStates[]=UNREVIEWED
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/expenses'
+                  meta:
+                    $ref: '#/components/schemas/meta'
+                required:
+                - data
+                - meta
+      operationId: getV1Expenses
+      x-operation-id-source: derived
+    post:
+      summary: Create expense
+      tags:
+      - '@oysterhr/prepay'
+      description: 'Creates a new expense for an engagement. This is an asynchronous operation. Returns operationKey that can be used to retrieve the operation to know if it''s successfully completed
+
+
+        **This endpoint requires the `X-Oyster-Actor-Email` header when using client credentials authentication.**'
+      security:
+      - bearer_auth:
+        - manage
+      parameters: []
+      responses:
+        '202':
+          description: Successfully created async operation
+          content:
+            application/json:
+              examples:
+                Successfully created async operation:
+                  value:
+                    meta:
+                      operationKey: e1d8b6c7-be75-c625-ea2d-b10de17aa688
+              schema:
+                $ref: '#/components/schemas/asyncResponse'
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              examples:
+                Unprocessable entity:
+                  value:
+                    errors:
+                    - message: Category must have a valid category
+              schema:
+                $ref: '#/components/schemas/errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                engagementId:
+                  type: string
+                  minLength: 1
+                  pattern: ^[\w+\-]{8,9}$
+                name:
+                  type: string
+                  minLength: 1
+                description:
+                  type: string
+                incurredOn:
+                  type: string
+                  format: date
+                  minLength: 1
+                category:
+                  type: string
+                  minLength: 1
+                  pattern: ^[A-Z_]+$
+                receiptUrl:
+                  type: string
+                  minLength: 1
+                  pattern: '([a-zA-Z][\-+.a-zA-Z\d]*): (?# 1: scheme) (?: ((?:[\-_.!~*''()a-zA-Z\d;?:@&=+$,]|%[a-fA-F\d]{2})(?:[\-_.!~*''()a-zA-Z\d;/?:@&=+$,\[\]]|%[a-fA-F\d]{2})*) (?# 2: opaque) | (?:(?: //(?: (?:(?:((?:[\-_.!~*''()a-zA-Z\d;:&=+$,]|%[a-fA-F\d]{2})*)@)? (?# 3: userinfo) (?:((?:(?:[a-zA-Z0-9\-.]|%\h\h)+|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|\[(?:(?:[a-fA-F\d]{1,4}:)*(?:[a-fA-F\d]{1,4}|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|(?:(?:[a-fA-F\d]{1,4}:)*[a-fA-F\d]{1,4})?::(?:(?:[a-fA-F\d]{1,4}:)*(?:[a-fA-F\d]{1,4}|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}))?)\]))(?::(\d*))?))? (?# 4: host, 5: port) | ((?:[\-_.!~*''()a-zA-Z\d$,;:@&=+]|%[a-fA-F\d]{2})+) (?# 6: registry) ) | (?!//)) (?# XXX: ''//'' is the mark for hostport) (/(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*(?:;(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*)*(?:/(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*(?:;(?:[\-_.!~*''()a-zA-Z\d:@&=+$,]|%[a-fA-F\d]{2})*)*)*)? (?# 7: path) )(?:\?((?:[\-_.!~*''()a-zA-Z\d;/?:@&=+$,\[\]]|%[a-fA-F\d]{2})*))? (?# 8: query) ) (?:\#((?:[\-_.!~*''()a-zA-Z\d;/?:@&=+$,\[\]]|%[a-fA-F\d]{2})*))? (?# 9: fragment)'
+                pendingApproval:
+                  type: boolean
+                receiptAmount:
+                  type: object
+                  properties:
+                    decimal:
+                      type: string
+                      minLength: 1
+                      pattern: ^[0-9]+(\.[0-9]{2,})?$
+                    currencyCode:
+                      type: string
+                      minLength: 1
+                      pattern: ^[A-Z]{3}$
+                  required:
+                  - decimal
+                  - currencyCode
+              required:
+              - engagementId
+              - name
+              - incurredOn
+              - category
+              - receiptUrl
+              - receiptAmount
+            examples:
+              Successfully created async operation:
+                summary: Successfully created async operation
+                value:
+                  engagementId: A5540727
+                  name: An expense
+                  description: ''
+                  category: HOME_OFFICE
+                  incurredOn: '2022-10-15'
+                  receiptAmount:
+                    decimal: '1.23'
+                    currencyCode: GBP
+                  receiptUrl: https://www.example.com/receipts/test.pdf
+      operationId: postV1Expenses
+      x-operation-id-source: derived
+  /v1/expenses/{id}:
+    delete:
+      summary: Deletes an individual expense
+      tags:
+      - '@oysterhr/prepay'
+      description: Deletes an unreviewed expense given an ID.
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: id
+        in: path
+        description: Expense ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+        '422':
+          description: Operation cannot be performed
+          content:
+            application/json:
+              examples:
+                Operation cannot be performed:
+                  value:
+                    errors:
+                    - message: This expense has already been submitted. It cannot be deleted.
+              schema:
+                $ref: '#/components/schemas/errors'
+      operationId: deleteV1ExpensesById
+      x-operation-id-source: derived
+    get:
+      summary: Retrieve an individual expense
+      tags:
+      - '@oysterhr/prepay'
+      description: Returns details for an expense with a given expense ID.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: id
+        in: path
+        description: Expense ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                      expenseId: A48674e0
+                      name: Winter Breaker coffee
+                      description: Odit aut voluptatem. Earum quia sit. Iusto fugiat qui.
+                      amount:
+                        decimal: '723.89'
+                        currencyCode: EUR
+                      category: CAR
+                      incurredOn: '2022-10-15'
+                      submittedAt: '2022-10-15T12:34:56Z'
+                      reviewState: UNREVIEWED
+                      reviewedAt: null
+                      declineReason: null
+                      revertReason: null
+                      receiptAmount:
+                        decimal: '723.89'
+                        currencyCode: USD
+                      receiptUrl: null
+                      engagement:
+                        engagementId: A5540727
+                        name: null
+                        engagementType: EMPLOYMENT
+                      source: OYSTER
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/expense'
+                required:
+                - data
+      operationId: getV1ExpensesById
+      x-operation-id-source: derived
+  /v1/expenses/{id}/approve:
+    post:
+      summary: Approve expense
+      tags:
+      - '@oysterhr/prepay'
+      description: 'Approves an expense.
+
+
+        **This endpoint requires the `X-Oyster-Actor-Email` header when using client credentials authentication.**'
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: id
+        in: path
+        description: Expense ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+        '422':
+          description: Operation cannot be performed
+          content:
+            application/json:
+              examples:
+                Operation cannot be performed:
+                  value:
+                    errors:
+                    - message: Expense has been approved already
+              schema:
+                $ref: '#/components/schemas/errors'
+      operationId: postV1ExpensesByIdApprove
+      x-operation-id-source: derived
+  /v1/expenses/{id}/decline:
+    post:
+      summary: Decline expense
+      tags:
+      - '@oysterhr/prepay'
+      description: 'Declines an expense.
+
+
+        **This endpoint requires the `X-Oyster-Actor-Email` header when using client credentials authentication.**'
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: id
+        in: path
+        description: Expense ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+        '422':
+          description: Operation cannot be performed
+          content:
+            application/json:
+              examples:
+                Operation cannot be performed:
+                  value:
+                    errors:
+                    - message: Expense has been declined already
+              schema:
+                $ref: '#/components/schemas/errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type:
+                  - string
+                  - 'null'
+            examples:
+              Successful:
+                summary: Successful
+                value:
+                  reason: exceeds budget for this period
+      operationId: postV1ExpensesByIdDecline
+      x-operation-id-source: derived
+  /v1/public_holidays:
+    get:
+      summary: Retrieve public holidays
+      tags:
+      - '@oysterhr/prepay'
+      description: This API endpoint lets you retrieve the public holidays between specified dates. Note that the endpoint supports retrieving holidays up to two years in advance.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: country_code
+        in: query
+        schema:
+          type: string
+          description: ISO 3166-1 alpha-2 country code
+        required: false
+      - name: subdivision_code
+        in: query
+        schema:
+          type: string
+          minLength: 1
+          maxLength: 3
+          description: ISO 3166-2 subdivision code
+        required: false
+      - name: engagement_id
+        in: query
+        schema:
+          type: string
+        required: false
+      - name: start_date
+        in: query
+        schema:
+          type: string
+          format: date
+          minLength: 1
+        required: true
+      - name: end_date
+        in: query
+        schema:
+          type: string
+          format: date
+          minLength: 1
+        required: true
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                    - date: '2022-12-31'
+                      dayOfWeek: SATURDAY
+                      name: New years eve
+                      type: LOCAL
+                    - date: '2023-05-01'
+                      dayOfWeek: MONDAY
+                      name: New years eve
+                      type: NATIONAL
+                    meta:
+                      items: 100
+                      count: 2
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/public_holidays?countryCode=&subdivisionCode=AZ&engagementId=A5540727&startDate=2022-01-01&endDate=2023-12-31&perPage=100&page=1
+                      lastUrl: /v1/public_holidays?countryCode=&subdivisionCode=AZ&engagementId=A5540727&startDate=2022-01-01&endDate=2023-12-31&perPage=100&page=1
+                      pageUrl: /v1/public_holidays?countryCode=&subdivisionCode=AZ&engagementId=A5540727&startDate=2022-01-01&endDate=2023-12-31&perPage=100&page=1
+                      nextUrl: /v1/public_holidays?countryCode=&subdivisionCode=AZ&engagementId=A5540727&startDate=2022-01-01&endDate=2023-12-31&perPage=100&page=
+                      prevUrl: /v1/public_holidays?countryCode=&subdivisionCode=AZ&engagementId=A5540727&startDate=2022-01-01&endDate=2023-12-31&perPage=100&page=
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/publicHolidays'
+                  meta:
+                    $ref: '#/components/schemas/meta'
+                required:
+                - data
+                - meta
+        '400':
+          description: Invalid dates
+          content:
+            application/json:
+              examples:
+                Date not supported:
+                  value:
+                    errors:
+                    - field: start_date
+                      type: invalid
+                      message: only dates up to two years in advance are supported
+                Both the engagement_id and country_code parameters provided:
+                  value:
+                    errors:
+                    - message: You must provide exactly one of country_code or engagement_id parameters
+                Invalid dates:
+                  value:
+                    errors:
+                    - field: start_date
+                      type: invalid
+                      message: the start date is after the end date
+                    - field: end_date
+                      type: invalid
+                      message: the start date is after the end date
+              schema:
+                $ref: '#/components/schemas/errors'
+      operationId: getV1PublicHolidays
+      x-operation-id-source: derived
+  /v1/time_off/entitlements:
+    get:
+      summary: Retrieve entitlements
+      tags:
+      - '@oysterhr/prepay'
+      description: Returns entitlements for each engagement of the company.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                No engagements:
+                  value:
+                    data: []
+                    meta:
+                      items: 100
+                      count: 0
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/time_off/entitlements?perPage=100&page=1
+                      lastUrl: /v1/time_off/entitlements?perPage=100&page=1
+                      pageUrl: /v1/time_off/entitlements?perPage=100&page=1
+                      nextUrl: /v1/time_off/entitlements?perPage=100&page=
+                      prevUrl: /v1/time_off/entitlements?perPage=100&page=
+                Successful:
+                  value:
+                    data:
+                    - engagement:
+                        engagementId: A5540727
+                        name: Brad Doe
+                        type: EMPLOYMENT
+                        countryCode: GB
+                      annualEntitlement: 30
+                      accrued: 30
+                      carried: 0
+                      adjustedAdhoc: 0
+                      taken: 0
+                      availableBalance: 29
+                      upcoming: 0
+                      projectedBalance: 29
+                      units: DAYS
+                    - engagement:
+                        engagementId: C6c9d557
+                        name: John Mark
+                        type: EMPLOYMENT
+                        countryCode: GB
+                      annualEntitlement: 24.5
+                      accrued: 24.5
+                      carried: 0
+                      adjustedAdhoc: 0
+                      taken: 0
+                      availableBalance: 24.5
+                      upcoming: 0
+                      projectedBalance: 24.5
+                      units: DAYS
+                    meta:
+                      items: 100
+                      count: 2
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/time_off/entitlements?perPage=100&page=1
+                      lastUrl: /v1/time_off/entitlements?perPage=100&page=1
+                      pageUrl: /v1/time_off/entitlements?perPage=100&page=1
+                      nextUrl: /v1/time_off/entitlements?perPage=100&page=
+                      prevUrl: /v1/time_off/entitlements?perPage=100&page=
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/timeOffEntitlements'
+                  meta:
+                    $ref: '#/components/schemas/meta'
+                required:
+                - data
+                - meta
+      operationId: getV1TimeOffEntitlements
+      x-operation-id-source: derived
+  /v1/time_off/entitlements/{id}:
+    get:
+      summary: Retrieve entitlements for individual engagement
+      tags:
+      - '@oysterhr/prepay'
+      description: Returns entitlements for an engagement.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: id
+        in: path
+        description: Engagement ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                      engagement:
+                        engagementId: A5540727
+                        name: Dr. Ines Denesik
+                        type: EMPLOYMENT
+                        countryCode: GB
+                      annualEntitlement: 0
+                      accrued: 0
+                      carried: 0
+                      adjustedAdhoc: 0
+                      taken: 0
+                      availableBalance: 0
+                      upcoming: 0
+                      projectedBalance: 0
+                      units: DAYS
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/timeOffEntitlement'
+                required:
+                - data
+        '422':
+          description: Cannot determine entitlements for given resource
+          content:
+            application/json:
+              examples:
+                Cannot determine entitlements for given resource:
+                  value:
+                    errors:
+                    - message: The entitlements cannot be determined for given engagement.
+              schema:
+                $ref: '#/components/schemas/errors'
+      operationId: getV1TimeOffEntitlementsById
+      x-operation-id-source: derived
+  /v1/time_off/requests:
+    get:
+      summary: Retrieve all requests
+      tags:
+      - '@oysterhr/prepay'
+      description: Returns all Time Off Requests for a company. Optionally filter by engagement.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: engagement_ids[]
+        in: query
+        schema:
+          type: array
+          items:
+            type: string
+        required: false
+        description: Return only the Time Off Requests for the engagements with these IDs.
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                No requests:
+                  value:
+                    data: []
+                    meta:
+                      items: 100
+                      count: 0
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/time_off/requests?perPage=100&page=1
+                      lastUrl: /v1/time_off/requests?perPage=100&page=1
+                      pageUrl: /v1/time_off/requests?perPage=100&page=1
+                      nextUrl: /v1/time_off/requests?perPage=100&page=
+                      prevUrl: /v1/time_off/requests?perPage=100&page=
+                Successful:
+                  value:
+                    data:
+                    - timeOffRequestId: Abce6d0f
+                      engagement:
+                        engagementId: A5540727
+                        name: Elba Corwin
+                        type: EMPLOYMENT
+                        countryCode: US
+                      startDate: '2020-02-03'
+                      endDate: '2020-02-04'
+                      firstDayDuration: FULL_DAY
+                      lastDayDuration: FULL_DAY
+                      firstDayDurationInHours: null
+                      lastDayDurationInHours: null
+                      state: SUBMITTED
+                      type: VACATION
+                      requesterComments: Need a rest
+                      rejectionReason: null
+                      reason: PAID_TIME_OFF
+                      periodInHours: 16
+                      submittedAt: '2022-10-15T12:34:56Z'
+                      approvedAt: null
+                      rejectedAt: null
+                      attachment: null
+                    - timeOffRequestId: B41a79c9
+                      engagement:
+                        engagementId: B0b779a8
+                        name: Carly Jacobson
+                        type: EMPLOYMENT
+                        countryCode: US
+                      startDate: '2020-02-03'
+                      endDate: '2020-02-04'
+                      firstDayDuration: FULL_DAY
+                      lastDayDuration: FULL_DAY
+                      firstDayDurationInHours: null
+                      lastDayDurationInHours: null
+                      state: APPROVED
+                      type: VACATION
+                      requesterComments: Need a rest
+                      rejectionReason: null
+                      reason: PAID_TIME_OFF
+                      periodInHours: 16
+                      submittedAt: '2022-10-15T12:34:56Z'
+                      approvedAt: '2022-10-15T12:34:56Z'
+                      rejectedAt: null
+                      attachment: null
+                    - timeOffRequestId: C1bd0c25
+                      engagement:
+                        engagementId: C6c9d557
+                        name: Donya Upton
+                        type: EMPLOYMENT
+                        countryCode: US
+                      startDate: '2020-02-03'
+                      endDate: '2020-02-04'
+                      firstDayDuration: FULL_DAY
+                      lastDayDuration: FULL_DAY
+                      firstDayDurationInHours: null
+                      lastDayDurationInHours: null
+                      state: REJECTED
+                      type: VACATION
+                      requesterComments: Need a rest
+                      rejectionReason: reason
+                      reason: PAID_TIME_OFF
+                      periodInHours: 16
+                      submittedAt: '2022-10-15T12:34:56Z'
+                      approvedAt: null
+                      rejectedAt: '2022-10-15T12:34:56Z'
+                      attachment: null
+                    meta:
+                      items: 100
+                      count: 3
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/time_off/requests?perPage=100&page=1
+                      lastUrl: /v1/time_off/requests?perPage=100&page=1
+                      pageUrl: /v1/time_off/requests?perPage=100&page=1
+                      nextUrl: /v1/time_off/requests?perPage=100&page=
+                      prevUrl: /v1/time_off/requests?perPage=100&page=
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/timeOffRequests'
+                  meta:
+                    $ref: '#/components/schemas/meta'
+                required:
+                - data
+                - meta
+      operationId: getV1TimeOffRequests
+      x-operation-id-source: derived
+    post:
+      summary: Create time off request
+      tags:
+      - '@oysterhr/prepay'
+      description: This API endpoint allows you to create a new time off request record and receive a complete response with the created record details.
+      security:
+      - bearer_auth:
+        - manage
+      parameters: []
+      responses:
+        '200':
+          description: Successfully created time off request in hours
+          content:
+            application/json:
+              examples:
+                Successfully created time off request:
+                  value:
+                    data:
+                      timeOffRequestId: Abce6d0f
+                      engagement:
+                        engagementId: A5540727
+                        name: Willie Mraz
+                        type: EMPLOYMENT
+                        countryCode: PL
+                      startDate: '2022-10-14'
+                      endDate: '2022-10-14'
+                      firstDayDuration: FULL_DAY
+                      lastDayDuration: null
+                      firstDayDurationInHours: null
+                      lastDayDurationInHours: null
+                      state: SUBMITTED
+                      type: VACATION
+                      requesterComments: null
+                      rejectionReason: null
+                      reason: PAID_TIME_OFF
+                      periodInHours: 8
+                      submittedAt: '2022-10-15T12:34:56Z'
+                      approvedAt: null
+                      rejectedAt: null
+                      attachment: null
+                Successfully created time off request in hours:
+                  value:
+                    data:
+                      timeOffRequestId: Abce6d0f
+                      engagement:
+                        engagementId: A5540727
+                        name: Willie Mraz
+                        type: EMPLOYMENT
+                        countryCode: PL
+                      startDate: '2022-10-14'
+                      endDate: '2022-10-15'
+                      firstDayDuration: null
+                      lastDayDuration: null
+                      firstDayDurationInHours: 8
+                      lastDayDurationInHours: 8
+                      state: SUBMITTED
+                      type: VACATION
+                      requesterComments: null
+                      rejectionReason: null
+                      reason: PAID_TIME_OFF
+                      periodInHours: 8
+                      submittedAt: '2022-10-15T12:34:56Z'
+                      approvedAt: null
+                      rejectedAt: null
+                      attachment: null
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/timeOffRequest'
+                required:
+                - data
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              examples:
+                Unprocessable entity:
+                  value:
+                    errors:
+                    - message: Reason is invalid for the specified time off type
+              schema:
+                $ref: '#/components/schemas/errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                engagementId:
+                  type: string
+                  minLength: 1
+                  pattern: ^[\w+\-]{8,9}$
+                startDate:
+                  type: string
+                  format: date
+                  minLength: 1
+                endDate:
+                  type: string
+                  format: date
+                  minLength: 1
+                type:
+                  type: string
+                  minLength: 1
+                  enum:
+                  - VACATION
+                  - SICK_LEAVE
+                  - UNPAID_LEAVE
+                  - OTHER
+                reason:
+                  type: string
+                  minLength: 1
+                  enum:
+                  - PAID_TIME_OFF
+                  - UNPAID_TIME_OFF
+                  - PARENTAL_LEAVE
+                  - CAREGIVER_LEAVE
+                  - EDUCATIONAL_LEAVE
+                  - MARRIAGE_LEAVE
+                  - MILITARY_TRAINING_ASSEMBLY
+                  - MILITARY_MEDICAL_EXAMINATION
+                  - MILITARY_PAID_LEAVE
+                  - SABBATICAL
+                  - CIVIC_DUTIES
+                  - BEREAVEMENT
+                  - TIME_OFF_IN_LIEU
+                  - LOCAL_HOLIDAY
+                  - OTHER_PAID_LEAVE
+                  - MILITARY_UNPAID_LEAVE
+                  - RELIGIOUS_OBSERVANCE
+                  - OTHER_UNPAID_LEAVE
+                requestByAdmin:
+                  type: boolean
+                  description: This parameter shows whether the time off was requested by the Company Admin. If it's set to false, it means the request came from the Team Member.
+                firstDayDuration:
+                  type: string
+                  minLength: 1
+                  enum:
+                  - FULL_DAY
+                  - MORNING
+                  - AFTERNOON
+                lastDayDuration:
+                  type: string
+                  minLength: 1
+                  enum:
+                  - FULL_DAY
+                  - MORNING
+                firstDayDurationInHours:
+                  type: integer
+                lastDayDurationInHours:
+                  type: integer
+                requesterComments:
+                  type: string
+                  minLength: 1
+              required:
+              - engagementId
+              - startDate
+              - endDate
+              - type
+              - reason
+              - requestByAdmin
+            examples:
+              Successfully created time off request:
+                summary: Successfully created time off request
+                value:
+                  engagementId: A5540727
+                  startDate: '2022-10-14'
+                  endDate: '2022-10-14'
+                  type: VACATION
+                  reason: PAID_TIME_OFF
+                  firstDayDuration: FULL_DAY
+                  requestByAdmin: true
+              Successfully created time off request in hours:
+                summary: Successfully created time off request in hours
+                value:
+                  engagementId: A5540727
+                  startDate: '2022-10-14'
+                  endDate: '2022-10-15'
+                  type: VACATION
+                  reason: PAID_TIME_OFF
+                  firstDayDurationInHours: 8
+                  lastDayDurationInHours: 8
+                  requestByAdmin: true
+      operationId: postV1TimeOffRequests
+      x-operation-id-source: derived
+  /v1/time_off/requests/{id}:
+    get:
+      summary: Retrieve an individual request
+      tags:
+      - '@oysterhr/prepay'
+      description: Returns details for a request.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: id
+        in: path
+        description: Time Off Request ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                      timeOffRequestId: Abce6d0f
+                      engagement:
+                        engagementId: A5540727
+                        name: Elba Corwin
+                        type: EMPLOYMENT
+                        countryCode: US
+                      startDate: '2020-02-03'
+                      endDate: '2020-02-04'
+                      firstDayDuration: FULL_DAY
+                      lastDayDuration: FULL_DAY
+                      firstDayDurationInHours: null
+                      lastDayDurationInHours: null
+                      state: SUBMITTED
+                      type: VACATION
+                      requesterComments: Need a rest
+                      rejectionReason: null
+                      reason: PAID_TIME_OFF
+                      periodInHours: 16
+                      submittedAt: '2022-10-15T12:34:56Z'
+                      approvedAt: null
+                      rejectedAt: null
+                      attachment:
+                        filename: document.pdf
+                        url: http://api.example.com/83ca06bb5063276c088b5ebb85bced3a/document.pdf
+                        contentType: application/pdf
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/timeOffRequest'
+                required:
+                - data
+      operationId: getV1TimeOffRequestsById
+      x-operation-id-source: derived
+  /v1/time_off/requests/{id}/approve:
+    post:
+      summary: Approve request
+      tags:
+      - '@oysterhr/prepay'
+      description: Approves a time off request.
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: id
+        in: path
+        description: Time Off Request ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+        '422':
+          description: Operation cannot be performed
+          content:
+            application/json:
+              examples:
+                Operation cannot be performed:
+                  value:
+                    errors:
+                    - message: Can't approve a request that's in the APPROVED state
+              schema:
+                $ref: '#/components/schemas/errors'
+      operationId: postV1TimeOffRequestsByIdApprove
+      x-operation-id-source: derived
+  /v1/time_off/requests/{id}/attachment:
+    post:
+      summary: Upload Time Off Request Attachment
+      tags:
+      - '@oysterhr/prepay'
+      description: This API endpoint allows you to upload the attachment for the time off request.
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: id
+        in: path
+        description: Time Off Request ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully upload a file
+        '422':
+          description: File extension is not allowed
+          content:
+            application/json:
+              examples:
+                An attachment is already included with this time off request:
+                  value:
+                    errors:
+                    - message: An attachment is already included with this time off request.
+                File extension is not allowed:
+                  value:
+                    errors:
+                    - message: File file extension is not allowed. Valid extensions are text/csv, application/pdf, image/jpeg, image/png, image/gif, image/heic, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-powerpoint, application/vnd.openxmlformats-officedocument.presentationml.presentation, application/rtf, application/vnd.oasis.opendocument.text, application/vnd.oasis.opendocument.presentation, application/vnd.oasis.opendocument.spreadsheet, application/vnd.apple.keynote, application/vnd.apple.pages, application/vnd.apple.numbers
+              schema:
+                $ref: '#/components/schemas/errors'
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+              required:
+              - file
+      operationId: postV1TimeOffRequestsByIdAttachment
+      x-operation-id-source: derived
+  /v1/time_off/requests/{id}/cancel:
+    post:
+      summary: Cancel request
+      tags:
+      - '@oysterhr/prepay'
+      description: Cancels a time off request.
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: id
+        in: path
+        description: Time Off Request ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+        '422':
+          description: Operation cannot be performed
+          content:
+            application/json:
+              examples:
+                Operation cannot be performed:
+                  value:
+                    errors:
+                    - message: Can't cancel a request that's in the CANCELED state
+              schema:
+                $ref: '#/components/schemas/errors'
+      operationId: postV1TimeOffRequestsByIdCancel
+      x-operation-id-source: derived
+  /v1/time_off/requests/{id}/reject:
+    post:
+      summary: Reject request
+      tags:
+      - '@oysterhr/prepay'
+      description: Rejects a time off request.
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: id
+        in: path
+        description: Time Off Request ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              examples:
+                Bad request:
+                  value:
+                    errors:
+                    - field: reason
+                      message: Reason is missing
+              schema:
+                $ref: '#/components/schemas/errors'
+        '422':
+          description: Operation cannot be performed
+          content:
+            application/json:
+              examples:
+                Operation cannot be performed:
+                  value:
+                    errors:
+                    - message: Can't reject a request that's in the REJECTED state
+              schema:
+                $ref: '#/components/schemas/errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  minLength: 1
+              required:
+              - reason
+            examples:
+              Successful:
+                summary: Successful
+                value:
+                  reason: We need you!
+      operationId: postV1TimeOffRequestsByIdReject
+      x-operation-id-source: derived
+components:
+  schemas:
+    publicHolidays:
+      type: array
+      items:
+        type: object
+        properties:
+          date:
+            type: string
+            format: date
+          dayOfWeek:
+            type: string
+            enum:
+            - MONDAY
+            - TUESDAY
+            - WEDNESDAY
+            - THURSDAY
+            - FRIDAY
+            - SATURDAY
+            - SUNDAY
+          name:
+            type: string
+          type:
+            type: string
+            enum:
+            - NATIONAL
+            - LOCAL
+    expenses:
+      type: array
+      items:
+        $ref: '#/components/schemas/expense'
+    expense:
+      type: object
+      properties:
+        expenseId:
+          type: string
+        name:
+          type: string
+        description:
+          type:
+          - string
+          - 'null'
+        amount:
+          type: object
+          $ref: '#/components/schemas/amount'
+        category:
+          type: string
+          pattern: ^[A-Z_]+$
+        incurredOn:
+          type: string
+          format: date
+        submittedAt:
+          type: string
+          format: date-time
+        reviewState:
+          type: string
+        reviewedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        receiptAmount:
+          type: object
+          $ref: '#/components/schemas/amount'
+        receiptUrl:
+          type:
+          - string
+          - 'null'
+          format: uri
+        engagement:
+          type: object
+          properties:
+            engagementId:
+              type: string
+            name:
+              type:
+              - string
+              - 'null'
+            engagementType:
+              type: string
+              pattern: ^[A-Z_]+$
+        source:
+          type: string
+      required:
+      - expenseId
+      - name
+      - amount
+      - category
+      - receiptAmount
+    timeOffRequests:
+      type: array
+      items:
+        $ref: '#/components/schemas/timeOffRequest'
+    timeOffRequest:
+      type: object
+      properties:
+        timeOffRequestId:
+          type: string
+        engagement:
+          $ref: '#/components/schemas/timeOffEngagementDetails'
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        firstDayDuration:
+          type:
+          - string
+          - 'null'
+          pattern: ^[A-Z_]+$
+        lastDayDuration:
+          type:
+          - string
+          - 'null'
+          pattern: ^[A-Z_]+$
+        firstDayDurationInHours:
+          type:
+          - number
+          - 'null'
+          format: float
+        lastDayDurationInHours:
+          type:
+          - number
+          - 'null'
+          format: float
+        state:
+          type: string
+          pattern: ^[A-Z_]+$
+        type:
+          type: string
+          pattern: ^[A-Z_]+$
+        requesterComments:
+          type:
+          - string
+          - 'null'
+        rejectionReason:
+          type:
+          - string
+          - 'null'
+        reason:
+          type: string
+          pattern: ^[A-Z_]+$
+        periodInHours:
+          type: number
+          format: float
+        submittedAt:
+          type: string
+          format: date-time
+        approvedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        rejectedAt:
+          type:
+          - string
+          - 'null'
+          format: date-time
+        attachment:
+          $ref: '#/components/schemas/attachmentDetails'
+    attachmentDetails:
+      type:
+      - object
+      - 'null'
+      properties:
+        filename:
+          type: string
+        url:
+          type: string
+        contentType:
+          type: string
+    asyncResponse:
+      type: object
+      properties:
+        meta:
+          type: object
+          properties:
+            operationKey:
+              type: string
+          required:
+          - operationKey
+      required:
+      - meta
+    errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+            required:
+            - message
+      required:
+      - errors
+    meta:
+      type: object
+      properties:
+        items:
+          type: integer
+        count:
+          type: integer
+        page:
+          type: integer
+        pages:
+          type: integer
+        firstUrl:
+          type: string
+        lastUrl:
+          type: string
+        pageUrl:
+          type: string
+        nextUrl:
+          type: string
+        prevUrl:
+          type: string
+        deprecation:
+          type: object
+          properties:
+            at:
+              type: string
+            sunset:
+              type: string
+            link:
+              type: object
+              properties:
+                rel:
+                  type: string
+                url:
+                  type: string
+      required:
+      - items
+      - count
+      - page
+      - pages
+      - firstUrl
+      - lastUrl
+      - pageUrl
+      - nextUrl
+      - prevUrl
+    timeOffEngagementDetails:
+      type: object
+      properties:
+        engagementId:
+          type: string
+        name:
+          type: string
+        type:
+          type: string
+          pattern: ^[A-Z_]+$
+        countryCode:
+          type: string
+    timeOffEntitlement:
+      type: object
+      properties:
+        engagement:
+          $ref: '#/components/schemas/timeOffEngagementDetails'
+        annualEntitlement:
+          type: number
+          format: float
+        accrued:
+          type: number
+          format: float
+        carried:
+          type: number
+          format: float
+        adjustedAdhoc:
+          type: number
+          format: float
+        taken:
+          type: number
+          format: float
+        availableBalance:
+          type: number
+          format: float
+        upcoming:
+          type: number
+          format: float
+        projectedBalance:
+          type: number
+          format: float
+        units:
+          type: string
+          enum:
+          - DAYS
+    timeOffEntitlements:
+      type: array
+      items:
+        $ref: '#/components/schemas/timeOffEntitlement'
+    amount:
+      type: object
+      properties:
+        decimal:
+          type: string
+          pattern: ^\d+([.]\d+)?$
+        currencyCode:
+          type: string
+          minLength: 3
+          maxLength: 3
+      required:
+      - decimal
+      - currencyCode
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+x-provenance:
+  method: searched
+  source: https://docs.oysterhr.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.oysterhr.com/reference/delete_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/delete_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-document-document-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/delete_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-engagements-engagement-id-offerings.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-enrollments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-company.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes.md
+  - https://docs.oysterhr.com/reference/get_v1-departments.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-allowances.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-bonuses.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-documents.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-identity-verification.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-payslips.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id-sources-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements-agreement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-annually.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-monthly.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form-documents-field-or-document-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-tasks.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-role-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier-breakdown.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices.md
+  - https://docs.oysterhr.com/reference/get_v1-meta-operations-operation-key.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-payroll-team-members-terminations-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-pay-types.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id-charges.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charges-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-payouts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id-records.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll.md
+  - https://docs.oysterhr.com/reference/get_v1-public-holidays.md
+  - https://docs.oysterhr.com/reference/get_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id-sources-source-type.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks-dispatches.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/patch_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-employments-id-personal-details.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-reseller-customers-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/post_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/post_v1-benefits-engagements-engagement-id-enrollments.md
+  - https://docs.oysterhr.com/reference/post_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-approved.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-declined.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-sessions.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-decline.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-agreements-agreement-id-verify.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-document.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-onboarding-form-complete.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-team-member-invite.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-dispute.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-cancellation.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-documents.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-initiate.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-payroll-team-members-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/post_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-attachment.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-reject.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-entries.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-confirm.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks-id-test.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/put_v1-hiring-employments-id-onboarding-form-documents-field-id.md
+  merge:
+    pages: 140
+    deduped: 378
+    conflicts_kept_first: 0

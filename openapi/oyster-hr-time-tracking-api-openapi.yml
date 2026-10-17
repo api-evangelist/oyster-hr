@@ -1,0 +1,1660 @@
+openapi: 3.2.0
+info:
+  title: Endpoints Time Tracking API
+  version: v1
+servers:
+- url: https://api.oysterhr.com
+  description: Production server
+- url: https://api-sandbox.oysterhr.com
+  description: Sandbox server
+tags:
+- name: Time Tracking
+paths:
+  /v1/time_tracking/rulesets/{engagement_id}:
+    get:
+      summary: Retrieve time tracking rulesets for engagement
+      tags:
+      - Time Tracking
+      description: 'Retrieves the rulesets for a specific engagement, which includes work schedules and entry types.
+
+
+        - Use the `engagement_id` path parameter to fetch relevant rulesets for an engagement.
+
+        - The rulesets include both work schedules and entry types, which are essential for managing time tracking.
+
+
+        Typical use case:
+
+        - Retrieving rulesets when creating new time sheet for an engagement.'
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: engagement_id
+        in: path
+        description: Engagement ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                      rulesetId: A5540727
+                      scope: {}
+                      schemas: {}
+                      sources:
+                        entryTypes:
+                          data:
+                          - value: REGULAR
+                            title: Regular hours
+                          - value: OVERTIME
+                            title: Overtime
+                          - value: NIGHT_WORK
+                            title: Night work
+                          - value: ON_CALL
+                            title: On-call
+                          - value: ON_CALL_ACTIVE
+                            title: On-call active
+                          - value: ON_CALL_PASSIVE
+                            title: On-call passive
+                        workSchedule:
+                          data:
+                            weekly:
+                            - day: MONDAY
+                              type: REGULAR
+                              present:
+                                fromTime: '1970-01-01T09:00:00Z'
+                                toTime: '1970-01-01T18:00:00Z'
+                              breakInterval:
+                                fromTime: '1970-01-01T12:00:00Z'
+                                toTime: '1970-01-01T13:00:00Z'
+                            - day: TUESDAY
+                              type: REGULAR
+                              present:
+                                fromTime: '1970-01-01T09:00:00Z'
+                                toTime: '1970-01-01T18:00:00Z'
+                              breakInterval:
+                                fromTime: '1970-01-01T12:00:00Z'
+                                toTime: '1970-01-01T13:00:00Z'
+                            - day: WEDNESDAY
+                              type: REGULAR
+                              present:
+                                fromTime: '1970-01-01T09:00:00Z'
+                                toTime: '1970-01-01T18:00:00Z'
+                              breakInterval:
+                                fromTime: '1970-01-01T12:00:00Z'
+                                toTime: '1970-01-01T13:00:00Z'
+                            - day: THURSDAY
+                              type: REGULAR
+                              present:
+                                fromTime: '1970-01-01T09:00:00Z'
+                                toTime: '1970-01-01T18:00:00Z'
+                              breakInterval:
+                                fromTime: '1970-01-01T12:00:00Z'
+                                toTime: '1970-01-01T13:00:00Z'
+                            - day: FRIDAY
+                              type: REGULAR
+                              present:
+                                fromTime: '1970-01-01T09:00:00Z'
+                                toTime: '1970-01-01T18:00:00Z'
+                              breakInterval:
+                                fromTime: '1970-01-01T12:00:00Z'
+                                toTime: '1970-01-01T13:00:00Z'
+                      rules: {}
+      operationId: getV1TimeTrackingRulesetsByEngagementId
+      x-operation-id-source: derived
+  /v1/time_tracking/rulesets/{engagement_id}/sources/{source_type}:
+    get:
+      summary: Retrieve time tracking sources by source type for engagement
+      tags:
+      - Time Tracking
+      description: 'Retrieves time tracking sources for a specific engagement and source type.
+
+
+        - Use the `engagement_id` and `source_type` path parameters to fetch relevant sources for an engagement.
+
+        - For creating a time sheet, both work schedules and entry types are required.
+
+        - When updating time sheet entries, only entry types are needed, this endpoint provides the necessary data.
+
+
+        Typical use case:
+
+        - Retrieving entry types when modifying existing time sheet entries.'
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: engagement_id
+        in: path
+        description: Engagement ID
+        required: true
+        schema:
+          type: string
+      - name: source_type
+        in: path
+        schema:
+          type: string
+          enum:
+          - entry_types
+          - work_schedule
+        description: Source type to retrieve
+        required: true
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                    - value: REGULAR
+                      title: Regular hours
+                    - value: OVERTIME
+                      title: Overtime
+                    - value: NIGHT_WORK
+                      title: Night work
+                    - value: ON_CALL
+                      title: On-call
+                    - value: ON_CALL_ACTIVE
+                      title: On-call active
+                    - value: ON_CALL_PASSIVE
+                      title: On-call passive
+      operationId: getV1TimeTrackingRulesetsByEngagementIdSourcesBySourceType
+      x-operation-id-source: derived
+  /v1/time_tracking/time_sheets:
+    get:
+      summary: Retrieve all time sheets
+      tags:
+      - Time Tracking
+      description: Returns all Time Sheets for a company.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: per_page
+        in: query
+        required: false
+        schema:
+          type: integer
+      - name: page
+        in: query
+        required: false
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                No time sheets:
+                  value:
+                    data: []
+                    meta:
+                      items: 100
+                      count: 0
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/time_tracking/time_sheets?perPage=100&page=1
+                      lastUrl: /v1/time_tracking/time_sheets?perPage=100&page=1
+                      pageUrl: /v1/time_tracking/time_sheets?perPage=100&page=1
+                      nextUrl: /v1/time_tracking/time_sheets?perPage=100&page=
+                      prevUrl: /v1/time_tracking/time_sheets?perPage=100&page=
+                Successful:
+                  value:
+                    data:
+                    - id: A4338e26
+                      engagement:
+                        engagementId: A5540727
+                        name: Margery Wolf
+                        type: EMPLOYMENT
+                        countryCode: US
+                      timePeriod:
+                        startDate: '2022-10-01'
+                        endDate: '2022-10-31'
+                        year: '2022'
+                        month: '10'
+                      cadence: MONTHLY
+                      status: PENDING_SUBMISSION
+                      statusReason: null
+                      locked: false
+                      isAmendment: false
+                      hasAmendmentTimeSheet: false
+                      amendmentTimeSheetId: null
+                      originalTimeSheetId: null
+                      createdBy: OYSTER_STAFF
+                      submittedBy: null
+                      confirmedBy: null
+                      flexibleWorkArrangement: false
+                      workSummary: []
+                      totals:
+                        worked:
+                          hours: 0
+                          minutes: 0
+                        workedOnHolidays:
+                          hours: 0
+                          minutes: 0
+                        workedOnWeekends:
+                          hours: 0
+                          minutes: 0
+                        workedOnWeekdays:
+                          hours: 0
+                          minutes: 0
+                        notWorked:
+                          hours: 136
+                          minutes: 0
+                        timeOff:
+                          hours: 0
+                          minutes: 0
+                    - id: B4b8df09
+                      engagement:
+                        engagementId: B0b779a8
+                        name: Hermine Dach
+                        type: EMPLOYMENT
+                        countryCode: US
+                      timePeriod:
+                        startDate: '2022-10-01'
+                        endDate: '2022-10-31'
+                        year: '2022'
+                        month: '10'
+                      cadence: MONTHLY
+                      status: SUBMITTED
+                      statusReason: null
+                      locked: false
+                      isAmendment: false
+                      hasAmendmentTimeSheet: false
+                      amendmentTimeSheetId: null
+                      originalTimeSheetId: null
+                      createdBy: OYSTER_STAFF
+                      submittedBy: AUTOMATION
+                      confirmedBy: null
+                      flexibleWorkArrangement: false
+                      workSummary: []
+                      totals:
+                        worked:
+                          hours: 0
+                          minutes: 0
+                        workedOnHolidays:
+                          hours: 0
+                          minutes: 0
+                        workedOnWeekends:
+                          hours: 0
+                          minutes: 0
+                        workedOnWeekdays:
+                          hours: 0
+                          minutes: 0
+                        notWorked:
+                          hours: 136
+                          minutes: 0
+                        timeOff:
+                          hours: 0
+                          minutes: 0
+                    - id: C5aef98c
+                      engagement:
+                        engagementId: C6c9d557
+                        name: Mitzi Nienow DVM
+                        type: EMPLOYMENT
+                        countryCode: US
+                      timePeriod:
+                        startDate: '2022-10-01'
+                        endDate: '2022-10-31'
+                        year: '2022'
+                        month: '10'
+                      cadence: MONTHLY
+                      status: PENDING_APPROVAL
+                      statusReason: PENDING_ADMIN_REVIEW
+                      locked: true
+                      isAmendment: false
+                      hasAmendmentTimeSheet: false
+                      amendmentTimeSheetId: null
+                      originalTimeSheetId: null
+                      createdBy: OYSTER_STAFF
+                      submittedBy: AUTOMATION
+                      confirmedBy: null
+                      flexibleWorkArrangement: false
+                      workSummary: []
+                      totals:
+                        worked:
+                          hours: 0
+                          minutes: 0
+                        workedOnHolidays:
+                          hours: 0
+                          minutes: 0
+                        workedOnWeekends:
+                          hours: 0
+                          minutes: 0
+                        workedOnWeekdays:
+                          hours: 0
+                          minutes: 0
+                        notWorked:
+                          hours: 136
+                          minutes: 0
+                        timeOff:
+                          hours: 0
+                          minutes: 0
+                    meta:
+                      items: 100
+                      count: 3
+                      page: 1
+                      pages: 1
+                      firstUrl: /v1/time_tracking/time_sheets?perPage=100&page=1
+                      lastUrl: /v1/time_tracking/time_sheets?perPage=100&page=1
+                      pageUrl: /v1/time_tracking/time_sheets?perPage=100&page=1
+                      nextUrl: /v1/time_tracking/time_sheets?perPage=100&page=
+                      prevUrl: /v1/time_tracking/time_sheets?perPage=100&page=
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/timeTrackingTimeSheets'
+                  meta:
+                    $ref: '#/components/schemas/meta'
+                required:
+                - data
+                - meta
+      operationId: getV1TimeTrackingTimeSheets
+      x-operation-id-source: derived
+    post:
+      summary: Create a time sheet
+      tags:
+      - Time Tracking
+      description: This API endpoint allows you to create and fill out a new time sheet record and receive a complete response with the created record details. Optionally, you can set the default work schedule for the time sheet.
+      security:
+      - bearer_auth:
+        - manage
+      parameters: []
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                      id: A4338e26
+                      engagement:
+                        engagementId: A5540727
+                        name: Margery Wolf
+                        type: EMPLOYMENT
+                        countryCode: US
+                      timePeriod:
+                        startDate: '2022-10-01'
+                        endDate: '2022-10-31'
+                        year: '2022'
+                        month: '10'
+                      cadence: MONTHLY
+                      status: PENDING_SUBMISSION
+                      statusReason: null
+                      locked: false
+                      isAmendment: false
+                      hasAmendmentTimeSheet: false
+                      amendmentTimeSheetId: null
+                      originalTimeSheetId: null
+                      createdBy: TEAM_MEMBER
+                      submittedBy: null
+                      confirmedBy: null
+                      flexibleWorkArrangement: false
+                      workSummary:
+                      - type: REGULAR
+                        duration:
+                          hours: 35
+                          minutes: 0
+                      totals:
+                        worked:
+                          hours: 35
+                          minutes: 0
+                        workedOnHolidays:
+                          hours: 0
+                          minutes: 0
+                        workedOnWeekends:
+                          hours: 0
+                          minutes: 0
+                        workedOnWeekdays:
+                          hours: 35
+                          minutes: 0
+                        notWorked:
+                          hours: 213
+                          minutes: 0
+                        timeOff:
+                          hours: 0
+                          minutes: 0
+                      timeOffs: []
+                      entries:
+                      - id: B56fa57c
+                        timeSheetId: A4338e26
+                        date: '2022-10-03'
+                        type: REGULAR
+                        notes: null
+                        present:
+                          fromTime: '2022-10-03T09:00:00Z'
+                          toTime: '2022-10-03T16:00:00Z'
+                          duration:
+                            hours: 7
+                            minutes: 0
+                        breakInterval: null
+                        workDuration:
+                          hours: 7
+                          minutes: 0
+                      - id: Cad54180
+                        timeSheetId: A4338e26
+                        date: '2022-10-10'
+                        type: REGULAR
+                        notes: null
+                        present:
+                          fromTime: '2022-10-10T09:00:00Z'
+                          toTime: '2022-10-10T16:00:00Z'
+                          duration:
+                            hours: 7
+                            minutes: 0
+                        breakInterval: null
+                        workDuration:
+                          hours: 7
+                          minutes: 0
+                      - id: D76aa8ad
+                        timeSheetId: A4338e26
+                        date: '2022-10-17'
+                        type: REGULAR
+                        notes: null
+                        present:
+                          fromTime: '2022-10-17T09:00:00Z'
+                          toTime: '2022-10-17T16:00:00Z'
+                          duration:
+                            hours: 7
+                            minutes: 0
+                        breakInterval: null
+                        workDuration:
+                          hours: 7
+                          minutes: 0
+                      - id: Eae1d866
+                        timeSheetId: A4338e26
+                        date: '2022-10-24'
+                        type: REGULAR
+                        notes: null
+                        present:
+                          fromTime: '2022-10-24T09:00:00Z'
+                          toTime: '2022-10-24T16:00:00Z'
+                          duration:
+                            hours: 7
+                            minutes: 0
+                        breakInterval: null
+                        workDuration:
+                          hours: 7
+                          minutes: 0
+                      - id: F5684abe
+                        timeSheetId: A4338e26
+                        date: '2022-10-31'
+                        type: REGULAR
+                        notes: null
+                        present:
+                          fromTime: '2022-10-31T09:00:00Z'
+                          toTime: '2022-10-31T16:00:00Z'
+                          duration:
+                            hours: 7
+                            minutes: 0
+                        breakInterval: null
+                        workDuration:
+                          hours: 7
+                          minutes: 0
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/timeTrackingTimeSheet'
+                required:
+                - data
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              examples:
+                Unprocessable entity:
+                  value:
+                    errors:
+                    - message: A time sheet for this engagement and time period already exists
+              schema:
+                $ref: '#/components/schemas/errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                engagementId:
+                  type: string
+                  minLength: 1
+                  pattern: ^[\w+\-]{8,9}$
+                timePeriod:
+                  type: object
+                  properties:
+                    month:
+                      type: string
+                      pattern: ^(0?[1-9]|1[0-2])$
+                    year:
+                      type: string
+                      pattern: ^\d{4}$
+                    day:
+                      type: string
+                      pattern: ^(0?[1-9]|[12][0-9]|3[01])$
+                  required:
+                  - month
+                  - year
+                workSchedule:
+                  type: object
+                  properties:
+                    weekly:
+                      type: array
+                      items:
+                        type: object
+                        properties:
+                          day:
+                            type: string
+                            enum:
+                            - MONDAY
+                            - TUESDAY
+                            - WEDNESDAY
+                            - THURSDAY
+                            - FRIDAY
+                            - SATURDAY
+                            - SUNDAY
+                          type:
+                            type: string
+                            enum:
+                            - REGULAR
+                            - OVERTIME
+                            - NIGHT_WORK
+                            - ON_CALL
+                            - ON_CALL_ACTIVE
+                            - ON_CALL_PASSIVE
+                          present:
+                            type: object
+                            properties:
+                              fromTime:
+                                type: string
+                                pattern: ^\d{2}:\d{2}$
+                              toTime:
+                                type: string
+                                pattern: ^\d{2}:\d{2}$
+                            required:
+                            - fromTime
+                            - toTime
+                          breakInterval:
+                            type:
+                            - object
+                            - 'null'
+                            properties:
+                              fromTime:
+                                type: string
+                                pattern: ^\d{2}:\d{2}$
+                              toTime:
+                                type: string
+                                pattern: ^\d{2}:\d{2}$
+                        required:
+                        - day
+                        - type
+                        - present
+                  required:
+                  - weekly
+                setAsDefault:
+                  type: boolean
+              required:
+              - engagementId
+            examples:
+              Successful:
+                summary: Successful
+                value:
+                  engagementId: A5540727
+                  timePeriod:
+                    month: '10'
+                    year: '2022'
+                  workSchedule:
+                    weekly:
+                    - day: MONDAY
+                      type: REGULAR
+                      present:
+                        fromTime: 09:00
+                        toTime: '16:00'
+                  set_as_default: true
+      operationId: postV1TimeTrackingTimeSheets
+      x-operation-id-source: derived
+  /v1/time_tracking/time_sheets/entries:
+    post:
+      summary: Create time sheet entry
+      tags:
+      - Time Tracking
+      description: This API endpoint allows you to create a new time sheet entry and receive a complete response with the created entry details.
+      security:
+      - bearer_auth:
+        - manage
+      parameters: []
+      responses:
+        '200':
+          description: Successfully created time sheet entry
+          content:
+            application/json:
+              examples:
+                Successfully created time sheet entry:
+                  value:
+                    data:
+                      id: A20a2969
+                      timeSheetId: A4338e26
+                      date: '2022-10-03'
+                      type: REGULAR
+                      notes: Worked on feature X
+                      present:
+                        fromTime: '2022-10-03T09:00:00Z'
+                        toTime: '2022-10-03T17:00:00Z'
+                        duration:
+                          hours: 8
+                          minutes: 0
+                      breakInterval:
+                        fromTime: '2022-10-03T12:00:00Z'
+                        toTime: '2022-10-03T12:30:00Z'
+                        duration:
+                          hours: 0
+                          minutes: 30
+                      workDuration:
+                        hours: 7
+                        minutes: 30
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/timeTrackingTimeSheetEntry'
+                required:
+                - data
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              examples:
+                Unprocessable entity:
+                  value:
+                    errors:
+                    - message: 'Time sheet entry type must be one of: REGULAR, OVERTIME, NIGHT_WORK'
+              schema:
+                $ref: '#/components/schemas/errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                timeSheetId:
+                  type: string
+                  minLength: 1
+                  pattern: ^[\w+\-]{8,9}$
+                date:
+                  type: string
+                  minLength: 1
+                  pattern: ^\d{4}-\d{2}-\d{2}$
+                type:
+                  type: string
+                  minLength: 1
+                  enum:
+                  - REGULAR
+                  - OVERTIME
+                  - NIGHT_WORK
+                  - ON_CALL
+                  - ON_CALL_ACTIVE
+                  - ON_CALL_PASSIVE
+                notes:
+                  type:
+                  - string
+                  - 'null'
+                  maxLength: 255
+                present:
+                  type: object
+                  properties:
+                    fromTime:
+                      type: string
+                      pattern: ^\d{2}:\d{2}$
+                    toTime:
+                      type: string
+                      pattern: ^\d{2}:\d{2}$
+                  required:
+                  - fromTime
+                  - toTime
+                breakInterval:
+                  type:
+                  - object
+                  - 'null'
+                  properties:
+                    fromTime:
+                      type: string
+                      pattern: ^\d{2}:\d{2}$
+                    toTime:
+                      type: string
+                      pattern: ^\d{2}:\d{2}$
+              required:
+              - timeSheetId
+              - date
+              - type
+              - present
+            examples:
+              Successfully created time sheet entry:
+                summary: Successfully created time sheet entry
+                value:
+                  timeSheetId: A4338e26
+                  date: '2022-10-03'
+                  type: REGULAR
+                  notes: Worked on feature X
+                  present:
+                    fromTime: 09:00
+                    toTime: '17:00'
+                  breakInterval:
+                    fromTime: '12:00'
+                    toTime: '12:30'
+      operationId: postV1TimeTrackingTimeSheetsEntries
+      x-operation-id-source: derived
+  /v1/time_tracking/time_sheets/entries/{id}:
+    patch:
+      summary: Update time sheet entry
+      tags:
+      - Time Tracking
+      description: This API endpoint allows you to update an existing time sheet entry and receive a complete response with the updated entry details.
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: id
+        in: path
+        description: Time Sheet Entry ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully updated time sheet entry
+          content:
+            application/json:
+              examples:
+                Successfully updated time sheet entry:
+                  value:
+                    data:
+                      id: A20a2969
+                      timeSheetId: A4338e26
+                      date: '2022-10-01'
+                      type: REGULAR
+                      notes: Updated notes
+                      present:
+                        fromTime: '2022-10-01T10:00:00Z'
+                        toTime: '2022-10-01T18:00:00Z'
+                        duration:
+                          hours: 8
+                          minutes: 0
+                      breakInterval:
+                        fromTime: '2022-10-01T13:00:00Z'
+                        toTime: '2022-10-01T13:30:00Z'
+                        duration:
+                          hours: 0
+                          minutes: 30
+                      workDuration:
+                        hours: 7
+                        minutes: 30
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/timeTrackingTimeSheetEntry'
+                required:
+                - data
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              examples:
+                Unprocessable entity:
+                  value:
+                    errors:
+                    - message: 'Time sheet entry type must be one of: REGULAR, OVERTIME, NIGHT_WORK'
+              schema:
+                $ref: '#/components/schemas/errors'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                type:
+                  type: string
+                  minLength: 1
+                  enum:
+                  - REGULAR
+                  - OVERTIME
+                  - NIGHT_WORK
+                  - ON_CALL
+                  - ON_CALL_ACTIVE
+                  - ON_CALL_PASSIVE
+                notes:
+                  type:
+                  - string
+                  - 'null'
+                  maxLength: 255
+                present:
+                  type: object
+                  properties:
+                    fromTime:
+                      type: string
+                      pattern: ^\d{2}:\d{2}$
+                    toTime:
+                      type: string
+                      pattern: ^\d{2}:\d{2}$
+                  required:
+                  - fromTime
+                  - toTime
+                breakInterval:
+                  type:
+                  - object
+                  - 'null'
+                  properties:
+                    fromTime:
+                      type: string
+                      pattern: ^\d{2}:\d{2}$
+                    toTime:
+                      type: string
+                      pattern: ^\d{2}:\d{2}$
+              required:
+              - type
+              - present
+            examples:
+              Successfully updated time sheet entry:
+                summary: Successfully updated time sheet entry
+                value:
+                  type: REGULAR
+                  notes: Updated notes
+                  present:
+                    fromTime: '10:00'
+                    toTime: '18:00'
+                  breakInterval:
+                    fromTime: '13:00'
+                    toTime: '13:30'
+      operationId: patchV1TimeTrackingTimeSheetsEntriesById
+      x-operation-id-source: derived
+    delete:
+      summary: Delete time sheet entry
+      tags:
+      - Time Tracking
+      description: This API endpoint allows you to delete an existing time sheet entry.
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: id
+        in: path
+        description: Time Sheet Entry ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successfully deleted time sheet entry
+        '422':
+          description: Unprocessable entity
+          content:
+            application/json:
+              examples:
+                Unprocessable entity:
+                  value:
+                    errors:
+                    - message: Time sheet is locked and cannot be modified.
+              schema:
+                $ref: '#/components/schemas/errors'
+      operationId: deleteV1TimeTrackingTimeSheetsEntriesById
+      x-operation-id-source: derived
+  /v1/time_tracking/time_sheets/{id}:
+    get:
+      summary: Retrieve an individual time sheet
+      tags:
+      - Time Tracking
+      description: Returns details for a time sheet.
+      security:
+      - bearer_auth:
+        - read
+      parameters:
+      - name: id
+        in: path
+        description: Time sheet ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+          content:
+            application/json:
+              examples:
+                Successful:
+                  value:
+                    data:
+                      id: A4338e26
+                      engagement:
+                        engagementId: A5540727
+                        name: Margery Wolf
+                        type: EMPLOYMENT
+                        countryCode: US
+                      timePeriod:
+                        startDate: '2022-10-01'
+                        endDate: '2022-10-31'
+                        year: '2022'
+                        month: '10'
+                      cadence: MONTHLY
+                      status: PENDING_SUBMISSION
+                      statusReason: null
+                      locked: false
+                      isAmendment: false
+                      hasAmendmentTimeSheet: false
+                      amendmentTimeSheetId: null
+                      originalTimeSheetId: null
+                      createdBy: OYSTER_STAFF
+                      submittedBy: null
+                      confirmedBy: null
+                      flexibleWorkArrangement: false
+                      workSummary:
+                      - type: REGULAR
+                        duration:
+                          hours: 8
+                          minutes: 0
+                      totals:
+                        worked:
+                          hours: 8
+                          minutes: 0
+                        workedOnHolidays:
+                          hours: 0
+                          minutes: 0
+                        workedOnWeekends:
+                          hours: 8
+                          minutes: 0
+                        workedOnWeekdays:
+                          hours: 0
+                          minutes: 0
+                        notWorked:
+                          hours: 240
+                          minutes: 0
+                        timeOff:
+                          hours: 16
+                          minutes: 0
+                      timeOffs:
+                      - date: '2022-10-03'
+                        duration:
+                          hours: 8
+                          minutes: 0
+                        reason: PAID_TIME_OFF
+                        type: VACATION
+                      - date: '2022-10-10'
+                        duration:
+                          hours: 8
+                          minutes: 0
+                        reason: National holiday
+                        type: PUBLIC_HOLIDAY
+                      entries:
+                      - id: A20a2969
+                        timeSheetId: A4338e26
+                        date: '2022-10-01'
+                        type: REGULAR
+                        notes: null
+                        present:
+                          fromTime: '2022-10-01T09:00:00Z'
+                          toTime: '2022-10-01T17:30:00Z'
+                          duration:
+                            hours: 8
+                            minutes: 30
+                        breakInterval:
+                          fromTime: '2022-10-01T12:00:00Z'
+                          toTime: '2022-10-01T12:30:00Z'
+                          duration:
+                            hours: 0
+                            minutes: 30
+                        workDuration:
+                          hours: 8
+                          minutes: 0
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/timeTrackingTimeSheet'
+                required:
+                - data
+      operationId: getV1TimeTrackingTimeSheetsById
+      x-operation-id-source: derived
+    delete:
+      summary: Delete an individual time sheet
+      tags:
+      - Time Tracking
+      description: Deletes a time sheet.
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: id
+        in: path
+        description: Time sheet ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+        '422':
+          description: Unprocessable Entity
+          content:
+            application/json:
+              examples:
+                Unprocessable Entity:
+                  value:
+                    errors:
+                    - message: Cannot delete time sheet in state approved
+      operationId: deleteV1TimeTrackingTimeSheetsById
+      x-operation-id-source: derived
+  /v1/time_tracking/time_sheets/{id}/confirm:
+    post:
+      summary: Confirm a time sheet
+      tags:
+      - Time Tracking
+      description: Confirm a time sheet.
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: id
+        in: path
+        description: Time sheet ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+        '422':
+          description: Operation cannot be performed
+          content:
+            application/json:
+              examples:
+                Operation cannot be performed:
+                  value:
+                    errors:
+                    - message: Contractor time sheets cannot be confirmed
+              schema:
+                $ref: '#/components/schemas/errors'
+      operationId: postV1TimeTrackingTimeSheetsByIdConfirm
+      x-operation-id-source: derived
+  /v1/time_tracking/time_sheets/{id}/submit:
+    post:
+      summary: Submit time sheet
+      tags:
+      - Time Tracking
+      description: Submits an individual time sheet.
+      security:
+      - bearer_auth:
+        - manage
+      parameters:
+      - name: id
+        in: path
+        description: Time sheet ID
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful
+        '422':
+          description: Operation cannot be performed
+          content:
+            application/json:
+              examples:
+                Operation cannot be performed:
+                  value:
+                    errors:
+                    - message: Can't submit a time sheet that's in the COMPLETED state
+              schema:
+                $ref: '#/components/schemas/errors'
+      operationId: postV1TimeTrackingTimeSheetsByIdSubmit
+      x-operation-id-source: derived
+components:
+  schemas:
+    timeTrackingTimeSheets:
+      type: array
+      items:
+        type: object
+        required:
+        - id
+        - engagement
+        - timePeriod
+        - cadence
+        - status
+        - locked
+        - isAmendment
+        - hasAmendmentTimeSheet
+        - createdBy
+        - flexibleWorkArrangement
+        - totals
+        - workSummary
+        properties:
+          id:
+            type: string
+          engagement:
+            type: object
+            properties:
+              engagementId:
+                type: string
+              name:
+                type: string
+              type:
+                type: string
+              countryCode:
+                type: string
+          timePeriod:
+            type: object
+            required:
+            - startDate
+            - endDate
+            properties:
+              startDate:
+                type: string
+                format: date
+              endDate:
+                type: string
+                format: date
+              year:
+                type: string
+              month:
+                type: string
+          cadence:
+            type: string
+            enum:
+            - MONTHLY
+            - BI_WEEKLY
+            - SEMI_MONTHLY
+          status:
+            type: string
+            enum:
+            - PENDING_SUBMISSION
+            - SUBMITTED
+            - PENDING_APPROVAL
+            - APPROVED
+          statusReason:
+            type:
+            - string
+            - 'null'
+          locked:
+            type: boolean
+          isAmendment:
+            type: boolean
+          hasAmendmentTimeSheet:
+            type: boolean
+          amendmentTimeSheetId:
+            type:
+            - string
+            - 'null'
+          originalTimeSheetId:
+            type:
+            - string
+            - 'null'
+          createdBy:
+            type: string
+          submittedBy:
+            type:
+            - string
+            - 'null'
+          confirmedBy:
+            type:
+            - string
+            - 'null'
+          flexibleWorkArrangement:
+            type: boolean
+          totals:
+            type: object
+            properties:
+              worked:
+                $ref: '#/components/schemas/duration'
+              workedOnHolidays:
+                $ref: '#/components/schemas/duration'
+              workedOnWeekends:
+                $ref: '#/components/schemas/duration'
+              workedOnWeekdays:
+                $ref: '#/components/schemas/duration'
+              notWorked:
+                $ref: '#/components/schemas/duration'
+              timeOff:
+                $ref: '#/components/schemas/duration'
+          workSummary:
+            type: array
+            items:
+              $ref: '#/components/schemas/timeTrackingWorkSummaryItem'
+    timeTrackingTimeSheet:
+      type: object
+      required:
+      - id
+      - engagement
+      - timePeriod
+      - cadence
+      - status
+      - locked
+      - isAmendment
+      - hasAmendmentTimeSheet
+      - createdBy
+      - flexibleWorkArrangement
+      - totals
+      - workSummary
+      - timeOffs
+      - entries
+      properties:
+        id:
+          type: string
+        engagement:
+          type: object
+          properties:
+            engagementId:
+              type: string
+            name:
+              type: string
+            type:
+              type: string
+            countryCode:
+              type: string
+        timePeriod:
+          type: object
+          required:
+          - startDate
+          - endDate
+          properties:
+            startDate:
+              type: string
+              format: date
+            endDate:
+              type: string
+              format: date
+            year:
+              type: string
+            month:
+              type: string
+        cadence:
+          type: string
+          enum:
+          - MONTHLY
+          - BI_WEEKLY
+          - SEMI_MONTHLY
+        status:
+          type: string
+          enum:
+          - PENDING_SUBMISSION
+          - SUBMITTED
+          - PENDING_APPROVAL
+          - APPROVED
+        statusReason:
+          type:
+          - string
+          - 'null'
+        locked:
+          type: boolean
+        isAmendment:
+          type: boolean
+        hasAmendmentTimeSheet:
+          type: boolean
+        amendmentTimeSheetId:
+          type:
+          - string
+          - 'null'
+        originalTimeSheetId:
+          type:
+          - string
+          - 'null'
+        createdBy:
+          type: string
+        submittedBy:
+          type:
+          - string
+          - 'null'
+        confirmedBy:
+          type:
+          - string
+          - 'null'
+        flexibleWorkArrangement:
+          type: boolean
+        totals:
+          type: object
+          properties:
+            worked:
+              $ref: '#/components/schemas/duration'
+            workedOnHolidays:
+              $ref: '#/components/schemas/duration'
+            workedOnWeekends:
+              $ref: '#/components/schemas/duration'
+            workedOnWeekdays:
+              $ref: '#/components/schemas/duration'
+            notWorked:
+              $ref: '#/components/schemas/duration'
+            timeOff:
+              $ref: '#/components/schemas/duration'
+        workSummary:
+          type: array
+          items:
+            $ref: '#/components/schemas/timeTrackingWorkSummaryItem'
+        timeOffs:
+          type: array
+          items:
+            $ref: '#/components/schemas/timeTrackingTimeOff'
+        entries:
+          type: array
+          items:
+            $ref: '#/components/schemas/timeTrackingTimeSheetEntry'
+    timeTrackingWorkSummaryItem:
+      type: object
+      properties:
+        type:
+          type: string
+        duration:
+          $ref: '#/components/schemas/duration'
+      required:
+      - type
+      - duration
+    meta:
+      type: object
+      properties:
+        items:
+          type: integer
+        count:
+          type: integer
+        page:
+          type: integer
+        pages:
+          type: integer
+        firstUrl:
+          type: string
+        lastUrl:
+          type: string
+        pageUrl:
+          type: string
+        nextUrl:
+          type: string
+        prevUrl:
+          type: string
+        deprecation:
+          type: object
+          properties:
+            at:
+              type: string
+            sunset:
+              type: string
+            link:
+              type: object
+              properties:
+                rel:
+                  type: string
+                url:
+                  type: string
+      required:
+      - items
+      - count
+      - page
+      - pages
+      - firstUrl
+      - lastUrl
+      - pageUrl
+      - nextUrl
+      - prevUrl
+    errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              message:
+                type: string
+            required:
+            - message
+      required:
+      - errors
+    timeTrackingTimeSheetEntry:
+      type: object
+      properties:
+        id:
+          type: string
+        timeSheetId:
+          type: string
+        date:
+          type: string
+          format: date
+        type:
+          type: string
+        notes:
+          type:
+          - string
+          - 'null'
+          maxLength: 255
+        present:
+          type: object
+          properties:
+            fromTime:
+              type: string
+              format: date-time
+            toTime:
+              type: string
+              format: date-time
+            duration:
+              $ref: '#/components/schemas/duration'
+          required:
+          - fromTime
+          - toTime
+          - duration
+        breakInterval:
+          type:
+          - object
+          - 'null'
+          properties:
+            fromTime:
+              type: string
+              format: date-time
+            toTime:
+              type: string
+              format: date-time
+            duration:
+              $ref: '#/components/schemas/duration'
+          required:
+          - fromTime
+          - toTime
+          - duration
+        workDuration:
+          $ref: '#/components/schemas/duration'
+      required:
+      - id
+      - timeSheetId
+      - date
+      - type
+      - notes
+      - present
+      - workDuration
+    duration:
+      type: object
+      properties:
+        hours:
+          type: integer
+          minimum: 0
+        minutes:
+          type: integer
+          minimum: 0
+      required:
+      - hours
+      - minutes
+    timeTrackingTimeOff:
+      type: object
+      properties:
+        date:
+          type: string
+          format: date
+        duration:
+          $ref: '#/components/schemas/duration'
+        reason:
+          type: string
+        type:
+          type: string
+      required:
+      - date
+      - duration
+      - reason
+      - type
+  securitySchemes:
+    bearer_auth:
+      type: http
+      scheme: bearer
+x-provenance:
+  method: searched
+  source: https://docs.oysterhr.com/reference
+  harvested: '2026-10-14'
+  tool: harvest-readme-openapi.py
+  note: Assembled verbatim from the OpenAPI definition ReadMe embeds in each operation page of the provider's developer portal; paths and components merged by API title, nothing authored.
+  assembled_from:
+  - https://docs.oysterhr.com/reference/delete_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/delete_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-document-document-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/delete_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/delete_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/delete_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-engagements-engagement-id-offerings.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-enrollments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-benefits-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-company.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-credit-notes.md
+  - https://docs.oysterhr.com/reference/get_v1-departments.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-allowances.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-bonuses.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-documents.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-identity-verification.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id-payslips.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-engagements.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id-sources-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses-rulesets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-expenses.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements-agreement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-annually.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-cost-estimates-monthly.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form-documents-field-or-document-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id-tasks.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-onboarding-form.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-employments-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-hiring-role-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier-breakdown.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-identifier.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-statuses.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-invoices.md
+  - https://docs.oysterhr.com/reference/get_v1-meta-operations-operation-key.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id-agreements.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-id.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-payroll-team-members-terminations-rulesets.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-categories.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings-sources-employment-type-pay-types.md
+  - https://docs.oysterhr.com/reference/get_v1-offboardings.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id-charges.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charge-groups.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-charges-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payments-payouts-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-ruleset.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-rulesets-default.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes-sources-types.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id-records.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll-id.md
+  - https://docs.oysterhr.com/reference/get_v1-payroll.md
+  - https://docs.oysterhr.com/reference/get_v1-public-holidays.md
+  - https://docs.oysterhr.com/reference/get_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-entitlements.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id-sources-source-type.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-rulesets-engagement-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets-id.md
+  - https://docs.oysterhr.com/reference/get_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks-dispatches.md
+  - https://docs.oysterhr.com/reference/get_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/patch_v1-bank-accounts-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-employments-id-personal-details.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id-onboarding-form.md
+  - https://docs.oysterhr.com/reference/patch_v1-hiring-employments-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-payroll-changes-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-reseller-customers-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-time-tracking-time-sheets-entries-id.md
+  - https://docs.oysterhr.com/reference/patch_v1-webhooks-id.md
+  - https://docs.oysterhr.com/reference/post_v1-bank-accounts.md
+  - https://docs.oysterhr.com/reference/post_v1-benefits-engagements-engagement-id-enrollments.md
+  - https://docs.oysterhr.com/reference/post_v1-consent-grants.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-contract-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-approved.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-declined.md
+  - https://docs.oysterhr.com/reference/post_v1-engagements-id-identity-verification-sessions.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses-id-decline.md
+  - https://docs.oysterhr.com/reference/post_v1-expenses.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-agreements-agreement-id-verify.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-commission-plan.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-document.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-onboarding-form-complete.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-team-member-invite.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments-id-work-permit.md
+  - https://docs.oysterhr.com/reference/post_v1-hiring-employments.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-invoices-identifier-dispute.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-contractors-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-resignations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-employments-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-cancellation.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-documents.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-id-initiate.md
+  - https://docs.oysterhr.com/reference/post_v1-offboardings-payroll-team-members-terminations.md
+  - https://docs.oysterhr.com/reference/post_v1-payments-charge-groups-id-wire-sent.md
+  - https://docs.oysterhr.com/reference/post_v1-payroll-changes.md
+  - https://docs.oysterhr.com/reference/post_v1-reseller-customers.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-approve.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-attachment.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-cancel.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests-id-reject.md
+  - https://docs.oysterhr.com/reference/post_v1-time-off-requests.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-entries.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-confirm.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets-id-submit.md
+  - https://docs.oysterhr.com/reference/post_v1-time-tracking-time-sheets.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks-id-test.md
+  - https://docs.oysterhr.com/reference/post_v1-webhooks.md
+  - https://docs.oysterhr.com/reference/put_v1-hiring-employments-id-onboarding-form-documents-field-id.md
+  merge:
+    pages: 140
+    deduped: 378
+    conflicts_kept_first: 0
