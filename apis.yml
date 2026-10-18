@@ -318,6 +318,8 @@ apis:
   humanURL: https://www.oysterhr.com/developer-api
   baseURL: https://api.oysterhr.com/v1
   tags:
+  - Credit Notes
+  tags_raw:
   - Credit notes
   properties:
   - type: OpenAPI
@@ -527,7 +529,8 @@ apis:
   description: The Operations API from Oyster HR — 1 operation(s) for operations.
   humanURL: https://www.oysterhr.com/developer-api
   baseURL: https://api.oysterhr.com/v1
-  tags:
+  tags: []
+  tags_raw:
   - Operations
   properties:
   - type: OpenAPI
@@ -742,6 +745,8 @@ apis:
   humanURL: https://www.oysterhr.com/developer-api
   baseURL: https://api.oysterhr.com/v1
   tags:
+  - Webhook
+  tags_raw:
   - Webhooks
   properties:
   - type: OpenAPI
