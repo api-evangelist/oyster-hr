@@ -13,6 +13,7 @@ checked:
 - https://n8n.io/integrations/oyster-hr/
 - https://zapier.com/api/v4/apps/
 - https://zapier.com/apps/oyster-hr/integrations
+- slack/integrations/slack-integration-edges.yml
 summary: null
 marketplace_apps: []
 edges:
@@ -84,4 +85,21 @@ edges:
     builder: Pipedream repo (component)
   detected_by: sweep-workflow-automation.py
   first_seen: '2026-10-15'
+- partner_name: Slack (own)
+  partner: slack
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://slack.com/marketplace/A056EEJMEQZ-oyster
+  mirror_of: slack/integrations/slack-integration-edges.yml
+  apps:
+  - Oyster
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Slack app
 templates: []
