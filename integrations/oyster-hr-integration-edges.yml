@@ -15,43 +15,10 @@ checked:
 - https://zapier.com/api/v4/apps/
 - https://zapier.com/apps/oyster-hr/integrations
 - slack/integrations/slack-integration-edges.yml
+- xero/integrations/xero-integration-edges.yml
 summary: null
 marketplace_apps: []
 edges:
-- partner_name: BambooHR (own)
-  partner: bamboohr
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://www.bamboohr.com/integrations/listings/oyster
-  mirror_of: bamboohr/integrations/bamboohr-integration-edges.yml
-  apps:
-  - Oyster
-  listing_count: 1
-  detected: '2026-10-14'
-  detected_by: mirror-platform-listings.py
-  category: Global Payroll, Payroll, PEO
-- partner_name: Slack (own)
-  partner: slack
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://slack.com/marketplace/A056EEJMEQZ-oyster
-  mirror_of: slack/integrations/slack-integration-edges.yml
-  apps:
-  - Oyster
-  listing_count: 1
-  detected: '2026-10-18'
-  detected_by: mirror-platform-listings.py
-  category: Slack app
 - partner_name: Zapier
   partner: zapier
   partner_match: aggregator
@@ -103,4 +70,57 @@ edges:
     builder: Pipedream repo (component)
   detected_by: sweep-workflow-automation.py
   first_seen: '2026-10-15'
+- partner_name: BambooHR (own)
+  partner: bamboohr
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.bamboohr.com/integrations/listings/oyster
+  mirror_of: bamboohr/integrations/bamboohr-integration-edges.yml
+  apps:
+  - Oyster
+  listing_count: 1
+  detected: '2026-10-14'
+  detected_by: mirror-platform-listings.py
+  category: Global Payroll, Payroll, PEO
+- partner_name: Slack (own)
+  partner: slack
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://slack.com/marketplace/A056EEJMEQZ-oyster
+  mirror_of: slack/integrations/slack-integration-edges.yml
+  apps:
+  - Oyster
+  listing_count: 1
+  detected: '2026-10-18'
+  detected_by: mirror-platform-listings.py
+  category: Slack app
+- partner_name: Xero (own)
+  partner: xero
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://apps.xero.com/nz/app/oysterhr
+  mirror_of: xero/integrations/xero-integration-edges.yml
+  apps:
+  - OysterHR
+  listing_count: 1
+  detected: '2026-10-23'
+  detected_by: mirror-platform-listings.py
+  category: Payroll HR
+  features:
+  - Sign Up with Xero
 templates: []
